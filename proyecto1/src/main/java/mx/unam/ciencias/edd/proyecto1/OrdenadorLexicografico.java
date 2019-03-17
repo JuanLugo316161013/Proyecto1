@@ -1,25 +1,27 @@
 package mx.unam.ciencias.edd.proyecto1;
+import mx.unam.ciencias.edd.ArbolRojinegro;
+import mx.unam.ciencias.edd.Pila;
 
-public class OrdenadorLexicografico implements Comparable<String>{	
+
+public class OrdenadorLexicografico {
 	
-	String cadena;
+	private boolean reversa;
 
-	public OrdenadorLexicografico() {}
+	private boolean salida;
 
-	public OrdenadorLexicografico(T cadena) {
-		this.cadena = cadena;
+	private ArbolRojinegro<Cadena> arbol;
+
+	public OrdenadorLexicografico() {
+		arbol = new ArbolRojinegro<Cadena>();
 	}
 
-	public boolean esVacia() {
-		return cadena == null;
+	public OrdenadorLexicografico(String bandera) {
 	}
 
-	@Override public int compareTo(String cadena) {
-		String cadena1 = this.cadena.trim(), cadena2 = cadena.trim();
-		return cadena1.compareTo(cadena2);
+	public void agrega(Cadena elemento) {
+		arbol.agrega(elemento);
 	}
 
-	public void setCadena(String cadena) {
-		this.cadena = cadena;
+	public void imprime() {
 	}
 }
