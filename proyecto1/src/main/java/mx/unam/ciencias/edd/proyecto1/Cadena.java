@@ -1,6 +1,7 @@
 package mx.unam.ciencias.edd.proyecto1;
 
 import java.util.NoSuchElementException;
+import java.util.regex.Pattern;
 import java.text.Collator;
 
 /**
@@ -21,7 +22,7 @@ public class Cadena implements Comparable<Cadena>{
 	private Cadena() {}
 
 	/**
-	 * Contructor que recibe e inicializa a la cadena de caracteres 
+	 * Contructor que recibe e inicializa a la cadena de caracteres
 	 * @param cadena cadena de caracteres (String).
 	 * @throws IllegalAccessException si la cadena es null.
 	 */
@@ -41,7 +42,7 @@ public class Cadena implements Comparable<Cadena>{
 	public String getCadena() {
 		if (cadena == null)
 			throw new NoSuchElementException();
-		
+
 		return cadena;
 	}
 
@@ -73,17 +74,17 @@ public class Cadena implements Comparable<Cadena>{
 
 		if (cadena == null || cadena.getCadena() == null)
 			throw new IllegalArgumentException();
-		
+
 		String cadena1 = this.cadena.trim(), cadena2 = cadena.getCadena().trim();
 		Collator comparador = Collator.getInstance();
-		comparador.setStrength(Collator.CANONICAL_DECOMPOSITION);
+		comparador.setStrength(Collator.PRIMARY);
 		return comparador.compare(cadena1,cadena2);
 	}
 
 	/**
 	 * Determina si dos cadenas son iguales.
 	 * @param objeto objeto a comparar.
-	 * @return 'true' si son iguales, 
+	 * @return 'true' si son iguales,
 	 *		   'false' si no.
 	 */
 	@Override public boolean equals(Object objeto){
@@ -97,4 +98,4 @@ public class Cadena implements Comparable<Cadena>{
 
 		return cadena.equals(cadenaObjeto.getCadena());
 	}
-} 
+}
