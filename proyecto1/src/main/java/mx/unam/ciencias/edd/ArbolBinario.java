@@ -220,8 +220,8 @@ public abstract class ArbolBinario<T> implements Coleccion<T> {
      */
     public ArbolBinario(Coleccion<T> coleccion) {
         // Aquí va su código.
-    for (T elemento : coleccion)
-        agrega(elemento);
+        for (T elemento : coleccion)
+            agrega(elemento);
     }
 
     /**
@@ -367,11 +367,8 @@ public abstract class ArbolBinario<T> implements Coleccion<T> {
         @SuppressWarnings("unchecked")
             ArbolBinario<T> arbol = (ArbolBinario<T>)objeto;
         // Aquí va su código.
-        try {
-            return raiz.equals(arbol.raiz());
-        } catch (NoSuchElementException nsee) {
-            return true;
-        }
+        try {return raiz.equals(arbol.raiz());} 
+        catch (NoSuchElementException nsee) {return true;}
     }
 
     /**
@@ -425,6 +422,7 @@ public abstract class ArbolBinario<T> implements Coleccion<T> {
         // Aquí va su código.
         if (esVacia())
             return "";
+        
         int altura = altura();
         int[] arreglo = new int[altura + 1];
         

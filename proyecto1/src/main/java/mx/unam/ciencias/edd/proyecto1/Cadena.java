@@ -1,4 +1,8 @@
 package mx.unam.ciencias.edd.proyecto1;
+
+import java.util.NoSuchElementException;
+import java.text.Collator;
+
 /**
  * Clase que compara cadenas basada en la comparación de cadenas de
  * caracteres Sort de Unix. (Clase que envuelve a String)
@@ -6,33 +10,50 @@ package mx.unam.ciencias.edd.proyecto1;
 
 public class Cadena implements Comparable<Cadena>{
 
-	/* Cadena de caracteres de Cadena*/
+	/** Cadena de caracteres de Cadena*/
 	private String  cadena;
 
 	/**
 	 * Constructor vacío de Cadena
+	 * No se puede crear un objeto cadena sin su cadena
+	 * de caracteres.
 	 */
-	public Cadena() {}
+	private Cadena() {}
 
 	/**
 	 * Contructor que recibe e inicializa a la cadena de caracteres 
-	 * @param cadena cadena de caracteres (String)
+	 * @param cadena cadena de caracteres (String).
+	 * @throws IllegalAccessException si la cadena es null.
 	 */
 	public Cadena(String cadena) {
+		if (cadena == null)
+			throw new IllegalArgumentException();
+
 		this.cadena = cadena;
 	}
 
 	/**
-	 * Regresa la cadena de caracteres de la Cadena
-	 * @return cadena de caracteres de Cadena (String)
+	 * Regresa la cadena de caracteres de la Cadena.
+	 * @return cadena de caracteres de Cadena (String).
+	 * @throws NoSuchElementException si la cadena no tiene su cadena
+	 *								  de caracteres.
 	 */
-	public String getCadena() {return cadena;}
+	public String getCadena() {
+		if (cadena == null)
+			throw new NoSuchElementException();
+		
+		return cadena;
+	}
 
 	/**
-	 * Define la cadena de caracteres de la Cadena
-	 * @param cadena cadena de caracteres (String)
+	 * Define la cadena de caracteres de la Cadena.
+	 * @param cadena cadena de caracteres (String).
+	 * @throws IllegalAccessException si la cadena es null.
 	 */
 	public void setCadena(String cadena) {
+		if (cadena == null)
+			throw new IllegalArgumentException();
+
 		this.cadena = cadena;
 	}
 
@@ -41,23 +62,39 @@ public class Cadena implements Comparable<Cadena>{
 	 * de cadenas de caracteres Sort de Unix.
 	 * @param cadena cadena a comparar
 	 * @return si la cadena primera es mayor regresa un numero mayor a 0,
-			   si son iguales regresa 0
-			   si la primera es menor regresa un numero negativo
+	 *		   si son iguales regresa 0
+	 *	 	   si la primera es menor regresa un numero negativo.
+	 * @throws NullPointerException si la cadena de Cadena es null.
+	 * @throws IllegalAccessException si la cadena que se pasa es null.
 	 */
 	@Override public int compareTo(Cadena cadena) {
-		if (cadena == null)
-			throw new NullPointerException();
+		if (this.cadena == null)
+			throw new NoSuchElementException();
 
+		if (cadena == null || cadena.getCadena() == null)
+			throw new IllegalArgumentException();
+		
 		String cadena1 = this.cadena.trim(), cadena2 = cadena.getCadena().trim();
-		return cadena1.compareTo(cadena2);
+		Collator comparador = Collator.getInstance();
+		comparador.setStrength(Collator.CANONICAL_DECOMPOSITION);
+		return comparador.compare(cadena1,cadena2);
 	}
 
+	/**
+	 * Determina si dos cadenas son iguales.
+	 * @param objeto objeto a comparar.
+	 * @return 'true' si son iguales, 
+	 *		   'false' si no.
+	 */
 	@Override public boolean equals(Object objeto){
 		if (objeto == null || getClass() != objeto.getClass())
             return false;
 
-        @SuppressWarnings("unchecked") Cadena cadena = (Cadena) objeto;
+		if (cadena == null)
+        	return false;
 
-		return this.cadena.equals(cadena.getCadena());
+        @SuppressWarnings("unchecked") Cadena cadenaObjeto = (Cadena) objeto;
+
+		return cadena.equals(cadenaObjeto.getCadena());
 	}
 } 

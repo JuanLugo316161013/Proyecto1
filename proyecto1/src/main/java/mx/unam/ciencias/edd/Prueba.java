@@ -47,7 +47,7 @@ public class Prueba {
 		cadena[27] = "él mismo empaña el espejo";
 		cadena[28] = "    y siente que no esté claro?";
 
-		for(int i = 0; i < cadena.length; i++)
+		for(int i = 0; i < 3; i++)
 			arbol1.agrega(cadena[i]);
 		
 		arbol1.dfsInOrder(v -> System.out.println(v.get()));
