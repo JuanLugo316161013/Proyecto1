@@ -1,15 +1,15 @@
 package mx.unam.ciencias.edd.proyecto1;
 
-import java.nio.charset.StandardCharsets;
-import java.util.NoSuchElementException;
 import java.io.FileNotFoundException;
-import java.lang.SecurityException;
 import java.io.OutputStreamWriter;
 import java.io.FileOutputStream;
 import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.IOException;
 import java.io.File;
+import java.lang.SecurityException;
+import java.nio.charset.StandardCharsets;
+import java.util.NoSuchElementException;
 
 /**
  * Codifica y escribe un flujo de caracteres en una salida, en formato 

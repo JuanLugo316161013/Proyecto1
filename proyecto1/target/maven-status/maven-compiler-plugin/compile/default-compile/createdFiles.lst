@@ -17,13 +17,14 @@ mx/unam/ciencias/edd/ArbolBinario.class
 mx/unam/ciencias/edd/ArbolBinarioOrdenado$Iterador.class
 mx/unam/ciencias/edd/ArbolBinarioCompleto.class
 mx/unam/ciencias/edd/Arreglos.class
+mx/unam/ciencias/edd/proyecto1/VerificadorArchivos.class
 mx/unam/ciencias/edd/Lista$Iterador.class
 mx/unam/ciencias/edd/proyecto1/Proyecto1.class
-mx/unam/ciencias/edd/proyecto1/OrdenadorLexicografico.class
 mx/unam/ciencias/edd/ArbolBinario$Vertice.class
+mx/unam/ciencias/edd/proyecto1/OrdenadorLexicografico.class
 mx/unam/ciencias/edd/AccionVerticeArbolBinario.class
 mx/unam/ciencias/edd/MeteSaca.class
-mx/unam/ciencias/edd/MeteSaca$Nodo.class
 mx/unam/ciencias/edd/Coleccion.class
-mx/unam/ciencias/edd/Lista.class
+mx/unam/ciencias/edd/MeteSaca$Nodo.class
 mx/unam/ciencias/edd/Practica4.class
+mx/unam/ciencias/edd/Lista.class

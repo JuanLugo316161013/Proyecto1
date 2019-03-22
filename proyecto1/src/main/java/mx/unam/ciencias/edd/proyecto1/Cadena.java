@@ -6,7 +6,7 @@ import java.text.Collator;
 
 /**
  * Clase que compara cadenas basada en la comparación de cadenas de
- * caracteres Sort de Unix. (Clase que envuelve a String)
+ * caracteres Sort de Unix. (Clase que envuelve a String).
  */
 
 public class Cadena implements Comparable<Cadena>{
@@ -75,14 +75,15 @@ public class Cadena implements Comparable<Cadena>{
 		if (cadena == null || cadena.getCadena() == null)
 			throw new IllegalArgumentException();
 
-		String cadena1 = this.cadena.trim(), cadena2 = cadena.getCadena().trim();
+		String cadena1 = this.cadena, cadena2 = cadena.getCadena();
 		Collator comparador = Collator.getInstance();
 		comparador.setStrength(Collator.PRIMARY);
-		return comparador.compare(cadena1,cadena2);
+		return comparador.compare(cadena1.replaceAll("[^\\p{L}\\p{Z}]", ""),
+			                      cadena2.replaceAll("[^\\p{L}\\p{Z}]", ""));
 	}
 
 	/**
-	 * Determina si dos cadenas son iguales.
+	 * Determina si la cadena es igual a un objeto.
 	 * @param objeto objeto a comparar.
 	 * @return 'true' si son iguales,
 	 *		   'false' si no.

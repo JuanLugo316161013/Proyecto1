@@ -1,15 +1,15 @@
 package mx.unam.ciencias.edd.proyecto1;
 
-import java.nio.charset.StandardCharsets;
-import java.util.NoSuchElementException;
 import java.io.FileNotFoundException;
-import java.lang.SecurityException;
 import java.io.InputStreamReader;
 import java.io.FileInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.File;
+import java.lang.SecurityException;
+import java.nio.charset.StandardCharsets;
+import java.util.NoSuchElementException;
 
 /**
  * Lee y codifica un flujo de bytes en una entrada, en formato 
