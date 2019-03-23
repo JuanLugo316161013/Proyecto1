@@ -3,8 +3,13 @@ package mx.unam.ciencias.edd.proyecto1;
 import mx.unam.ciencias.edd.VerticeArbolBinario;
 import mx.unam.ciencias.edd.ArbolRojinegro;
 import mx.unam.ciencias.edd.Pila;
+import mx.unam.ciencias.edd.Cola;
 import java.util.NoSuchElementException;
 
+/**
+ * Clase que ordena cadenas de caracteres basado en el ordenamiento
+ * Sort de Unix.
+ */
 public class OrdenadorLexicografico {
 	
 	/** Bandera -r, bandera de imprimir en orden inverso. */
@@ -16,15 +21,21 @@ public class OrdenadorLexicografico {
 	/** Arbol que ordena agrega y ordena cadenas en tiempo logaritmico. */
 	private ArbolRojinegro<Cadena> arbol;
 
-	/** Pila que almacena el orden las cadenas segun Sort de Unix. */
-	private Pila<Cadena> pila;
-
 	/**
 	 * Contructor vacio.
 	 * Inicializa la estructura que ordena las cadenas.
 	 */
 	public OrdenadorLexicografico() {
 		arbol = new ArbolRojinegro<Cadena>();
+	}
+
+	/**
+	 * Devuelve si el Ordenador Lexicografico es vacio.
+	 * @return 'true' si la estructura que ordena es vacia
+	 *         'false' si no lo es.
+	 */
+	public boolean esVacio() {
+		return arbol.esVacia();
 	}
 
 	/**
@@ -98,13 +109,25 @@ public class OrdenadorLexicografico {
 			return null;
 
 		String[] orden = new String[arbol.getElementos()];
-		int i = 0;
+		Pila<Cadena> pila;
+		Cola<Cadena> cola;
+		String cadena = "";
+
+		cola = new Cola<Cadena>();
+		pila = new Pila<Cadena>();
 
 		for (Cadena vertice : arbol) {
-			orden[i] = vertice.getCadena();
-			i++;
+			cola.mete(vertice);
+			pila.mete(vertice);
 		}
 
+		if (reversa)
+			for (int i = 0; !pila.esVacia(); i++)
+				orden[i] = pila.saca().getCadena();
+		else
+			for (int i = 0; !cola.esVacia(); i++)
+				orden[i] = cola.saca().getCadena();
+					
 		return orden;
 	}
 
@@ -117,18 +140,24 @@ public class OrdenadorLexicografico {
 		if (arbol.esVacia())
 			return "";
 
-		pila = new Pila<Cadena>();
+		Pila<Cadena> pila;
+		Cola<Cadena> cola;
 		String cadena = "";
+
+		cola = new Cola<Cadena>();
+		pila = new Pila<Cadena>();
+
 		for (Cadena vertice : arbol) {
-			cadena += vertice.getCadena() + "\n";
+			cola.mete(vertice);
 			pila.mete(vertice);
 		}
 
-		if (reversa) {
-			cadena = "";
+		if (reversa)
 			while (!pila.esVacia())
 				cadena += pila.saca().getCadena() + "\n";
-		}
+		else
+			while(!cola.esVacia())
+				cadena += cola.saca().getCadena() + "\n";
 
 		return cadena;
 	}

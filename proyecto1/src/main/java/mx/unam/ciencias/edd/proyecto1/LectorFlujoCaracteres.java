@@ -59,6 +59,19 @@ public class LectorFlujoCaracteres {
 	} 
 
 	/**
+	 * Devuelve si el lector esta listo para leer de la entrada.
+	 * @return 'true' si esta listo
+	 * 		   'false' si no lo esta.
+	 */
+	public boolean listo() {
+		try {
+			return lector.ready();
+		} catch (IOException ioe) {
+			return false;
+		}
+	}
+
+	/**
 	 * Devuelve un renglon de caracteres de la salida leida por el lector
 	 * @return renglon actual donde esta leyendo el lector
 	 * @throws NoSuchElementException si lector es null.

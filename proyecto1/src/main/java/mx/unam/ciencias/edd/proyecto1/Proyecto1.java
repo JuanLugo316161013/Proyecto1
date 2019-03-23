@@ -23,10 +23,11 @@ public class Proyecto1 {
     	ordenador = new OrdenadorLexicografico();
     	String linea;
 
-    	while ((linea = lector.leer()) != null)
-    		ordenador.agrega(linea); // Lee y ordena por renglones
+        if (args.length <= 0 || lector.listo())
+    	   while ((linea = lector.leer()) != null)
+               ordenador.agrega(linea); // Lee y ordena por renglones
+        lector.cerrar(); // Cierra el flujo de entrada
 
-    	lector.cerrar(); // Cierra el flujo de entrada
 
     	/* Leer archivos dede la entrada estandar */
     	colaArchivos = new Cola<File>();
@@ -63,6 +64,10 @@ public class Proyecto1 {
 
     		lector.cerrar();
     	}
+
+        /* Si no se ah ordenado nada termina */
+        if (ordenador.esVacio())
+            System.exit(0);
 
     	/* Escribe en los archivos dador por -o */
     	if (ordenador.bandera_O()) {
