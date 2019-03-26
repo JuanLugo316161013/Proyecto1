@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  * Sort de Unix.
  */
 public class OrdenadorLexicografico {
-	
+
 	/** Bandera -r, bandera de imprimir en orden inverso. */
 	private boolean reversa;
 
@@ -71,7 +71,7 @@ public class OrdenadorLexicografico {
 	public void agrega(String elemento) {
 		if (elemento == null)
 			throw new IllegalArgumentException();
-		
+
 		Cadena cadena = new Cadena(elemento);
 		arbol.agrega(cadena);
 	}
@@ -105,9 +105,6 @@ public class OrdenadorLexicografico {
 		if (arbol.esVacia())
 			throw new NoSuchElementException();
 
-		if (!salida)
-			return null;
-
 		String[] orden = new String[arbol.getElementos()];
 		Pila<Cadena> pila;
 		Cola<Cadena> cola;
@@ -123,11 +120,11 @@ public class OrdenadorLexicografico {
 
 		if (reversa)
 			for (int i = 0; !pila.esVacia(); i++)
-				orden[i] = pila.saca().getCadena();
+				orden[i] = pila.saca().getCadena() + "\n";
 		else
 			for (int i = 0; !cola.esVacia(); i++)
-				orden[i] = cola.saca().getCadena();
-					
+				orden[i] = cola.saca().getCadena() + "\n";
+
 		return orden;
 	}
 
@@ -171,14 +168,14 @@ public class OrdenadorLexicografico {
 	@Override public boolean equals(Object objeto) {
 		if (objeto == null || getClass() != objeto.getClass())
             return false;
-		
+
 		if (arbol == null)
 			return false;
 
 		@SuppressWarnings("unchecked") OrdenadorLexicografico ordenador = (OrdenadorLexicografico)objeto;
 
 		try {
-			return arbol.equals(ordenador.getOrdenador()) && 
+			return arbol.equals(ordenador.getOrdenador()) &&
 			bandera_R() == ordenador.bandera_R() &&
 			ordenador.bandera_O() == bandera_O();
 		} catch (NoSuchElementException nsee) {return true;}

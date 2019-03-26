@@ -18,16 +18,17 @@ public class Proyecto1 {
     	String[] orden;
     	File archivo;
 
-    	/* Leer desde System.in */ 
+    	/* Leer desde System.in */
     	lector = new LectorFlujoCaracteres(System.in);
     	ordenador = new OrdenadorLexicografico();
     	String linea;
+
+        long tiempoInicial = System.nanoTime();
 
         if (args.length <= 0 || lector.listo())
     	   while ((linea = lector.leer()) != null)
                ordenador.agrega(linea); // Lee y ordena por renglones
         lector.cerrar(); // Cierra el flujo de entrada
-
 
     	/* Leer archivos dede la entrada estandar */
     	colaArchivos = new Cola<File>();
@@ -65,9 +66,14 @@ public class Proyecto1 {
     		lector.cerrar();
     	}
 
+        long tiempoOrdenar = System.nanoTime() - tiempoInicial;
+
         /* Si no se ah ordenado nada termina */
         if (ordenador.esVacio())
             System.exit(0);
+
+        /* Nos regresa las lineas ordenadas */
+        orden = ordenador.salida();
 
     	/* Escribe en los archivos dador por -o */
     	if (ordenador.bandera_O()) {
@@ -84,6 +90,12 @@ public class Proyecto1 {
     	}
 
     	/* Imprime las cadenas ordenadas */
-    	System.out.printf(ordenador.toString());
+        for (int k = 0; k < orden.length; k++)
+            System.out.print(orden[k]);
+
+        long tiempoTotal = System.nanoTime() - tiempoInicial;
+        System.out.printf("Se tardo %2.9f en ordenar\n",tiempoOrdenar/1000000000.0);
+        System.out.printf("se tardo %2.9f en ordenar e imprimir\n",tiempoTotal/1000000000.0);
+    	//System.out.printf(ordenador.toString());
     }
 }
