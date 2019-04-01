@@ -1,0 +1,36 @@
+--- src/main/java/mx/unam/ciencias/edd/ArbolRojinegro.java
++++ src/main/java/mx/unam/ciencias/edd/ArbolRojinegro.java
+@@ -32,14 +32,19 @@ public class ArbolRojinegro<T extends Comparable<T>>
+          */
+         public VerticeRojinegro(T elemento) {
+             // Aquí va su código.
++            super(elemento);
++            color = Color.NINGUNO;
+         }
+ 
+         /**
+          * Regresa una representación en cadena del vértice rojinegro.
+          * @return una representación en cadena del vértice rojinegro.
+          */
+-        @Override public String toString() {
++        public String toString() {
+             // Aquí va su código.
++            if (color == Color.ROJO)
++                return "R{"+elemento+"}";
++            return "N{"+elemento+"}";
+         }
+ 
+         /**
+@@ -88,12 +94,6 @@ public class ArbolRojinegro<T extends Comparable<T>>
+         return new VerticeRojinegro(elemento);
+     }
+ 
+-    /* Convierte el vértice a VerticeRojinegro. */
+-    private VerticeRojinegro verticeRojinegro(VerticeArbolBinario<T> vertice) {
+-        VerticeRojinegro v = (VerticeRojinegro)vertice;
+-        return v;
+-    }
+-
+     /**
+      * Regresa el color del vértice rojinegro.
+      * @param vertice el vértice del que queremos el color.
