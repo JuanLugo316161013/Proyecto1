@@ -1,8 +1,23 @@
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+
 public class pruebaSplit{
+
     public static void main(String[] args) {
-        String cadena = "1 2 3 4 5 6 7 8 9 10 11 12 13";
-        String[] numero = (cadena.split(" "));
-        for (String n: numero)
-            System.out.println(n);
+
+    	try {
+	        BufferedReader bf = new BufferedReader(new InputStreamReader
+				        (new FileInputStream("prueba.txt"), StandardCharsets.UTF_8));
+	        StreamTokenizer st = new StreamTokenizer(bf);
+	        st.commentChar('#');
+	        //st.parseNumbers();
+	        //st.pushBack();
+	        int entero;
+	        while ((entero = st.nextToken()) != StreamTokenizer.TT_EOF)
+	        	System.out.println(entero +" "+ st.toString());
+	    }
+		catch (FileNotFoundException fnfe) {} 
+		catch (SecurityException se) {}
+		catch (IOException ioe) {}
     }
 }
