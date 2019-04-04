@@ -1,0 +1,4 @@
+ExcepcionElementosInvalidos /*Se lanza si los elementos de la estructura no es un Entero*/
+ExcepcionFormatoEquivocado /* Se lanza si hay errores en a especificacion de la estrutura para ser leido */
+ExcepcionEntradaSobrecargada /* Se lanza si se quiere pasar más de una Estructura de datos */
+ExcepcionVerticesImpares /* Se lanza si los elementos para una grafica son impares */
