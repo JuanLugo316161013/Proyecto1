@@ -26,6 +26,10 @@ public class GeneradorListaSVG implements GeneradorEstructuraSVG {
 				lista.agrega(new Integer(numero));
 	}
 
+	private String flecha(int x1, int y1, int x2, int y2) {
+		
+	}
+
 	/**
 	 * Devuelve un arreglo con el codigo SVG, en orden.
 	 */

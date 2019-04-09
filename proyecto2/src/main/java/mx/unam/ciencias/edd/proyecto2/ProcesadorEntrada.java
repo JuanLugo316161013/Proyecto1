@@ -47,10 +47,10 @@ public class ProcesadorEntrada {
 		}
 
 		lector = new LectorArchivo(System.in);
-
 		if (lector.estaListo())
 			throw new ExcepcionEntradaSobrecargada();
-		
+
+
 		procesaEntradaEstandar(args);
 	}
 
@@ -62,7 +62,7 @@ public class ProcesadorEntrada {
 		for (String cadena : args)
 			if (cadena.equals("#"))
 				break;
-			else 
+			else
 				entrada.agrega(cadena);
 	}
 
@@ -77,12 +77,17 @@ public class ProcesadorEntrada {
 			for (String cadena : linea.trim().split("\\s"))
 				if (cadena.equals("#"))
 					break;
-				else 
+				else
 					entrada.agrega(cadena);
 	}
 
 	/**
 	 * Regresa una lista con la entrada procesada.
+	 * @throws NoSuchElementException si la lista es vacía;
 	 */
-	public Lista<String> entradaProcesada() {return entrada;}
+	public Lista<String> entradaProcesada() {
+		if (entrada.esVacia())
+			throw new NoSuchElementException();
+		return entrada;
+	}
 }
