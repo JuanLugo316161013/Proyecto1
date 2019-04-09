@@ -1,5 +1,7 @@
 package mx.unam.ciencias.edd.proyecto2;
-import mx.unam.ciencias.edd.*;
+
+import java.util.NoSuchElementException;
+
 public class Proyecto2 {
 	public static void main(String[] args) {
 

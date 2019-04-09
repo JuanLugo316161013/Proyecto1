@@ -37,5 +37,5 @@ public class GeneradorArbolRojinegroSVG implements GeneradorEstructuraSVG {
 	/**
 	 * Imprime el codigo SVG que representa a la Estructura de Datos.
 	 */
-	@Override public void imprimirCodigoSVG() {}
+	@Override public void imprimirCodigoSVG() {System.out.println(arbolRojinegro.toString());}
 }
