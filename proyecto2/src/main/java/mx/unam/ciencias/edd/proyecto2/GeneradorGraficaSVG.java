@@ -47,13 +47,6 @@ public class GeneradorGraficaSVG implements GeneradorEstructuraSVG {
 	}
 
 	/**
-	 * Devuelve un arreglo con el codigo SVG, en orden.
-	 */
-	@Override public String[] codigoSVG() {
-		return null;
-	}
-
-	/**
 	 * Imprime el codigo SVG que representa a la Estructura de Datos.
 	 */
 	@Override public void imprimirCodigoSVG() {}

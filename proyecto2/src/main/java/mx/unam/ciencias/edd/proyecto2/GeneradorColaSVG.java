@@ -7,7 +7,12 @@ import mx.unam.ciencias.edd.Lista;
  */
 public class GeneradorColaSVG implements GeneradorEstructuraSVG {
 
+	/** Cola de Integer interna. */
 	private Cola<Integer> cola;
+
+	/** elementos en la estructura */
+	private int elementos;
+
 	/**
 	 * Constructor vacío.
 	 */
@@ -21,21 +26,48 @@ public class GeneradorColaSVG implements GeneradorEstructuraSVG {
 	public GeneradorColaSVG(Lista<String> elementos) {
 		cola = new Cola<Integer>();
 		for(String numero : elementos)
-			if (numero.charAt(0) < 32)
+			if (numero.charAt(0) < 32) {
 				throw new ExcepcionFormatoEquivocado();
-			else
+			} else {
 				cola.mete(new Integer(numero));
+				this.elementos++;
+			}
 	}
 
 	/**
-	 * Devuelve un arreglo con el codigo SVG, en orden.
+	 * Regresa un segmento de codigo que coloca un elemento en un casiila en SVG,
+	 * a partir de la posicion de la casilla en el plano (x,y).
+	 * @param x punto en la recta x.
+	 * @param y punto en la recta y.
+	 * @return representacion del elemento
 	 */
-	@Override public String[] codigoSVG() {
-		return null;
+	private String elemento(int x, int y, int elemento) {
+		return  String.format("<text fill='black' font-family='sans-serif' font-size='20' x='%d' y='%d' text-anchor='middle'>%d</text>",
+			x+25, (y+30)-7, elemento);
+	}
+
+	/**
+	 * Regresa un un rectangulo de 50px por 30px en codigo SVG, a partir del punto el plano (x,y).
+	 * @param x punto en la recta x.
+	 * @param y punto en la recta y.
+	 * @return rectangulo de 50px por 30px en codigo SVG.
+	 */
+	private String rectangulo(int x, int y) {
+		return String.format("<rect x = '%d' y = '%d' width = '50' height = '30' stroke-width = '2' stroke = 'black' fill = 'white'/>", x, y);
 	}
 
 	/**
 	 * Imprime el codigo SVG que representa a la Estructura de Datos.
 	 */
-	@Override public void imprimirCodigoSVG() {}
+	@Override public void imprimirCodigoSVG() {
+		int x = 50, y = 50;
+		System.out.printf("<svg width='%d' height='150' >\n\n", 100 + elementos*50);
+
+		while (!cola.esVacia()) {
+			System.out.println(rectangulo(x,y));
+			System.out.println(elemento(x,y,cola.saca()));
+			x += 50;
+		}
+		System.out.println("\n</svg");
+	}
 }
