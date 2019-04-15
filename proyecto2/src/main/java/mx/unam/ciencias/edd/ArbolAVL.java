@@ -251,13 +251,4 @@ public class ArbolAVL<T extends Comparable<T>>
                                                 "girar a la derecha por el " +
                                                 "usuario.");
     }
-
-    public static void main(String[] args) {
-        ArbolAVL<Integer> arbol = new ArbolAVL<Integer>();
-
-        for (int i = 0; i < 8; i++)
-            arbol.agrega(i);
-
-        System.out.println(arbol.toString());
-    }
 }

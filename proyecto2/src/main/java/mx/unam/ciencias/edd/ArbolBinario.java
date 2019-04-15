@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * deja la implementación de varias en manos de las subclases concretas.</p>
  */
 public abstract class ArbolBinario<T> implements Coleccion<T> {
-
+    
     /**
      * Clase interna protegida para vértices.
      */

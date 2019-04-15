@@ -26,7 +26,7 @@ public class GeneradorPilaSVG implements GeneradorEstructuraSVG {
 	public GeneradorPilaSVG(Lista<String> elementos) {
 		pila = new Pila<Integer>();
 		for(String numero : elementos)
-			if (numero.charAt(0) < 32) {
+			if (numero.isEmpty()) {
 				throw new ExcepcionFormatoEquivocado();
 			} else {
 				pila.mete(new Integer(numero));
@@ -60,7 +60,7 @@ public class GeneradorPilaSVG implements GeneradorEstructuraSVG {
 	 * Imprime el codigo SVG que representa a la Estructura de Datos.
 	 */
 	@Override public void imprimirCodigoSVG() {
-		int x = 50, y = 50;
+		int x = 40, y = 40;
 		System.out.printf("<svg width='150' height='%d' >\n\n", 100 + elementos*30);
 
 		while (!pila.esVacia()) {

@@ -26,7 +26,7 @@ public class GeneradorColaSVG implements GeneradorEstructuraSVG {
 	public GeneradorColaSVG(Lista<String> elementos) {
 		cola = new Cola<Integer>();
 		for(String numero : elementos)
-			if (numero.charAt(0) < 32) {
+			if (numero.isEmpty()) {
 				throw new ExcepcionFormatoEquivocado();
 			} else {
 				cola.mete(new Integer(numero));
@@ -60,7 +60,7 @@ public class GeneradorColaSVG implements GeneradorEstructuraSVG {
 	 * Imprime el codigo SVG que representa a la Estructura de Datos.
 	 */
 	@Override public void imprimirCodigoSVG() {
-		int x = 50, y = 50;
+		int x = 40, y = 40;
 		System.out.printf("<svg width='%d' height='150' >\n\n", 100 + elementos*50);
 
 		while (!cola.esVacia()) {

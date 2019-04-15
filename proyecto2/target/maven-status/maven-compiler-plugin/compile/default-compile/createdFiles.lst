@@ -16,6 +16,7 @@ mx/unam/ciencias/edd/proyecto2/EstructurasDeDatosSVG.class
 mx/unam/ciencias/edd/Color.class
 mx/unam/ciencias/edd/AccionVerticeGrafica.class
 mx/unam/ciencias/edd/Cola.class
+mx/unam/ciencias/edd/proyecto2/GeneradorArbolBinarioSVG.class
 mx/unam/ciencias/edd/proyecto2/GeneradorArreglosSVG.class
 mx/unam/ciencias/edd/proyecto2/ProcesadorEntrada.class
 mx/unam/ciencias/edd/ArbolBinarioCompleto$Iterador.class
@@ -27,7 +28,6 @@ mx/unam/ciencias/edd/ArbolBinarioCompleto.class
 mx/unam/ciencias/edd/proyecto2/GeneradorArbolRojinegroSVG.class
 mx/unam/ciencias/edd/Arreglos.class
 mx/unam/ciencias/edd/proyecto2/ExcepcionFormatoEquivocado.class
-mx/unam/ciencias/edd/Practica6.class
 mx/unam/ciencias/edd/proyecto2/GeneradorColaSVG.class
 mx/unam/ciencias/edd/VerticeGrafica.class
 mx/unam/ciencias/edd/proyecto2/ExcepcionEntradaSobrecargada.class

@@ -28,7 +28,7 @@ public class GeneradorGraficaSVG implements GeneradorEstructuraSVG {
 		int i = 0;
 		Integer[] parVertices = new Integer[2];
 		for(String numero : elementos) {
-			if (numero.charAt(0) < 32)
+			if (numero.isEmpty())
 				throw new ExcepcionFormatoEquivocado();
 
 			parVertices[i] = new Integer(numero);
@@ -37,17 +37,20 @@ public class GeneradorGraficaSVG implements GeneradorEstructuraSVG {
 				if (parVertices[0].equals(parVertices[1])) {
 					grafica.agrega(parVertices[0]);
 				} else {
-					grafica.agrega(parVertices[0]);
-					grafica.agrega(parVertices[1]);
+					try {
+						grafica.agrega(parVertices[0]);
+						grafica.agrega(parVertices[1]);
+				    } catch (IllegalArgumentException iae) {}
 					grafica.conecta(parVertices[0],parVertices[1]);
 				}
 				i = 0;
-			} 
+			}
+			i++; 
 		}
 	}
 
 	/**
 	 * Imprime el codigo SVG que representa a la Estructura de Datos.
 	 */
-	@Override public void imprimirCodigoSVG() {}
+	@Override public void imprimirCodigoSVG() {System.out.println(grafica.toString());}
 }

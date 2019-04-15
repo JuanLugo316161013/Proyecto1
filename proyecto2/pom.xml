@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>mx.unam.ciencias.edd</groupId>
-  <artifactId>practica</artifactId>
+  <groupId>mx.unam.ciencias.edd.proyecto2</groupId>
+  <artifactId>proyecto</artifactId>
   <version>EDD</version>
   <packaging>jar</packaging>
 
@@ -27,7 +27,7 @@
         <version>3.1</version>
         <configuration>
           <compilerArgument>-Xlint:deprecation</compilerArgument>
-          <compilerArgument>-Xlint:unchecked</compilerArgument>
+          <compilerArgument>-Xlint:unchecked</compilerArgument> 
           <debug>true</debug>
           <debuglevel>lines,vars,source</debuglevel>
           <showDeprecation>true</showDeprecation>
@@ -38,16 +38,16 @@
       </plugin>
 
       <plugin>
-  <groupId>org.apache.maven.plugins</groupId>
-  <artifactId>maven-jar-plugin</artifactId>
-        <version>3.0.2</version>
-  <configuration>
-    <archive>
-      <manifest>
-        <mainClass>mx.unam.ciencias.edd.proyecto2.Proyecto2</mainClass>
-      </manifest>
-    </archive>
-  </configuration>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-jar-plugin</artifactId>
+		        <version>3.0.2</version>
+		  <configuration>
+		    <archive>
+		      <manifest>
+		        <mainClass>mx.unam.ciencias.edd.proyecto2.Proyecto2</mainClass>
+		      </manifest>
+		    </archive>
+		  </configuration>
       </plugin>
 
       <plugin>

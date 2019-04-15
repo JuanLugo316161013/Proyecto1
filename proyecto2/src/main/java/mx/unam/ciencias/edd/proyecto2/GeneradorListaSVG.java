@@ -20,7 +20,7 @@ public class GeneradorListaSVG implements GeneradorEstructuraSVG {
 	public GeneradorListaSVG(Lista<String> elementos) {
 		lista = new Lista<Integer>();
 		for(String numero : elementos)
-			if (numero.charAt(0) < 32)
+			if (numero.isEmpty())
 				throw new ExcepcionFormatoEquivocado();
 			else
 				lista.agrega(new Integer(numero));
@@ -66,7 +66,7 @@ public class GeneradorListaSVG implements GeneradorEstructuraSVG {
 	 * Imprime el codigo SVG que representa a la Estructura de Datos.
 	 */
 	@Override public void imprimirCodigoSVG() {
-		int x = 50, y = 50;
+		int x = 40, y = 40;
 		System.out.printf("<svg width='%d' height='100' >\n\n", 100 + lista.getElementos()*50*2);
 		System.out.println(rectangulo(x,y));
 		System.out.println(elemento(x,y,lista.eliminaPrimero()));

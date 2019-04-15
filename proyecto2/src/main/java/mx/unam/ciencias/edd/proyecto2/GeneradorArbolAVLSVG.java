@@ -1,34 +1,26 @@
 package mx.unam.ciencias.edd.proyecto2;
 
 import mx.unam.ciencias.edd.ArbolAVL;
+import mx.unam.ciencias.edd.ArbolBinario;
 import mx.unam.ciencias.edd.Lista;
 /**
  * Genera codigo SVG que representa a un ArbolAVL.
  */
-public class GeneradorArbolAVLSVG implements GeneradorEstructuraSVG {
-
-	private ArbolAVL<Integer> arbolAVL;
-	/**
-	 * Constructor vacío.
-	 */
-	private GeneradorArbolAVLSVG() {}
+public class GeneradorArbolAVLSVG extends GeneradorArbolBinarioSVG {
 
 	/**
 	 * Constructor que recibe una Lista de elementos del ArbolAVL.
 	 * @throws ExcepcionFormatoEquivocado si algun elemento es caracter no imprimible.
 	 * @throws NumberFormatException si algun elemento no es un numero entero.
 	 */
-	public GeneradorArbolAVLSVG(Lista<String> elementos) {
-		arbolAVL = new ArbolAVL<Integer>();
-		for(String numero : elementos)
-			if (numero.charAt(0) < 32)
-				throw new ExcepcionFormatoEquivocado();
-			else
-				arbolAVL.agrega(new Integer(numero));
+	public GeneradorArbolAVLSVG(Lista<String> elementos) {	
+		super(elementos);
 	}
 
 	/**
-	 * Imprime el codigo SVG que representa a la Estructura de Datos.
+	 * Devuelve una instancia de un nuevo arbol binario, usando una instancia de {@link ArbolAVL}
 	 */
-	@Override public void imprimirCodigoSVG() {}
+	@Override protected ArbolBinario<Integer> nuevoArbolBinario() {
+		return new ArbolAVL<Integer>();
+	}
 }

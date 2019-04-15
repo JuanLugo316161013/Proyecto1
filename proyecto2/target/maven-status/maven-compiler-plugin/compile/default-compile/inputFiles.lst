@@ -6,7 +6,6 @@
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/ArbolRojinegro.java
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/proyecto2/GeneradorArreglosSVG.java
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/AccionVerticeGrafica.java
-/home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/Practica6.java
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/proyecto2/ExcepcionEstructuraInvalida.java
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/ArbolBinario.java
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/proyecto2/GeneradorPilaSVG.java
@@ -33,6 +32,7 @@
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/proyecto2/ExcepcionFormatoEquivocado.java
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/proyecto2/GeneradorArbolBinarioCompletoSVG.java
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/Cola.java
+/home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/proyecto2/GeneradorArbolBinarioSVG.java
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/ArbolBinarioCompleto.java
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/proyecto2/ProcesadorEntrada.java
 /home/lugo/Proyectos/proyecto2/src/main/java/mx/unam/ciencias/edd/Pila.java

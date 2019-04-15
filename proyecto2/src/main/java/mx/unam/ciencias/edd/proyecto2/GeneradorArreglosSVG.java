@@ -21,7 +21,7 @@ public class GeneradorArreglosSVG implements GeneradorEstructuraSVG {
 		arreglo = new Integer[elementos.getElementos()];
 		int i = 0;
 		for(String numero : elementos)
-			if (numero.charAt(0) < 32)
+			if (numero.isEmpty())
 				throw new ExcepcionFormatoEquivocado();
 			else
 				arreglo[i++] = new Integer(numero);
