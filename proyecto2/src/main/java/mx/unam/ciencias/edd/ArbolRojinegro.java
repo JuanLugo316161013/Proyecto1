@@ -451,16 +451,4 @@ public class ArbolRojinegro<T extends Comparable<T>>
         VerticeRojinegro v = (VerticeRojinegro)vertice;
         return v;
     }
-
-    public static void main(String[] args) {
-        ArbolRojinegro<Integer> arbol = new ArbolRojinegro<Integer>();
-
-        for (int i = 1; i < 16; i++)
-            arbol.agrega(i);
-
-        System.out.println(arbol.toString());
-
-        for (Integer i : arbol)
-            System.out.println(i);
-    } 
 }

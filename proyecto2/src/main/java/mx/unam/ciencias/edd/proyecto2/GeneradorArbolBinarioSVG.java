@@ -9,7 +9,7 @@ import mx.unam.ciencias.edd.VerticeArbolBinario;
  */
 public abstract class GeneradorArbolBinarioSVG implements GeneradorEstructuraSVG {
 
-	/** ArbolBinario de Integer interna */
+	/** ArbolBinario de Integer interno */
 	protected ArbolBinario<Integer> arbolBinario; 
 
 	/**
@@ -26,7 +26,7 @@ public abstract class GeneradorArbolBinarioSVG implements GeneradorEstructuraSVG
 		arbolBinario = nuevoArbolBinario();
 		for(String numero : elementos)
 			if (numero.isEmpty())
-				throw new ExcepcionFormatoEquivocado();
+				continue;
 			else 
 				arbolBinario.agrega(new Integer(numero));
 	}
@@ -36,13 +36,18 @@ public abstract class GeneradorArbolBinarioSVG implements GeneradorEstructuraSVG
 	 */
 	protected abstract ArbolBinario<Integer> nuevoArbolBinario();
 
+
+	/**
+	 * Regresa un vertice con su elemento y sus correspondientes aristas en codigo SVG.
+	 * @return vertice de ArbolBinario
+	 */
 	protected String vertice(int x, int y, int radio, int distancia, VerticeArbolBinario<Integer> vertice) {
 		double trazo = 3;
 		double texto = 20;
 
 		if (radio < 20) {
 			trazo = 1.5;
-			texto = 17.5;
+			texto = 16.5;
 		}
 
 		String verticeSVG = "";
@@ -61,7 +66,9 @@ public abstract class GeneradorArbolBinarioSVG implements GeneradorEstructuraSVG
 			texto, x, y + 5, vertice.get());
 	}
 
-
+	/**
+	 * Recorre el arbolBinario en orden bfs imprimiendo cada vertice en codigo SVG.
+	 */
 	protected void bfsSVG(int x, int y, int radio, int distancia, VerticeArbolBinario<Integer> vertice) {
 		System.out.println(vertice(x,y,radio,distancia,vertice));
 
@@ -78,13 +85,20 @@ public abstract class GeneradorArbolBinarioSVG implements GeneradorEstructuraSVG
 	 */
 	@Override public void imprimirCodigoSVG() {
 		int altura = arbolBinario.altura();
-		int distancia = (int) Math.pow(2,altura)*10*2 + 15;
+		int distancia = (int)Math.pow(2,altura+1)*10 + 20;
 		int x = distancia * 2 + 40;
 		int y = 40;
 		int radio = 20;
 
-		if (altura > 4)
-			radio = 15;
+		if (altura > 5) {
+			radio = 16;
+			distancia = (int)Math.pow(2,altura)*10;
+			if (distancia < 0) {
+				distancia = distancia*-1;
+				distancia += (altura-5)*60*2 + (altura-5)*200;
+			}
+			x = distancia * 2 + 40; 
+		}
 
 		System.out.printf("<svg width='%d' height='%d' >\n\n", distancia * 4 + 80, (altura + 1) * 120); 
 		bfsSVG(x,y,radio,distancia, arbolBinario.raiz());

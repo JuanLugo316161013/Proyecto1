@@ -35,25 +35,16 @@ public class GeneradorColaSVG implements GeneradorEstructuraSVG {
 	}
 
 	/**
-	 * Regresa un segmento de codigo que coloca un elemento en un casiila en SVG,
-	 * a partir de la posicion de la casilla en el plano (x,y).
+	 * Regresa un nodo con su elemento en codigo SVG.
 	 * @param x punto en la recta x.
 	 * @param y punto en la recta y.
-	 * @return representacion del elemento
+	 * @return nodo de la Cola con su elemento.
 	 */
-	private String elemento(int x, int y, int elemento) {
-		return  String.format("<text fill='black' font-family='sans-serif' font-size='20' x='%d' y='%d' text-anchor='middle'>%d</text>",
+	private String nodo(int x, int y, int elemento) {
+		String nodo = String.format("<rect x = '%d' y = '%d' width = '50' height = '30' stroke-width = '2' stroke = 'black' fill = 'white'/>\n", x, y);
+		nodo += String.format("<text fill='black' font-family='sans-serif' font-size='20' x='%d' y='%d' text-anchor='middle'>%d</text>",
 			x+25, (y+30)-7, elemento);
-	}
-
-	/**
-	 * Regresa un un rectangulo de 50px por 30px en codigo SVG, a partir del punto el plano (x,y).
-	 * @param x punto en la recta x.
-	 * @param y punto en la recta y.
-	 * @return rectangulo de 50px por 30px en codigo SVG.
-	 */
-	private String rectangulo(int x, int y) {
-		return String.format("<rect x = '%d' y = '%d' width = '50' height = '30' stroke-width = '2' stroke = 'black' fill = 'white'/>", x, y);
+		return nodo;
 	}
 
 	/**
@@ -61,13 +52,12 @@ public class GeneradorColaSVG implements GeneradorEstructuraSVG {
 	 */
 	@Override public void imprimirCodigoSVG() {
 		int x = 40, y = 40;
-		System.out.printf("<svg width='%d' height='150' >\n\n", 100 + elementos*50);
+		System.out.printf("<svg width='%d' height='110' >\n\n", 80 + elementos*50);
 
 		while (!cola.esVacia()) {
-			System.out.println(rectangulo(x,y));
-			System.out.println(elemento(x,y,cola.saca()));
+			System.out.println(nodo(x,y,cola.saca()));
 			x += 50;
 		}
-		System.out.println("\n</svg");
+		System.out.println("\n</svg>");
 	}
 }

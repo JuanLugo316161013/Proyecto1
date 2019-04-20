@@ -75,7 +75,7 @@ public class ProcesadorEntrada {
 
 		while ((linea = lector.leer()) != null)
 			for (String cadena : linea.trim().split("\\s"))
-				if (cadena.equals("#"))
+				if (cadena.contains("#"))
 					break;
 				else
 					entrada.agrega(cadena);
