@@ -23,8 +23,7 @@ public class GeneradorArreglosSVG implements GeneradorEstructuraSVG {
 		int i = 0;
 		for(String numero : elementos) {
 			if (numero.isEmpty())
-				continue;
-				//throw new ExcepcionFormatoEquivocado();
+				throw new ExcepcionFormatoEquivocado();
 			else{
 				entero = new Integer(numero);
 				arreglo[i++] = entero.intValue();
@@ -39,7 +38,7 @@ public class GeneradorArreglosSVG implements GeneradorEstructuraSVG {
 	 * @param i indice en el arreglo.
 	 * @return celda de memoria con su elemento.
 	 */
-	private String celda(int x, int y, int i, int elemento) {
+	protected String celda(int x, int y, int i, int elemento) {
 		String celda = String.format("<rect x = '%d' y = '%d' width = '50' height = '30' stroke-width = '2' stroke = 'black' fill = 'white'/>\n", x, y);
 		celda += String.format("<text fill='black' font-family='sans-serif' font-size='20' x='%d' y='%d' text-anchor='middle'>%d</text>\n",
 			x+25, (y+30)-7, elemento);

@@ -26,7 +26,7 @@ public abstract class GeneradorArbolBinarioSVG implements GeneradorEstructuraSVG
 		arbolBinario = nuevoArbolBinario();
 		for(String numero : elementos)
 			if (numero.isEmpty())
-				continue;
+				throw new ExcepcionFormatoEquivocado();
 			else 
 				arbolBinario.agrega(new Integer(numero));
 	}

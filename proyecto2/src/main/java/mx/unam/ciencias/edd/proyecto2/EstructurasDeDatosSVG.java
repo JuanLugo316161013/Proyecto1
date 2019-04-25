@@ -29,6 +29,8 @@ public class EstructurasDeDatosSVG {
 	 *				- Cola.
 	 *				- Grafica.
 	 * 				- Lista.
+	 *				- MonticuloArreglo.
+	 *				- MonticuloMinimo.
 	 *				- Pila.
 	 */
 	public EstructurasDeDatosSVG(Lista<String> estructura)  {
@@ -75,6 +77,16 @@ public class EstructurasDeDatosSVG {
 			return;
 		}
 
+		if (estructuraDeDatos.equals("MonticuloArreglo")) {
+			this.estructura = new GeneradorMonticuloArregloSVG(estructura);
+			return;
+		}
+
+		if (estructuraDeDatos.equals("MonticuloMinimo")) {
+			this.estructura = new GeneradorListaSVG(estructura);
+			return;
+		}
+
 		if (estructuraDeDatos.equals("Pila")) {
 			this.estructura = new GeneradorPilaSVG(estructura);
 			return;
@@ -87,10 +99,5 @@ public class EstructurasDeDatosSVG {
 	 * Imprime el codigo SVG que representa a la estrutura definida.
 	 * @throws NoSuchElementException si no se definio bien la estructura.
 	 */
-	public void imprimirEstructuraSVG() {
-		if (estructura == null) 
-			throw new NoSuchElementException();
-
-		estructura.imprimirCodigoSVG();
-	}
+	public void imprimirEstructuraSVG() {estructura.imprimirCodigoSVG();}
 }

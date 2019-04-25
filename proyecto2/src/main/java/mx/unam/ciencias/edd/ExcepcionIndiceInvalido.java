@@ -1,4 +1,5 @@
 package mx.unam.ciencias.edd;
+
 /**
  * Clase para excepciones de índices de lista inválidos.
  */
