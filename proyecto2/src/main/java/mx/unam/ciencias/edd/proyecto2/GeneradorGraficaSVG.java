@@ -9,7 +9,7 @@ import java.util.Iterator;
  */
 public class GeneradorGraficaSVG implements GeneradorEstructuraSVG {
 
-	/** Clase interna GeneradorGraficaSVG que contiene  */ 
+	/** Clase interna GeneradorGraficaSVG que contiene  */
 	private class VerticeSVG {
 
 		/** punto en la recta x*/
@@ -21,7 +21,7 @@ public class GeneradorGraficaSVG implements GeneradorEstructuraSVG {
 		/** vertice de la grafica */
 		public VerticeGrafica<Integer> vertice;
 
-		/** 
+		/**
 		 * Constructor que recibe la posicion donde estará el vertice y el vertice.
 		 * @param x punto en la recta x.
 	 	 * @param y punto en la recta y.
@@ -43,7 +43,7 @@ public class GeneradorGraficaSVG implements GeneradorEstructuraSVG {
 
 	/** radio de la circunferencia más grande donde estaran los elementos(vertices, conjunto de vertices) */
 	private double radio;
-	
+
 	/**
 	 * Constructor vacío.
 	 */
@@ -69,7 +69,7 @@ public class GeneradorGraficaSVG implements GeneradorEstructuraSVG {
 				throw new ExcepcionFormatoEquivocado();
 
 			parVertices[i] = new Integer(numero);
-			
+
 			if (i == 1) {
 				if (parVertices[0].equals(parVertices[1])) {
 					grafica.agrega(parVertices[0]);
@@ -89,7 +89,7 @@ public class GeneradorGraficaSVG implements GeneradorEstructuraSVG {
 			i++;
 		}
 	}
-	
+
 	private VerticeSVG vertice(Integer elemento) {
 		for (VerticeSVG vertice : vertices)
 			if (vertice.vertice.get().equals(elemento))
@@ -99,7 +99,7 @@ public class GeneradorGraficaSVG implements GeneradorEstructuraSVG {
 	}
 
 	/**
-	 * Regresa el radio del circulo donde se colocaran n elementos(vertice o cunjunto se vertices) y que cada 
+	 * Regresa el radio del circulo donde se colocaran n elementos(vertice o cunjunto se vertices) y que cada
 	 * elemento vi, vi+1 estaran
 	 * a una distancia dada, i = 1, 2, 3,..., n-1.
 	 * @param n numero de elementos en el circulo.
@@ -112,14 +112,13 @@ public class GeneradorGraficaSVG implements GeneradorEstructuraSVG {
 
 	private void posicionaVertices() {
 		int elementos = grafica.getElementos();
-		double forma = Math.random();
 		double angulo;
 		double radio;
 		double x;
 		double y;
 
-		
-		if (forma > 0.5 || elementos <= 10) {
+
+		if (elementos <= 15) {
 			radio = radio(elementos,100);
 			this.radio = radio;
 			int i = -1;
@@ -150,7 +149,7 @@ public class GeneradorGraficaSVG implements GeneradorEstructuraSVG {
 					y = yExterno + radio + radio*Math.sin(Math.toRadians(angulo));
 					vertices.agrega(new VerticeSVG(x,y,grafica.vertice(it.next())));
 				}
-			} 
+			}
 		}
 	}
 

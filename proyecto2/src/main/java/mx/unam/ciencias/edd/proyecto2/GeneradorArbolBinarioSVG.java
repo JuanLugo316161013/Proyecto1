@@ -10,7 +10,7 @@ import mx.unam.ciencias.edd.VerticeArbolBinario;
 public abstract class GeneradorArbolBinarioSVG implements GeneradorEstructuraSVG {
 
 	/** ArbolBinario de Integer interno */
-	protected ArbolBinario<Integer> arbolBinario; 
+	protected ArbolBinario<Integer> arbolBinario;
 
 	/**
 	 * Constructor vacío.
@@ -27,7 +27,7 @@ public abstract class GeneradorArbolBinarioSVG implements GeneradorEstructuraSVG
 		for(String numero : elementos)
 			if (numero.isEmpty())
 				throw new ExcepcionFormatoEquivocado();
-			else 
+			else
 				arbolBinario.agrega(new Integer(numero));
 	}
 
@@ -52,12 +52,12 @@ public abstract class GeneradorArbolBinarioSVG implements GeneradorEstructuraSVG
 
 		String verticeSVG = "";
 		if (vertice.hayIzquierdo())
-			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='black' stroke-width='3' />\n",
-				x, y, x - distancia, y + 120);
+			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='black' stroke-width='%.1f' />\n",
+				x, y, x - distancia, y + 120, trazo);
 
 		if (vertice.hayDerecho())
-			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='black' stroke-width='3' />\n",
-				x, y, x + distancia, y + 120);
+			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='black' stroke-width='%.1f' />\n",
+				x, y, x + distancia, y + 120, trazo);
 
 		verticeSVG += String.format("<circle cx='%d' cy='%d' r='%d' stroke='black' stroke-width='%.1f' fill='white' />\n",
 			x, y, radio, trazo);
@@ -74,9 +74,9 @@ public abstract class GeneradorArbolBinarioSVG implements GeneradorEstructuraSVG
 
 		if (vertice.hayIzquierdo())
 			bfsSVG(x - distancia, y + 120, radio, (int)distancia/2, vertice.izquierdo());
-		
 
-		if (vertice.hayDerecho()) 
+
+		if (vertice.hayDerecho())
 			bfsSVG(x + distancia, y + 120, radio, (int)distancia/2, vertice.derecho());
 	}
 
@@ -97,10 +97,10 @@ public abstract class GeneradorArbolBinarioSVG implements GeneradorEstructuraSVG
 				distancia = distancia*-1;
 				distancia += (altura-5)*60*2 + (altura-5)*200;
 			}
-			x = distancia * 2 + 40; 
+			x = distancia * 2 + 40;
 		}
 
-		System.out.printf("<svg width='%d' height='%d' >\n\n", distancia * 4 + 80, (altura + 1) * 120); 
+		System.out.printf("<svg width='%d' height='%d' >\n\n", distancia * 4 + 80, (altura + 1) * 120);
 		bfsSVG(x,y,radio,distancia, arbolBinario.raiz());
 		System.out.println("\n</svg");
 	}

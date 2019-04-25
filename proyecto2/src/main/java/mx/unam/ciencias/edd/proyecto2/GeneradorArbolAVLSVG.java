@@ -14,7 +14,7 @@ public class GeneradorArbolAVLSVG extends GeneradorArbolBinarioSVG {
 	 * @throws ExcepcionFormatoEquivocado si algun elemento es caracter no imprimible.
 	 * @throws NumberFormatException si algun elemento no es un numero entero.
 	 */
-	public GeneradorArbolAVLSVG(Lista<String> elementos) {	
+	public GeneradorArbolAVLSVG(Lista<String> elementos) {
 		super(elementos);
 	}
 
@@ -36,7 +36,7 @@ public class GeneradorArbolAVLSVG extends GeneradorArbolBinarioSVG {
 		int derecho = -1;
 		boolean hayIzquierdo = false;
 		boolean hayDerecho = false;
-
+		System.out.println(distancia + ", "+ vertice.get());
 		if (radio < 20) {
 			trazo = 1.5;
 			texto = 16.5;
@@ -44,15 +44,15 @@ public class GeneradorArbolAVLSVG extends GeneradorArbolBinarioSVG {
 
 		String verticeSVG = "";
 		if (vertice.hayIzquierdo()) {
-			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='black' stroke-width='3' />\n",
-				x, y, x - distancia, y + 120);
+			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='black' stroke-width='%.1f' />\n",
+				x, y, x - distancia, y + 120, trazo);
 			izquierdo = vertice.izquierdo().altura();
 			hayIzquierdo = true;
 		}
 
 		if (vertice.hayDerecho()) {
-			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='black' stroke-width='3' />\n",
-				x, y, x + distancia, y + 120);
+			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='black' stroke-width='%.1f' />\n",
+				x, y, x + distancia, y + 120, trazo);
 			derecho = vertice.derecho().altura();
 			hayDerecho = true;
 		}
@@ -63,22 +63,22 @@ public class GeneradorArbolAVLSVG extends GeneradorArbolBinarioSVG {
 		verticeSVG += String.format("<text fill='black' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>%d</text>\n",
 			texto, x, y + 5, vertice.get());
 
-		if (!hayIzquierdo && !hayDerecho && radio < 20)
-			return verticeSVG += String.format("<text fill='black' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>{%d/%d}</text>",
+		if (distancia < 20)
+			return verticeSVG += String.format("<text fill='blue' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>{%d/%d}</text>",
 					texto - 2.5, x - radio - 3, y - radio - 5, vertice.altura(), izquierdo - derecho);
 
 
 		if (vertice.hayPadre()) {
 			VerticeArbolBinario<Integer> padre = vertice.padre();
 			if (padre.hayDerecho() && padre.derecho() == vertice)
-				return verticeSVG += String.format("<text fill='black' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>{%d/%d}</text>",
+				return verticeSVG += String.format("<text fill='blue' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>{%d/%d}</text>",
 					texto - 2.5, x + radio + 3, y - radio - 5, vertice.altura(), izquierdo - derecho);
-			else 
-				return verticeSVG += String.format("<text fill='black' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>{%d/%d}</text>",
+			else
+				return verticeSVG += String.format("<text fill='blue' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>{%d/%d}</text>",
 					texto - 2.5, x - radio - 3, y - radio - 5, vertice.altura(), izquierdo - derecho);
 		}
 
-		return verticeSVG += String.format("<text fill='black' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>{%d/%d}</text>",
+		return verticeSVG += String.format("<text fill='blue' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>{%d/%d}</text>",
 					texto - 2.5, x + radio + 3, y - radio - 5, vertice.altura(), izquierdo - derecho);
 	}
 }

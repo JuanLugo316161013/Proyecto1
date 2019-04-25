@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
  * Representa una estructura de datos en codigo SVG.
  */
 public class EstructurasDeDatosSVG {
-	
+
 	/** Generador de codigo SVG que representa una estructura de datos */
 	GeneradorEstructuraSVG estructura;
 
@@ -20,7 +20,7 @@ public class EstructurasDeDatosSVG {
 	 * define que estructura sera representada en SVG.
 	 * @param estructura lista con el nombre de la estructura y sus elementos.
 	 * @throws ExcepcionEstructuraInvalida si la estructura no es :
-	 * 				
+	 *
 	 * 				- ArbolAVL.
 	 * 				- ArbolBinarioCompleto.
 	 * 				- ArbolBinarioOrdenado.
@@ -83,7 +83,7 @@ public class EstructurasDeDatosSVG {
 		}
 
 		if (estructuraDeDatos.equals("MonticuloMinimo")) {
-			this.estructura = new GeneradorListaSVG(estructura);
+			this.estructura = new GeneradorMonticuloMinimoSVG(estructura);
 			return;
 		}
 

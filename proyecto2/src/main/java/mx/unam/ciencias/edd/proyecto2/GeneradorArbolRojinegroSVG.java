@@ -9,7 +9,7 @@ import mx.unam.ciencias.edd.VerticeArbolBinario;
  * Genera codigo SVG que representa a un ArbolRojinegro.
  */
 public class GeneradorArbolRojinegroSVG extends GeneradorArbolBinarioSVG {
-	
+
 	/** ArbolRojinegro de Integer interno */
 	private ArbolRojinegro<Integer> arbolRojinegro;
 
@@ -18,7 +18,7 @@ public class GeneradorArbolRojinegroSVG extends GeneradorArbolBinarioSVG {
 	 * @throws ExcepcionFormatoEquivocado si algun elemento es caracter no imprimible.
 	 * @throws NumberFormatException si algun elemento no es un numero entero.
 	 */
-	public GeneradorArbolRojinegroSVG(Lista<String> elementos) {	
+	public GeneradorArbolRojinegroSVG(Lista<String> elementos) {
 		super(elementos);
 		arbolRojinegro = (ArbolRojinegro<Integer>) arbolBinario;
 	}
@@ -46,12 +46,12 @@ public class GeneradorArbolRojinegroSVG extends GeneradorArbolBinarioSVG {
 		String verticeSVG = "";
 
 		if (vertice.hayIzquierdo())
-			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='blue' stroke-width='3' />\n",
-				x, y, x - distancia, y + 120);
+			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='blue' stroke-width='%.1f' />\n",
+				x, y, x - distancia, y + 120, trazo);
 
 		if (vertice.hayDerecho())
-			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='blue' stroke-width='3' />\n",
-				x, y, x + distancia, y + 120);
+			verticeSVG += String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='blue' stroke-width='%.1f' />\n",
+				x, y, x + distancia, y + 120, trazo);
 
 		switch (arbolRojinegro.getColor(vertice)) {
 

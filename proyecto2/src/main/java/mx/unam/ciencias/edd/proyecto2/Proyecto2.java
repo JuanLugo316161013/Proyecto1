@@ -33,10 +33,10 @@ public class Proyecto2 {
 			System.err.printf("%s\n%s\n",
 				"Error: vertices impares.","Los elementos de la grafica solo pueden se pares.");
 			System.exit(1);
-		} /*catch (IllegalArgumentException iae) {
+		} catch (IllegalArgumentException iae) {
 			System.err.printf("%s\n%s\n",
 				"Error: elementos repetidos.","No se puede repetir elementos en una grafica.");
 			System.exit(1);
-		}*/
+		}
 	}
 }
