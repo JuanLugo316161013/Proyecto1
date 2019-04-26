@@ -3,10 +3,10 @@ import java.util.Scanner;
 public class PruebaInteger {
 
 	public static void main(String[] args) {
-		int n = (int) (Math.random()*15);
+		int n = (int) (Math.random()*100);
 		System.out.println("Grafica");
 
-		for (int i = 1; i <= n; i++)
+		for (int i = 1; i <= 100; i++)
 			for (int j = 1; j <= n; j++)
 				if (i == j)
 					continue;
