@@ -1,8 +1,15 @@
 package mx.unam.ciencias.edd.proyecto2;
 
 import java.util.NoSuchElementException;
-
+/**
+ *  Proyecto 2 imprime, la representacion de una Estructura de Datos en codigo SVG.
+ */
 public class Proyecto2 {
+	
+	/**
+	 * Metodo principal.
+	 * @param args argumentos del metodo principal.
+	 */
 	public static void main(String[] args) {
 
 		try {
@@ -15,7 +22,7 @@ public class Proyecto2 {
 			System.exit(1);
 		} catch (NoSuchElementException nsee) {
 			System.err.printf("%s\n%s\n",
-				"Error: archivo invalido.","El archivo no existe, no se puede acceder al archivo, o el archivo esta vacio.");
+				"Error: archivo invalido.","No es un archivo, el archivo es invalido, o el archivo esta vacío");
 			System.exit(1);
 		} catch (ExcepcionEstructuraInvalida eei) {
 			System.err.printf("%s\n%s\n",
@@ -31,11 +38,11 @@ public class Proyecto2 {
 			System.exit(1);
 		} catch (ExcepcionVerticesImpares evi) {
 			System.err.printf("%s\n%s\n",
-				"Error: vertices impares.","Los elementos de la grafica solo pueden se pares.");
+				"Error: vertices impares.","Solo se pueden agregar pares de elementos que seran vertices aislados o adyacencias.");
 			System.exit(1);
 		} catch (IllegalArgumentException iae) {
 			System.err.printf("%s\n%s\n",
-				"Error: elementos repetidos.","No se puede repetir elementos en una grafica.");
+				"Error: vertices/aristas repetidos.","No se puede repetir vertices o aristas en una grafica.");
 			System.exit(1);
 		}
 	}

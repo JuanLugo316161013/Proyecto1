@@ -21,14 +21,13 @@ public class EstructurasDeDatosSVG {
 	 * @param estructura lista con el nombre de la estructura y sus elementos.
 	 * @throws ExcepcionEstructuraInvalida si la estructura no es :
 	 *
-	 * 				- ArbolAVL.
-	 * 				- ArbolBinarioCompleto.
-	 * 				- ArbolBinarioOrdenado.
-	 * 				- ArbolRojinegro.
-	 *				- Arreglos.
+	 *				- ArbolAVL.
+	 *				- ArbolBinarioCompleto.
+	 *				- ArbolBinarioOrdenado.
+	 *				- ArbolRojinegro.
 	 *				- Cola.
 	 *				- Grafica.
-	 * 				- Lista.
+	 *				- Lista.
 	 *				- MonticuloArreglo.
 	 *				- MonticuloMinimo.
 	 *				- Pila.
@@ -54,11 +53,6 @@ public class EstructurasDeDatosSVG {
 
 		if (estructuraDeDatos.equals("ArbolRojinegro")) {
 			this.estructura = new GeneradorArbolRojinegroSVG(estructura);
-			return;
-		}
-
-		if (estructuraDeDatos.equals("Arreglos")) {
-			this.estructura = new GeneradorArreglosSVG(estructura);
 			return;
 		}
 

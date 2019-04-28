@@ -67,6 +67,6 @@ public class GeneradorArbolRojinegroSVG extends GeneradorArbolBinarioSVG {
 		}
 
 		return verticeSVG += String.format("<text fill='white' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>%d</text>\n",
-			texto, x, y + 5, vertice.get());
+			texto, x, y + 6, vertice.get());
 	}
 }

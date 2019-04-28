@@ -148,11 +148,25 @@ public class GeneradorMonticuloMinimoSVG implements GeneradorEstructuraSVG {
 			bfsSVG(x + distancia, y + 120, radio, (int)distancia/2, derecho(vertice));
 	}
 
+	/**
+	 * Imprime una estructura vacía.
+	 */
+	private void vacio() {
+		System.out.println("<svg width='200' height='200' >\n");
+		System.out.println("<circle cx='100' cy='100' r='50' stroke='black' stroke-width='3' fill='white' />");
+		System.out.println("<line x1='160' y1='40' x2='40' y2='160' stroke='black' stroke-width='3' />");
+		System.out.println("\n</svg>");
+	}
 
 	/**
 	 * Imprime el codigo SVG que representa a la Estructura de Datos.
 	 */
 	@Override public void imprimirCodigoSVG() {
+		if (monticuloMinimo.esVacia()) {
+			vacio();
+			return;
+		}
+
 		int altura = altura();
 		int distancia = (int)Math.pow(2,altura+1)*10 + 20;
 		int x = distancia * 2 + 40;

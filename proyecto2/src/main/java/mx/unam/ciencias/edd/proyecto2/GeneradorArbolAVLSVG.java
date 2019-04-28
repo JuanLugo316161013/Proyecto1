@@ -36,7 +36,7 @@ public class GeneradorArbolAVLSVG extends GeneradorArbolBinarioSVG {
 		int derecho = -1;
 		boolean hayIzquierdo = false;
 		boolean hayDerecho = false;
-		System.out.println(distancia + ", "+ vertice.get());
+
 		if (radio < 20) {
 			trazo = 1.5;
 			texto = 16.5;
@@ -61,7 +61,7 @@ public class GeneradorArbolAVLSVG extends GeneradorArbolBinarioSVG {
 			x, y, radio, trazo);
 
 		verticeSVG += String.format("<text fill='black' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>%d</text>\n",
-			texto, x, y + 5, vertice.get());
+			texto, x, y + 6, vertice.get());
 
 		if (distancia < 20)
 			return verticeSVG += String.format("<text fill='blue' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>{%d/%d}</text>",
