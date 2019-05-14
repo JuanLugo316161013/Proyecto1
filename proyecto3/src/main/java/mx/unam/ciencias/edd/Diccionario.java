@@ -298,6 +298,7 @@ public class Diccionario<K, V> implements Iterable<V> {
         if (llave == null)
             throw new IllegalArgumentException();
 
+        int llaveDispersada = dispersor.dispersa(llave) & (entradas.length-1);
         Lista<Entrada> listaEntradas = entradas[dispersor.dispersa(llave) & (entradas.length-1)];
 
         if(listaEntradas == null)
@@ -309,6 +310,8 @@ public class Diccionario<K, V> implements Iterable<V> {
                 estaLlave = true;
                 listaEntradas.elimina(entrada);
                 elementos--;
+                if (listaEntradas.esVacia())
+                    entradas[llaveDispersada] = null;
                 break;
             }
         }
