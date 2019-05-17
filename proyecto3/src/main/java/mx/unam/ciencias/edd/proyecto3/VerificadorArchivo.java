@@ -24,8 +24,6 @@ public class VerificadorArchivo {
 	 *         false en otro caso.
 	 */
 	public static boolean verificaArchivo(File archivo) {
-		if (archivo == null)
-			return false;
 		try{return archivo.exists() && archivo.isFile() && archivo.canRead();}
 		catch (SecurityException se) {return false;}
 	}
@@ -40,9 +38,11 @@ public class VerificadorArchivo {
 	 *         false en otro caso.
 	 */
 	public static boolean verificaDirectorio(File directorio) {
-		if (directorio == null)
-			return false;
-		try {return archivo.exists() && archivo.isDirectory() && archivo.canWriter();}
-		catch (SecurityException se) {return false;}
+		try {
+			if (directorio.exists())
+				return directorio.isDirectory() && directorio.canWrite();
+
+			return directorio.isDirectory() && directorio.mkdir() && directorio.canWrite();
+		} catch (SecurityException se) {return false;}
 	}
 }
