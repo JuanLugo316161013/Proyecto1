@@ -26,6 +26,7 @@ mx/unam/ciencias/edd/VerticeGrafica.class
 mx/unam/ciencias/edd/Diccionario$IteradorValores.class
 mx/unam/ciencias/edd/proyecto3/ExcepcionBanderaRepetida.class
 mx/unam/ciencias/edd/proyecto3/LectorArchivo.class
+mx/unam/ciencias/edd/proyecto3/Dato.class
 mx/unam/ciencias/edd/Grafica$Iterador.class
 mx/unam/ciencias/edd/ArbolBinario$Vertice.class
 mx/unam/ciencias/edd/proyecto2/GeneradorArbolRojinegroSVG$1.class
@@ -33,17 +34,18 @@ mx/unam/ciencias/edd/MonticuloArreglo.class
 mx/unam/ciencias/edd/Grafica$Vertice.class
 mx/unam/ciencias/edd/Coleccion.class
 mx/unam/ciencias/edd/MeteSaca$Nodo.class
-mx/unam/ciencias/edd/proyecto3/Archivo$ValorPalabra.class
 mx/unam/ciencias/edd/ArbolRojinegro$VerticeRojinegro.class
 mx/unam/ciencias/edd/ArbolAVL$VerticeAVL.class
 mx/unam/ciencias/edd/VerticeArbolBinario.class
 mx/unam/ciencias/edd/IteradorLista.class
 mx/unam/ciencias/edd/Lista$Nodo.class
 mx/unam/ciencias/edd/Pila.class
+mx/unam/ciencias/edd/proyecto3/GraficadoraSVG.class
 mx/unam/ciencias/edd/Diccionario$Entrada.class
 mx/unam/ciencias/edd/proyecto3/ProcesadorEntrada.class
 mx/unam/ciencias/edd/ArbolRojinegro.class
 mx/unam/ciencias/edd/Color.class
+mx/unam/ciencias/edd/proyecto3/Archivo$TF.class
 mx/unam/ciencias/edd/proyecto3/VerificadorArchivo.class
 mx/unam/ciencias/edd/proyecto3/Archivo.class
 mx/unam/ciencias/edd/Cola.class

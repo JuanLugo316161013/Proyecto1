@@ -44,8 +44,8 @@ public class ArbolAVL<T extends Comparable<T>>
             int alturaIzquierdo = -1, alturaDerecho = -1;
             String vertice;
             vertice = elemento + " " + altura + "/";
-            
-            if (izquierdo != null) 
+
+            if (izquierdo != null)
                 alturaIzquierdo = izquierdo.altura();
 
             if (derecho != null)
@@ -135,7 +135,7 @@ public class ArbolAVL<T extends Comparable<T>>
         elementos--;
         if (vertice.hayDerecho() && vertice.hayIzquierdo())
             vertice = verticeAVL(super.intercambiaEliminable(vertice));
-        
+
         super.eliminaVertice(vertice);
         /* Rebalancea el arbol si es que se ah desbalanceado despues de eliminar*/
         rebalancea(verticeAVL(vertice.padre));
@@ -213,17 +213,17 @@ public class ArbolAVL<T extends Comparable<T>>
         VerticeAVL izquierdo = verticeAVL(vertice.izquierdo);
         VerticeAVL derecho = verticeAVL(vertice.derecho);
         int alturaIzquierdo = -1, alturaDerecho = -1;
-        
+
         if (izquierdo != null)
             alturaIzquierdo = izquierdo.altura;
-        
+
         if (derecho != null)
             alturaDerecho = derecho.altura;
 
         if (alturaIzquierdo < alturaDerecho)
             return alturaDerecho + 1;
 
-        return alturaIzquierdo + 1; 
+        return alturaIzquierdo + 1;
     }
 
     /**

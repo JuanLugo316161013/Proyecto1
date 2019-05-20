@@ -361,7 +361,7 @@ public class Lista<T> implements Coleccion<T> {
         if (elemento == null)
             return false;
 
-        for (Nodo nodoAuxiliar = cabeza; nodoAuxiliar != null; nodoAuxiliar = nodoAuxiliar.siguiente) 
+        for (Nodo nodoAuxiliar = cabeza; nodoAuxiliar != null; nodoAuxiliar = nodoAuxiliar.siguiente)
             if (nodoAuxiliar.elemento.equals(elemento))
                 return true;
         return false;
@@ -553,7 +553,7 @@ public class Lista<T> implements Coleccion<T> {
     }
     /**
      * Mezcla dos listas en una de una con los elemento ordenados.
-     * @param listaA lista parqa mezclar. 
+     * @param listaA lista parqa mezclar.
      * @param listaB lista para mezclar.
      * @param comparador el comparador que la lista usará para hacer el
      *                   ordenamiento.

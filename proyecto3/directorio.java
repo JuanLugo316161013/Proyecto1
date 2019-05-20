@@ -2,7 +2,10 @@ import java.io.File;
 
 public class directorio {
 	public static void main(String[] args) {
-		if ("ø".compareTo("ZWQSCV") > 0)
-			System.out.println("Yes");
+		Integer[] n = new Integer[0];
+		for (Integer i : n)
+			System.out.println(i);
+
+		System.out.println(n.length);
 	}
 }

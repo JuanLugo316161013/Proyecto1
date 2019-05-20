@@ -106,7 +106,7 @@ public class Grafica<T> implements Coleccion<T> {
         }
 
         private Vecino vecino(T elemento) {
-            for(Vecino vecino : vecinos) 
+            for(Vecino vecino : vecinos)
                 if (vecino.vecino.elemento.equals(elemento))
                     return vecino;
 
@@ -184,8 +184,8 @@ public class Grafica<T> implements Coleccion<T> {
         // Aquí va su código.
         return vertices.getElementos();
     }
-    
-        
+
+
     /**
      * Regresa el número de aristas.
      * @return el número de aristas.
@@ -227,7 +227,7 @@ public class Grafica<T> implements Coleccion<T> {
         if (a == null || b == null || a.equals(b))
             throw new IllegalArgumentException();
 
-        Vertice verticeA = null, verticeB = null; 
+        Vertice verticeA = null, verticeB = null;
 
         for (Vertice vertice : vertices)
             if (a.equals(vertice.elemento))
@@ -238,7 +238,7 @@ public class Grafica<T> implements Coleccion<T> {
 
         if (verticeA == null)
             throw new NoSuchElementException();
-        
+
         if (verticeB == null)
             throw new NoSuchElementException();
 
@@ -266,8 +266,8 @@ public class Grafica<T> implements Coleccion<T> {
         if (a == null || b == null || peso < 0 || a.equals(b))
             throw new IllegalArgumentException();
 
-        Vertice verticeA = null, verticeB = null; 
-        
+        Vertice verticeA = null, verticeB = null;
+
         for (Vertice vertice : vertices)
             if (a.equals(vertice.elemento))
                 verticeA = vertice;
@@ -277,7 +277,7 @@ public class Grafica<T> implements Coleccion<T> {
 
         if (verticeA == null)
             throw new NoSuchElementException();
-        
+
         if (verticeB == null)
             throw new NoSuchElementException();
 
@@ -303,8 +303,8 @@ public class Grafica<T> implements Coleccion<T> {
         if (a == null || b == null || a.equals(b))
             throw new IllegalArgumentException();
 
-        Vertice verticeA = null, verticeB = null; 
-        
+        Vertice verticeA = null, verticeB = null;
+
         for (Vertice vertice : vertices)
             if (a.equals(vertice.elemento))
                 verticeA = vertice;
@@ -314,7 +314,7 @@ public class Grafica<T> implements Coleccion<T> {
 
         if (verticeA == null)
             throw new NoSuchElementException();
-        
+
         if (verticeB == null)
             throw new NoSuchElementException();
 
@@ -368,7 +368,7 @@ public class Grafica<T> implements Coleccion<T> {
             return;
 
         Vertice vertice = null;
-        
+
         for (Vertice v : vertices)
             if (v.elemento.equals(elemento))
                 vertice = v;
@@ -554,9 +554,9 @@ public class Grafica<T> implements Coleccion<T> {
 
         Cola<Vertice> cola = new Cola<Vertice>();
         Vertice vertice = vertices.getPrimero();
-        vertice.color = Color.NEGRO; 
+        vertice.color = Color.NEGRO;
         cola.mete(vertices.getPrimero());
-        
+
         while (!cola.esVacia()) {
             vertice = cola.saca();
             for (Vecino vecino : vertice.vecinos)
@@ -605,9 +605,9 @@ public class Grafica<T> implements Coleccion<T> {
 
         Cola<Vertice> cola = new Cola<Vertice>();
         Vertice vertice = vertices.getPrimero();
-        vertice.color = Color.NEGRO; 
+        vertice.color = Color.NEGRO;
         cola.mete(vertices.getPrimero());
-        
+
         while (!cola.esVacia()) {
             vertice = cola.saca();
             accion.actua(vertice);
@@ -639,9 +639,9 @@ public class Grafica<T> implements Coleccion<T> {
 
         Pila<Vertice> pila = new Pila<Vertice>();
         Vertice vertice = vertices.getPrimero();
-        vertice.color = Color.NEGRO; 
+        vertice.color = Color.NEGRO;
         pila.mete(vertices.getPrimero());
-        
+
         while (!pila.esVacia()) {
             vertice = pila.saca();
             accion.actua(vertice);
@@ -718,7 +718,7 @@ public class Grafica<T> implements Coleccion<T> {
                 VerticeGrafica<T> verticeGrafica = grafica.vertice(vertice.elemento);
                 for (VerticeGrafica<T> vecino : verticeGrafica.vecinos())
                     vertice.vecino(vecino.get());
-            } 
+            }
         } catch (NoSuchElementException nsee){return false;}
 
         return true;
@@ -763,7 +763,7 @@ public class Grafica<T> implements Coleccion<T> {
 
         verticeOrigen.distancia = 0;
         Lista<VerticeGrafica<T>> trayectoria = new Lista<VerticeGrafica<T>>();
-    
+
         if (verticeOrigen == verticeDestino) {
             trayectoria.agrega(verticeOrigen);
             return trayectoria;
@@ -815,7 +815,7 @@ public class Grafica<T> implements Coleccion<T> {
     public Lista<VerticeGrafica<T>> dijkstra(T origen, T destino) {
         // Aquí va su código.
         Vertice verticeOrigen = null, verticeDestino = null, vertice = null;
-        
+
         for (Vertice v : vertices) {
             v.distancia = Double.POSITIVE_INFINITY;
 

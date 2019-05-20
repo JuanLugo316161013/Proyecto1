@@ -76,7 +76,7 @@ public class Dispersores {
             break;
 
             case 4:
-                a += combina(llave[j+3],llave[j+2],llave[j+1],llave[j]);     
+                a += combina(llave[j+3],llave[j+2],llave[j+1],llave[j]);
             break;
 
             case 5:
@@ -123,7 +123,7 @@ public class Dispersores {
         b = abc[1];
         c = abc[2];
         return c;
-    } 
+    }
 
     /**
      * Función de dispersión Daniel J. Bernstein.

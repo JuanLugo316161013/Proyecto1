@@ -36,14 +36,14 @@ public class Arreglos {
 
         int i = inicio + 1, j = fin;
         while(i < j)
-            if (comparador.compare(arreglo[i],arreglo[inicio]) > 0 && comparador.compare(arreglo[j],arreglo[inicio]) <= 0) 
+            if (comparador.compare(arreglo[i],arreglo[inicio]) > 0 && comparador.compare(arreglo[j],arreglo[inicio]) <= 0)
                 intercambia(arreglo,i++,j--);
-             else 
+             else
                 if (comparador.compare(arreglo[i],arreglo[inicio]) <= 0)
                     i++;
                 else
                     j--;
-            
+
         if (comparador.compare(arreglo[i],arreglo[inicio]) > 0)
             i--;
         intercambia(arreglo,i,inicio);
@@ -105,7 +105,7 @@ public class Arreglos {
 
         if (comparador.compare(arreglo[0],elemento) == 0)
             return 0;
-        
+
         return busquedaBinaria(arreglo,elemento,0,arreglo.length-1,comparador);
     }
 
@@ -113,7 +113,7 @@ public class Arreglos {
         if (inicio > fin)
             return -1;
 
-        int mitad = (inicio + fin)/2; 
+        int mitad = (inicio + fin)/2;
         if (comparador.compare(arreglo[mitad],elemento) == 0)
             return mitad;
 
@@ -135,7 +135,7 @@ public class Arreglos {
     public static <T extends Comparable<T>> int busquedaBinaria(T[] arreglo, T elemento) {
         return busquedaBinaria(arreglo, elemento, (a, b) -> a.compareTo(b));
     }
-    
+
     /**
      * Intercambia lo elementos en dos posiciones de un arreglo
      * @param <T> tipo del que puede ser el arreglo

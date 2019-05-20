@@ -13,9 +13,6 @@ import mx.unam.ciencias.edd.Diccionario;
  */
 public class ProcesadorEntrada {
 
-	/** Lector de archivos */
-	private LectorArchivo lector;
-
 	/** Lista de archivos especificados en la entrada estandar. */
 	private Lista<File> archivos;
 
@@ -46,41 +43,9 @@ public class ProcesadorEntrada {
 	 * @throws NoSuchElementException si el archivo no existe.
 	 */
 	private void procesaArchivos(File directorio) {
-		Diccionario<Cadena,Integer> palabras;
 		archivosProcesados = new Lista<Archivo>();
-		String linea;
-		String palabra = "";
-		Cadena cadena; 
-		Integer i;
-
-		for (File archivo : archivos) {
-			palabras = new Diccionario<Cadena,Integer>();
-			lector = new LectorArchivo(archivo);
-
-			while ((linea = lector.leer()) != null) {
-				for (int j = 0; j < linea.length(); j++) {
-					if (linea.charAt(j) < 33) {
-						if (!palabras.equals("")) {
-							cadena = new Cadena(palabra);
-							if (palabras.contiene(cadena)) {
-								i = palabras.get(cadena) + 1;
-								palabras.agrega(cadena,i);
-							} else {
-								i = 1;
-								palabras.agrega(cadena,i);
-							}
-							palabra = "";
-						}
-						continue;
-					}
-					palabra += linea.charAt(j);
-				}
-			}
-			archivosProcesados.agrega(new Archivo(archivo,
-									  new File(String.format("%s/%s(html).html",directorio.getPath(),archivo.getName())),
-									  palabras));
-			lector.cerrar();
-		}
+		for (File archivo : archivos)
+			archivosProcesados.agrega(new Archivo(archivo,directorio));
 	}
 
 	/**

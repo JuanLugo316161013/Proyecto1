@@ -65,7 +65,7 @@ public class Diccionario<K, V> implements Iterable<V> {
                 throw new NoSuchElementException();
 
             Entrada entrada = null;
-            
+
             if (iterador.hasNext())
                 entrada = iterador.next();
 
@@ -80,7 +80,7 @@ public class Diccionario<K, V> implements Iterable<V> {
                     }
                 }
             }
-            
+
             return entrada;
         }
     }
@@ -165,7 +165,7 @@ public class Diccionario<K, V> implements Iterable<V> {
         this.dispersor = dispersor;
 
         capacidad = (capacidad < MINIMA_CAPACIDAD) ? MINIMA_CAPACIDAD : capacidad;
-        
+
         int n = 1;
         while (n < capacidad * 2)
             n *= 2;
@@ -272,7 +272,7 @@ public class Diccionario<K, V> implements Iterable<V> {
     public boolean contiene(K llave) {
         // Aquí va su código.
         if (llave == null)
-            return false;   
+            return false;
 
         Lista<Entrada> listaEntradas = entradas[dispersor.dispersa(llave) & (entradas.length-1)];
 
@@ -315,7 +315,7 @@ public class Diccionario<K, V> implements Iterable<V> {
                 break;
             }
         }
-        
+
         if (!estaLlave)
             throw new NoSuchElementException();
     }
@@ -395,7 +395,7 @@ public class Diccionario<K, V> implements Iterable<V> {
         // Aquí va su código.
         if (elementos == 0)
             return "{}";
-        
+
         String diccionario = "{ ";
         for (int i = 0; i < entradas.length; i++)
             if (entradas[i] != null)
@@ -425,7 +425,7 @@ public class Diccionario<K, V> implements Iterable<V> {
             if (entradas[i] != null){
                 for (Entrada entrada : entradas[i]) {
                     try {
-                        if (!entrada.valor.equals(diccionario.get(entrada.llave))) 
+                        if (!entrada.valor.equals(diccionario.get(entrada.llave)))
                             return false;
                     } catch(NoSuchElementException nsee) {return false;}
                 }

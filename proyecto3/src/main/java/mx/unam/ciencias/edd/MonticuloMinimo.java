@@ -169,7 +169,7 @@ public class MonticuloMinimo<T extends ComparableIndexable<T>>
     @Override public void elimina(T elemento) {
         // Aquí va su código.
         int indice = elemento.getIndice();
-        
+
         if (indice < 0 || indice >= elementos)
             return;
 
@@ -189,7 +189,7 @@ public class MonticuloMinimo<T extends ComparableIndexable<T>>
     @Override public boolean contiene(T elemento) {
         // Aquí va su código.
         int indice = elemento.getIndice();
-        
+
         if (indice < 0 || indice >= elementos)
             return false;
 
@@ -313,7 +313,7 @@ public class MonticuloMinimo<T extends ComparableIndexable<T>>
 
         while (!monticulo.esVacia())
             elementos.agrega(monticulo.elimina().elemento);
- 
+
         return elementos;
     }
 
@@ -323,7 +323,7 @@ public class MonticuloMinimo<T extends ComparableIndexable<T>>
      */
     private boolean hayIzquierdo(T elemento) {
         int izquierdo = 2*elemento.getIndice()+1;
-        return izquierdo < elementos; 
+        return izquierdo < elementos;
     }
 
     /**

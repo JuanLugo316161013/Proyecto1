@@ -43,7 +43,7 @@ public class ArbolBinarioCompleto<T> extends ArbolBinario<T> {
 
             if (vertice.hayDerecho())
                 cola.mete(vertice.derecho);
-            
+
             vertice = cola.saca();
             return vertice.get();
         }
@@ -86,8 +86,8 @@ public class ArbolBinarioCompleto<T> extends ArbolBinario<T> {
         Vertice vertice = raiz;
         Vertice nuevoVertice = nuevoVertice(elemento);
         int altura = altura();
-        double x = (elementos - Math.pow(2,altura) + 1) % Math.pow(2,altura);  
-        
+        double x = (elementos - Math.pow(2,altura) + 1) % Math.pow(2,altura);
+
         while (altura > 0) {
             if (x < Math.pow(2,altura - 1)) {
                 if (vertice.hayIzquierdo())
@@ -101,7 +101,7 @@ public class ArbolBinarioCompleto<T> extends ArbolBinario<T> {
         }
 
         nuevoVertice.padre = vertice;
-        if (!vertice.hayIzquierdo())  
+        if (!vertice.hayIzquierdo())
             vertice.izquierdo = nuevoVertice;
         else
             vertice.derecho = nuevoVertice;

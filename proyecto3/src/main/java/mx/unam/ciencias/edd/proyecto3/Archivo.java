@@ -1,9 +1,10 @@
 package mx.unam.ciencias.edd.proyecto3;
 
 import java.io.File;
+import java.text.Normalizer;
 import java.util.Iterator;
 import mx.unam.ciencias.edd.Arreglos;
-import mx.unam.ciencias.edd.Diccionario;
+import mx.unam.ciencias.edd.Conjunto;
 import mx.unam.ciencias.edd.Lista;
 /**
  * <p>Clase que asocia archivos de texto con achivos html.</p>
@@ -19,29 +20,77 @@ import mx.unam.ciencias.edd.Lista;
 public class Archivo {
 
 	/**
-	 * Clase que asigna valor a una palabra.
+	 * Clase que contiene una palabra del Archivo
 	 */
-	protected class ValorPalabra implements Comparable<ValorPalabra>{
+	protected class Palabra implements Comparable<Palabra>, Dato<String>{
+		
 		/* Palabra en el archivo de texto. */
 		public String palabra;
 
+		/* Palabra sin acentos y en minusculas. */
+		public String palabraNormalizada;
+
 		/* Número de veces que aparece la palabra en el archivo de texto */
-		public int valor;
+		public int concurrencia;
 
 		/**
 		 * Constructor que recibe una palabra del archivo de texto, y el número de veces 
 		 * que aparece en el archivo.
 		 * @param palabra palabra en el archivo de texto.
-		 * @param valor numero de veces que aparece la palabra en el archivo.
+		 * @param concurrencia numero de veces que aparece la palabra en el archivo.
 		 */
-		public ValorPalabra(String palabra, int valor) {
+		public Palabra(String palabra, int concurrencia) {
 			this.palabra = palabra;
-			this.valor = valor;
+			palabraNormalizada = Normalizer.normalize(palabra,Normalizer.Form.NFKD);
+			palabraNormalizada = palabraNormalizada.replaceAll("[^a-zA-Z0-9]", "");
+			this.concurrencia = concurrencia;
 		}
 
-		@Override public int compareTo(ValorPalabra palabra) {
-			return valor - palabra.valor;
+		/**
+	     * Compara un Palabra con otro Palabra.
+	     * @param palabra Palabra de la palabra.
+	     * @return un valor menor que cero si el Palabra que llama el método
+	     *         es menor que el parámetro; cero si son iguales; o mayor que cero
+	     *         si es mayor.
+	     */
+		@Override public int compareTo(Palabra palabra) {
+			return concurrencia - palabra.concurrencia;
 		}
+
+		/**
+		 * Devuelve el elemento de un Dato Palabra.
+		 * @return elemento del Dato Palabra.
+		 */
+		@Override public String get() {
+			return palabra;
+		}
+
+		/**
+		 * Devuelve la concurrencia del Dato Palabra.
+		 * @return concurrencia del Dato Palabra.
+		 */
+		@Override public int concurrencia() {
+			return concurrencia;
+		}
+
+		/**
+		 * Nos dice si un objeto es igual a una Palabra.
+		 * @param o objeto.
+		 * @return true si su palabra normalizada es igual a la palabra normalizada del objeto
+		 * 		   false en otro caso.
+		 */
+		@Override public boolean equals (Object o) {
+			if (o == null || getClass() != o.getClass())
+            return false;
+	        @SuppressWarnings("unchecked") Palabra palabra = (Palabra)o;
+	        return palabraNormalizada.equals(palabra.palabraNormalizada);
+		}
+
+		/**
+		 * Devuelve la dispersion del objeto Palabras.
+		 * @return dispersion de la palabra normalizada.
+		 */
+		@Override public int hashCode() {return palabraNormalizada.hashCode();}
 	}
 
 	/* Archivo de texto asociado. */
@@ -51,47 +100,64 @@ public class Archivo {
 	private File archivoHTML;
 
 	/* Palabras en el archivo.*/
-	private Diccionario<Cadena,Integer> palabras;
+	private <Palabra> palabras;
 
 	/* Número de palabras ene le archivo. */
 	private int noPalabras;
 
 	/**
-	 * Constructor que recibe un archivo de texto, su archivo html asociado, y un
-	 * diccionario con las palabras y el numero de parabras
+	 * Constructor que recibe un archivo de texto y la direccion en donde se creara su archivoHTML.
+	 * @param archivoTexto archivo de texto asociado al Archivo.
+	 * @param directorio directorio donde se creara el archivo html.
 	 */
-	public Archivo(File archivoTexto, File archivoHTML, Diccionario<Cadena,Integer> palabras) {
+	public Archivo(File archivoTexto, File directorio) {
 		this.archivoTexto = archivoTexto;
-		this.archivoHTML = archivoHTML;
-		this.palabras = palabras;
-		for (Integer i : palabras)
-			noPalabras += i.intValue();
+		LectorArchivo lector = new LectorArchivo(archivoTexto);
+		palabras = new Conjunto<Palabra>();
+		Palabra cadena;
+		String linea;
+		String palabra = "";
+		while ((linea = lector.leer()) != null) {
+			for (int j = 0; j < linea.length(); j++) {
+				if (linea.charAt(j) < 33) {
+					if (!palabras.equals("")) {
+						cadena = new Palabra(palabra,1);
+						if (palabras.contiene(cadena)) {
+							cadena.concurrencia	= palabras.get
+							palabras.agrega(cadena);
+						} else {
+							palabras.agrega(cadena,i);
+						}
+						palabra = "";
+					}
+					continue;
+				}
+				palabra += linea.charAt(j);
+			}
+		}
+		archivoHTML = new File(String.format("%s/%s(html).html",directorio.getPath(),archivoTexto.getName()));
+		noPalabras = palabras.getElementos();
 	}
 
-	private ValorPalabra[] ordenaPalabras() {
+	private Palabra[] ordenaPalabras() {
 		int elementos = palabras.getElementos();
-		if (elementos < 15)
-			elementos = 15;
-		ValorPalabra[] palabrasOrdenadas = new ValorPalabra[elementos];
+		Palabra[] palabrasOrdenadas = new Palabra[elementos];
 		Iterator<Cadena> iterador = palabras.iteradorLlaves();
 
-		ValorPalabra palabra;
+		Palabra palabra;
 		Cadena cadena;
+
 		for (int i = 0; iterador.hasNext(); i++) {
 			cadena = iterador.next();
-			palabra = new ValorPalabra(cadena.getCadena(), palabras.get(cadena).intValue());
+			palabra = new Palabra(cadena.getCadena(), palabras.get(cadena).intValue());
 			palabrasOrdenadas[i] = palabra;
 		}
-
-		for (int i = 0; i < palabrasOrdenadas.length; i++)
-			if (palabrasOrdenadas[i] == null)
-				palabrasOrdenadas[i] = new ValorPalabra("ø",0);
 
 		Arreglos.quickSort(palabrasOrdenadas);
 		return palabrasOrdenadas;
 	}
 
-	public String[] toString() {
+	public String[] html() {
 		return null;
 	}
 }

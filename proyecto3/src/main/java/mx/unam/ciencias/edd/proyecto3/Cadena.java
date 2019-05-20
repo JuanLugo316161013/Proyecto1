@@ -38,7 +38,7 @@ public class Cadena {
 	 * Regresa su String asociado en su forma 'liquida'.
 	 * @return String asociado en su forma 'liquida'.
 	 */
-	public String getCadenaLiquida() {return cadenaLiquida;}
+	private String getCadenaLiquida() {return cadenaLiquida;}
 
 	@Override public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass())
