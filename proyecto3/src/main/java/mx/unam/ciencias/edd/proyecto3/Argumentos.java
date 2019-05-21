@@ -41,7 +41,7 @@ public class Argumentos {
 			archivosTexto.agrega(archivo);
 		}
 
-		// Si no se especifico 
+		// Si no se especifico el directorio.
 		if (bandera_O == 0) {
 			directorio = new File(System.getProperty("user.dir"));
 			if (!VerificadorArchivo.verificaDirectorio(directorio))

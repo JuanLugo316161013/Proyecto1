@@ -11,9 +11,13 @@ import mx.unam.ciencias.edd.Lista;
  * <p>A partir de un archivo de texto se crea un archivo html, con la siguiente información:
  * <ol>
  *  	<li>El número de veces que se repite una palabra en el archivo del texto.</li>
+ *      <li>Una gráfica de pastel de las palabras más comunes en el archivo y qué
+ *		porcentaje del total de palabras ocupan; el resto de las palabras se juntrán
+ *		en una sola rebanada.</li>
+ *		<li>Una gráfica de barras con la misma información.</li>
  * 		<li>Un árbol rojinegro con las 15 palabras más utilizadas en el archivo, donde el
  *			valor de cada palabra es el número de veces que aparece en el archivo.</li>
- *		<li>Un árbol AVL con los mismos datos del árbol de arriba.</li>
+ *		<li>Un árbol AVL con la misma información.</li>
  *	</ol>
  *  </p>
  */
@@ -22,7 +26,7 @@ public class Archivo {
 	/**
 	 * Clase que contiene una palabra del Archivo
 	 */
-	protected class Palabra implements Comparable<Palabra>, Dato<String>{
+	protected class Palabra implements Comparable<Palabra>, DatoGraficable<String>{
 		
 		/* Palabra en el archivo de texto. */
 		public String palabra;
@@ -53,25 +57,19 @@ public class Archivo {
 	     *         es menor que el parámetro; cero si son iguales; o mayor que cero
 	     *         si es mayor.
 	     */
-		@Override public int compareTo(Palabra palabra) {
-			return concurrencia - palabra.concurrencia;
-		}
+		@Override public int compareTo(Palabra palabra) {return concurrencia - palabra.concurrencia;}
 
 		/**
 		 * Devuelve el elemento de un Dato Palabra.
 		 * @return elemento del Dato Palabra.
 		 */
-		@Override public String get() {
-			return palabra;
-		}
+		@Override public String get() {return palabra;}
 
 		/**
 		 * Devuelve la concurrencia del Dato Palabra.
 		 * @return concurrencia del Dato Palabra.
 		 */
-		@Override public int concurrencia() {
-			return concurrencia;
-		}
+		@Override public int concurrencia() {return concurrencia;}
 
 		/**
 		 * Nos dice si un objeto es igual a una Palabra.
@@ -81,7 +79,7 @@ public class Archivo {
 		 */
 		@Override public boolean equals (Object o) {
 			if (o == null || getClass() != o.getClass())
-            return false;
+            	return false;
 	        @SuppressWarnings("unchecked") Palabra palabra = (Palabra)o;
 	        return palabraNormalizada.equals(palabra.palabraNormalizada);
 		}
@@ -100,7 +98,7 @@ public class Archivo {
 	private File archivoHTML;
 
 	/* Palabras en el archivo.*/
-	private <Palabra> palabras;
+	private Diccionario<Palabra> palabras;
 
 	/* Número de palabras ene le archivo. */
 	private int noPalabras;
@@ -113,7 +111,7 @@ public class Archivo {
 	public Archivo(File archivoTexto, File directorio) {
 		this.archivoTexto = archivoTexto;
 		LectorArchivo lector = new LectorArchivo(archivoTexto);
-		palabras = new Conjunto<Palabra>();
+		palabras = new Diccionario<Palabra,Palabra>();
 		Palabra cadena;
 		String linea;
 		String palabra = "";
@@ -157,7 +155,20 @@ public class Archivo {
 		return palabrasOrdenadas;
 	}
 
-	public String[] html() {
-		return null;
+	/**
+	 * Crea un archivo html correspondiente al Archivo con la siguiente informacion:
+	 *  <ol>
+	 *  	<li>El número de veces que se repite una palabra en el archivo del texto.</li>
+	 *      <li>Una gráfica de pastel de las palabras más comunes en el archivo y qué
+	 *		porcentaje del total de palabras ocupan; el resto de las palabras se juntrán
+	 *		en una sola rebanada.</li>
+	 *		<li>Una gráfica de barras con la misma información.</li>
+	 * 		<li>Un árbol rojinegro con las 15 palabras más utilizadas en el archivo, donde el
+	 *			valor de cada palabra es el número de veces que aparece en el archivo.</li>
+	 *		<li>Un árbol AVL con los mismos datos del árbol de arriba.</li>
+	 *	</ol>
+	 */
+	public void CreaHtml() {
+		
 	}
 }

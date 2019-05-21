@@ -2,10 +2,16 @@ package mx.unam.ciencias.edd.proyecto3;
 
 import mx.unam.ciencias.edd.Lista;
 /**
- * Clase que grafica una Lista de datos.1
+ * Clase que grafica una Lista de datos.
  */
 public class GraficadoraSVG{
-	
+
+
+	private class ElementoGrafica {
+
+	}
+
+	ColorSVG[] colores = {}
 	/**
 	 * Constructor vacío.
 	 */
