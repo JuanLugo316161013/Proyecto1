@@ -2,16 +2,16 @@ package mx.unam.ciencias.edd.proyecto3;
 
 import java.text.Normalizer;
 /**
- * Clase que tiene que contiene una cadena ({@link String}) y misma cadena 'liquida',
- * diremos que una cadena es liquida si no tiene acentos y esta en minusculas.
+ * Clase que contiene una una cadena de caracteres, y la misma cadena pero en su forma 
+ * normalizada (sin acentos, y en minusculas).
  */
 public class Cadena {
 
 	/* Cadena original */
-	private String cadenaOriginal;
+	private String cadena;
 
-	/* Cadena 'liquida' */
-	private String cadenaLiquida;
+	/* Cadena normalizada. */
+	private String cadenaNormalizada;
 
 	/**
 	 * Constructor vacío.
@@ -23,33 +23,33 @@ public class Cadena {
 	 * @param cadena String que será la cadena asociada a Cadena.
 	 */
 	public Cadena(String cadena) {
-		cadenaOriginal = cadena;
-		cadenaLiquida = Normalizer.normalize(cadena,Normalizer.Form.NFKD);
-		cadenaLiquida = cadenaLiquida.replaceAll("[^a-zA-Z0-9]", "");
+		this.cadena = cadena;
+		cadenaNormalizada = Normalizer.normalize(cadena,Normalizer.Form.NFKD);
+		cadenaNormalizada = cadenaNormalizada.replaceAll("[^a-zA-Z0-9]", "");
 	}
 
 	/**
-	 * Regresa su String asociado.
-	 * @return String asociado.
+	 * Regresa su cadena de caracteres asociado.
+	 * @return cadena asociada.
 	 */
-	public String getCadena() {return cadenaOriginal;}
+	public String getCadena() {return cadena;}
 
 	/**
-	 * Regresa su String asociado en su forma 'liquida'.
-	 * @return String asociado en su forma 'liquida'.
+	 * Regresa la cadena de caracteres normalizada.
+	 * @return cadena normalizada.
 	 */
-	private String getCadenaLiquida() {return cadenaLiquida;}
+	private String getCadenaNormalizada() {return cadenaNormalizada;}
 
 	@Override public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass())
             return false;
         @SuppressWarnings("unchecked") Cadena cadena = (Cadena)o;
-        return cadenaLiquida.equals(cadena.getCadenaLiquida());
+        return cadenaNormalizada.equals(cadena.getCadenaNormalizada());
 	}
 
 	/**
-	 * Devuelve la dispersion del objeto {@link Cadena}.
-	 * @return dispersion de la cadena interna 'liquida'.
+	 * Devuelve la dispersion del objeto de la cadena normalizada.
+	 * @return dispersion de la cadena normalizada.
 	 */
-	@Override public int hashCode() {return cadenaLiquida.hashCode();}
+	@Override public int hashCode() {return cadenaNormalizada.hashCode();}
 }

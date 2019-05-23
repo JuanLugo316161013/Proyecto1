@@ -10,11 +10,10 @@ import mx.unam.ciencias.edd.VerticeArbolBinario;
 public class GeneradorArbolAVLSVG<T extends Comparable<T>> extends GeneradorArbolBinarioSVG<T> {
 
 	/**
-	 * Constructor que recibe una Lista de elementos del ArbolAVL.
-	 * @throws ExcepcionFormatoEquivocado si algun elemento es caracter no imprimible.
-	 * @throws NumberFormatException si algun elemento no es un numero entero.
+	 * Constructor que recibe una arreglo de elementos del ArbolBinarioAVL.
+	 * @param elementos arreglo de elementos.
 	 */
-	public GeneradorArbolAVLSVG(Lista<T> elementos) {super(elementos);}
+	public GeneradorArbolAVLSVG(T[] elementos) {super(elementos);}
 
 	/**
 	 * Devuelve una instancia de un nuevo arbol binario, usando una instancia de {@link ArbolAVL}

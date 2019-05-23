@@ -1,4 +1,4 @@
-package mx.unam.ciencias.edd.proyecto1;
+package mx.unam.ciencias.edd.proyecto3;
 
 import java.io.FileNotFoundException;
 import java.io.OutputStreamWriter;
@@ -10,11 +10,11 @@ import java.io.File;
 import java.lang.SecurityException;
 import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
+
 /**
- * Codifica y escribe un flujo de caracteres en una salida, en formato 
- * "UTF-8"
+ * Codifica y escribe cadenas de caracteres en un archivo en "UTF-8"
  */
-public class EscritorFlujoCaracteres {
+public class EscritorArchivo {
 
 	/** Objeto que escribe secuencias de caracteres en una salidad dada*/
 	BufferedWriter escritor;
@@ -24,7 +24,7 @@ public class EscritorFlujoCaracteres {
 	 * No se puede iniciar un escritor de flujo de caracteres
 	 * si no hay una salida valida.
 	 */
-	private EscritorFlujoCaracteres() {}
+	private EscritorArchivo() {}
 
 	/**
 	 * Constructor que recibe un archivo, que sera la salida donde
@@ -32,7 +32,7 @@ public class EscritorFlujoCaracteres {
 	 * @param archivo salida del escritor
 	 * @throws IllegalArgumentException si el archivo es null.
 	 */
-	public EscritorFlujoCaracteres(File archivo) {
+	public EscritorArchivo(File archivo) {
 		if (archivo == null)
 			throw new IllegalArgumentException();
 
@@ -50,7 +50,7 @@ public class EscritorFlujoCaracteres {
 	 * @param salida salida del escritor. 
 	 * @throws IllegalArgumentException si la salida es null.
 	 */
-	public EscritorFlujoCaracteres(OutputStream salida) {
+	public EscritorArchivo(OutputStream salida) {
 		if (salida == null)
 			throw new IllegalArgumentException();
 
@@ -69,6 +69,7 @@ public class EscritorFlujoCaracteres {
 
 		try {
 			escritor.write(cadena);
+			escritor.newLine();
 		} catch(IOException ioe) {escritor = null;}
 	}
 
@@ -81,9 +82,5 @@ public class EscritorFlujoCaracteres {
 
 		try {escritor.close();} 
 		catch (IOException ioe) {escritor = null;}
-	}
-
-	public static void main(String[] args) {
-			
 	}
 }

@@ -1,37 +1,7 @@
-package mx.unam.ciencias.edd.proyecto3;
-
-import mx.unam.ciencias.edd.Lista;
 /**
  * Clase que grafica una Lista de datos.
  */
 public class GraficadoraSVG{
-
-	public class Dato<T extends DatoGraficable<T>> {
-
-		/* Elemento del dato a graficar. */
-		public T elemento;
-
-		/* Color asociado del dato a graficar. */
-		public ColorSVG color;
-
-		/**
-		 * Constructor que recibe el elemento, y el color de un dato a graficar.
-		 * @param elemento elemento del dato.
-		 * @param color color asociado al dato.
-		 */
-		public Dato(T elemento, ColorSVG color) {
-			this.elemento = elemento;
-			this.color = color;
-		}
-
-	}
-
-	/** Colores de los datos a graficas. */
-	private final static ColorSVG[] colores = 
-	{ColorSVG.BURLYWOOD, ColorSVG.MARRON, ColorSVG.PURPLE, ColorSVG.LEMONCHIFFON,
-	ColorSVG.MEDIUMBLUE, ColorSVG.MEDIUMSEAGREEN, ColorSVG.YELLOW, ColorSVG.ORANGE, ColorSVG.ORANGERED, 
-	ColorSVG.DARKRED, ColorSVG.TOMATO, ColorSVG.DARKSLATEBLUE, ColorSVG.SEAGREEN, ColorSVG.DARKBLUE,
-	ColorSVG.LIGTHSALMON, ColorSVG.KHAKI, ColorSVG.MEDIUMPURPLE, ColorSVG.PINK};
 
 	/**
 	 * Constructor vacío.
@@ -73,5 +43,13 @@ public class GraficadoraSVG{
 	 */
 	public static <T extends DatoGraficable<T>> String graficaBarras(Lista<T> datos, int valorTotal) {
 		return null;
+	}
+
+	public static void main(String[] args) {
+		Lista<Palabra> palabras = new Lista<Palabra>();
+		palabras.agrega(new Palabra("perro",10));
+		palabras.agrega(new Palabra("gato",10));
+		palabras.agrega(new Palabra("Ana",10));
+		System.out.println(graficaPastel(palabras,100));
 	}
 }

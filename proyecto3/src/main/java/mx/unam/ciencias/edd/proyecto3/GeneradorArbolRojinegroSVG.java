@@ -14,11 +14,10 @@ public class GeneradorArbolRojinegroSVG<T extends Comparable<T>> extends Generad
 	private ArbolRojinegro<T> arbolRojinegro;
 
 	/**
-	 * Constructor que recibe una Lista de elementos del ArbolRojinegro.
-	 * @throws ExcepcionFormatoEquivocado si algun elemento es caracter no imprimible.
-	 * @throws NumberFormatException si algun elemento no es un numero entero.
+	 * Constructor que recibe una arreglo de elementos del ArbolBinarioRojinegro.
+	 * @param elementos arreglo de elementos.
 	 */
-	public GeneradorArbolRojinegroSVG(Lista<T> elementos) {
+	public GeneradorArbolRojinegroSVG(T[] elementos) {
 		super(elementos);
 		arbolRojinegro = (ArbolRojinegro<T>) arbolBinario;
 	}
@@ -26,9 +25,7 @@ public class GeneradorArbolRojinegroSVG<T extends Comparable<T>> extends Generad
 	/**
 	 * Devuelve una instancia de un nuevo arbol binario, usando una instancia de {@link ArbolRojinegro}
 	 */
-	@Override protected ArbolBinario<T> nuevoArbolBinario() {
-		return new ArbolRojinegro<T>();
-	}
+	@Override protected ArbolBinario<T> nuevoArbolBinario() {return new ArbolRojinegro<T>();}
 
 	/**
 	 * Regresa un vertice con su elemento y sus correspondientes aristas en codigo SVG.

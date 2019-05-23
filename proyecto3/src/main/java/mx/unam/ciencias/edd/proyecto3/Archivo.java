@@ -1,10 +1,9 @@
 package mx.unam.ciencias.edd.proyecto3;
 
 import java.io.File;
-import java.text.Normalizer;
 import java.util.Iterator;
 import mx.unam.ciencias.edd.Arreglos;
-import mx.unam.ciencias.edd.Conjunto;
+import mx.unam.ciencias.edd.Diccionario;
 import mx.unam.ciencias.edd.Lista;
 /**
  * <p>Clase que asocia archivos de texto con achivos html.</p>
@@ -24,30 +23,25 @@ import mx.unam.ciencias.edd.Lista;
 public class Archivo {
 
 	/**
-	 * Clase que contiene una palabra del Archivo
+	 * Clase que contiene una palabra del Archivo, y el número de veces que aparece en el Archivo.
 	 */
-	protected class Palabra implements Comparable<Palabra>, DatoGraficable<String>{
+	protected class Palabra implements Comparable<Palabra>, DatoGraficable<Palabra>{
 		
 		/* Palabra en el archivo de texto. */
 		public String palabra;
 
-		/* Palabra sin acentos y en minusculas. */
-		public String palabraNormalizada;
-
 		/* Número de veces que aparece la palabra en el archivo de texto */
-		public int concurrencia;
+		public int frecuencia;
 
 		/**
 		 * Constructor que recibe una palabra del archivo de texto, y el número de veces 
 		 * que aparece en el archivo.
 		 * @param palabra palabra en el archivo de texto.
-		 * @param concurrencia numero de veces que aparece la palabra en el archivo.
+		 * @param frecuencia numero de veces que aparece la palabra en el archivo.
 		 */
-		public Palabra(String palabra, int concurrencia) {
+		public Palabra(String palabra, int frecuencia) {
 			this.palabra = palabra;
-			palabraNormalizada = Normalizer.normalize(palabra,Normalizer.Form.NFKD);
-			palabraNormalizada = palabraNormalizada.replaceAll("[^a-zA-Z0-9]", "");
-			this.concurrencia = concurrencia;
+			this.frecuencia = frecuencia;
 		}
 
 		/**
@@ -57,7 +51,7 @@ public class Archivo {
 	     *         es menor que el parámetro; cero si son iguales; o mayor que cero
 	     *         si es mayor.
 	     */
-		@Override public int compareTo(Palabra palabra) {return concurrencia - palabra.concurrencia;}
+		@Override public int compareTo(Palabra palabra) {return frecuencia - palabra.frecuencia;}
 
 		/**
 		 * Devuelve el elemento de un Dato Palabra.
@@ -66,29 +60,10 @@ public class Archivo {
 		@Override public String get() {return palabra;}
 
 		/**
-		 * Devuelve la concurrencia del Dato Palabra.
-		 * @return concurrencia del Dato Palabra.
+		 * Devuelve el número de veces que aparece la palabra en el Archivo.
+		 * @return número de veces que aparece la palabra en el Archivo.
 		 */
-		@Override public int concurrencia() {return concurrencia;}
-
-		/**
-		 * Nos dice si un objeto es igual a una Palabra.
-		 * @param o objeto.
-		 * @return true si su palabra normalizada es igual a la palabra normalizada del objeto
-		 * 		   false en otro caso.
-		 */
-		@Override public boolean equals (Object o) {
-			if (o == null || getClass() != o.getClass())
-            	return false;
-	        @SuppressWarnings("unchecked") Palabra palabra = (Palabra)o;
-	        return palabraNormalizada.equals(palabra.palabraNormalizada);
-		}
-
-		/**
-		 * Devuelve la dispersion del objeto Palabras.
-		 * @return dispersion de la palabra normalizada.
-		 */
-		@Override public int hashCode() {return palabraNormalizada.hashCode();}
+		@Override public int frecuencia() {return frecuencia;}
 	}
 
 	/* Archivo de texto asociado. */
@@ -98,7 +73,7 @@ public class Archivo {
 	private File archivoHTML;
 
 	/* Palabras en el archivo.*/
-	private Diccionario<Palabra> palabras;
+	private Diccionario<Cadena,Integer> palabras;
 
 	/* Número de palabras ene le archivo. */
 	private int noPalabras;
@@ -111,19 +86,21 @@ public class Archivo {
 	public Archivo(File archivoTexto, File directorio) {
 		this.archivoTexto = archivoTexto;
 		LectorArchivo lector = new LectorArchivo(archivoTexto);
-		palabras = new Diccionario<Palabra,Palabra>();
-		Palabra cadena;
+		palabras = new Diccionario<Cadena,Integer>();
+		Cadena cadena;
 		String linea;
 		String palabra = "";
+		Integer i;
 		while ((linea = lector.leer()) != null) {
 			for (int j = 0; j < linea.length(); j++) {
 				if (linea.charAt(j) < 33) {
 					if (!palabras.equals("")) {
-						cadena = new Palabra(palabra,1);
+						cadena = new Cadena(palabra);
 						if (palabras.contiene(cadena)) {
-							cadena.concurrencia	= palabras.get
-							palabras.agrega(cadena);
+							i = new Integer(palabras.get(cadena).intValue());
+							palabras.agrega(cadena,i);
 						} else {
+							i = new Integer(1);
 							palabras.agrega(cadena,i);
 						}
 						palabra = "";
@@ -133,6 +110,7 @@ public class Archivo {
 				palabra += linea.charAt(j);
 			}
 		}
+		lector.cerrar();
 		archivoHTML = new File(String.format("%s/%s(html).html",directorio.getPath(),archivoTexto.getName()));
 		noPalabras = palabras.getElementos();
 	}

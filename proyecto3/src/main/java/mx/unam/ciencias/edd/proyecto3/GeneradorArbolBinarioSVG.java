@@ -18,10 +18,10 @@ public abstract class GeneradorArbolBinarioSVG<T> extends GeneradorEstructuraSVG
 	private GeneradorArbolBinarioSVG() {}
 
 	/**
-	 * Constructor que recibe una Lista de elementos del ArbolBinario.
-	 * @throws ExcepcionFormatoEquivocado si algun elemento es caracter no imprimible.
+	 * Constructor que recibe una arreglo de elementos del ArbolBinario.
+	 * @param elementos arreglo de elementos.
 	 */
-	public GeneradorArbolBinarioSVG(Lista<T> elementos) {
+	public GeneradorArbolBinarioSVG(T[] elementos) {
 		arbolBinario = nuevoArbolBinario();
 		for (T elemento : elementos)
 			arbolBinario.agrega(elemento);
