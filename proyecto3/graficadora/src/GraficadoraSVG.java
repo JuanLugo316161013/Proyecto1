@@ -47,9 +47,20 @@ public class GraficadoraSVG{
 
 	public static void main(String[] args) {
 		Lista<Palabra> palabras = new Lista<Palabra>();
-		palabras.agrega(new Palabra("perro",10));
-		palabras.agrega(new Palabra("gato",10));
-		palabras.agrega(new Palabra("Ana",10));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
+		palabras.agrega(new Palabra("perro",6));
 		System.out.println(graficaPastel(palabras,100));
 	}
 }
