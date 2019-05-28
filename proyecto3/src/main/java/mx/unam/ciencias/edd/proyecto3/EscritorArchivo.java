@@ -69,7 +69,6 @@ public class EscritorArchivo {
 
 		try {
 			escritor.write(cadena);
-			escritor.newLine();
 		} catch(IOException ioe) {escritor = null;}
 	}
 

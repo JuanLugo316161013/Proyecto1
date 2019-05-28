@@ -1,6 +1,7 @@
 package mx.unam.ciencias.edd.proyecto3;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import mx.unam.ciencias.edd.Arreglos;
 import mx.unam.ciencias.edd.Diccionario;
@@ -111,7 +112,7 @@ public class Archivo {
 			}
 		}
 		lector.cerrar();
-		archivoHTML = new File(String.format("%s/%s(html).html",directorio.getPath(),archivoTexto.getName()));
+		archivoHTML = new File(String.format("%s/%s(html).html",directorio.getAbsolutePath(),archivoTexto.getName()));
 		noPalabras = palabras.getElementos();
 	}
 
@@ -157,6 +158,36 @@ public class Archivo {
 	 *	</ol>
 	 */
 	public void CreaHtml() {
+		if (!VerificadorArchivo.verificaNuevoArchivo(archivoHTML));
+			throw new IOException();
+
+		File arbolAVL = new File(String.format("%s/%s_arbolAVL.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
+		File arbolRojinegro = new File(String.format("%s/%s_arbolRojinegro.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
+		File graficaPastel = new File(String.format("%s/%s_graficaPastel.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
+		File graficaBarras = new File(String.format("%s/%s_graficaBarras.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
 		
+		if (!VerificadorArchivo.verificaNuevoArchivo(arbolAVL));
+			throw new IOException();
+
+		if (!VerificadorArchivo.verificaNuevoArchivo(arbolRojinegro));
+			throw new IOException();
+
+		if (!VerificadorArchivo.verificaNuevoArchivo(graficaPastel));
+			throw new IOException();
+
+		if (!VerificadorArchivo.verificaNuevoArchivo(graficaBarras));
+			throw new IOException();
+
+		Palabra[] palabrasRepetidas = ordenaPalabras();
+		GeneradorArbolAVLSVG generadorArbolAVLSVG = new GeneradorArbolAVLSVG(palabrasRepetidas);
+		GeneradorArbolRojinegroSVG generadorArbolRojinegroSVG = new GeneradorArbolRojinegroSVG(palabrasRepetidas);
+		EscritorArchivo escritor = new EscritorArchivo(arbolAVL);
+		for (String codigo : generadorArbolAVLSVG.codigoSVG())
+			escritor.escribe(codigo);
+		escritor.cerrar();
+		EscritorArchivo escritor = new EscritorArchivo(arbolRojinegro);
+		for (String codigo : generadorArbolRojinegroSVG.codigoSVG())
+			escritor.escribe(codigo);
+		escritor.cerrar();
 	}
 }

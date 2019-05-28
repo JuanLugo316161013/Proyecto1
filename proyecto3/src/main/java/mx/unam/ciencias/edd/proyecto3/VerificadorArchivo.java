@@ -43,11 +43,11 @@ public class VerificadorArchivo {
 	 */
 	public static boolean verificaDirectorio(File directorio) {
 		try {
+			directorio = new File(directorio.getCanonicalPath());
 			if (directorio.exists())
+				directorio.delete();
 
-				return directorio.isDirectory() && directorio.canWrite();
-
-			return directorio.isDirectory() && directorio.mkdirs() && directorio.canWrite();
+			return directorio.mkdirs() && directorio.isDirectory() && directorio.canWrite();
 		} catch (SecurityException se) {return false;}
 	}
 
@@ -57,7 +57,7 @@ public class VerificadorArchivo {
 	 * @return true si el archivo existe o se puede crear 
 	 *         false en otro caso.
 	 */
-	public static boolean verificaNuevoArchvio (File archivo) {
+	public static boolean verificaNuevoArchivo (File archivo) {
 		try {
 			return archivo.exists() || archivo.createNewFile();
 		} catch(SecurityException se) {return false;}
