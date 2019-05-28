@@ -50,4 +50,17 @@ public class VerificadorArchivo {
 			return directorio.isDirectory() && directorio.mkdirs() && directorio.canWrite();
 		} catch (SecurityException se) {return false;}
 	}
+
+	/**
+	 * Verifica que exista un nuevo archivo, si no existe verifica si puede crearlo.
+	 * @param archivo a verificar.
+	 * @return true si el archivo existe o se puede crear 
+	 *         false en otro caso.
+	 */
+	public static boolean verificaNuevoArchvio (File archivo) {
+		try {
+			return archivo.exists() || archivo.createNewFile();
+		} catch(SecurityException se) {return false;}
+		catch (IOException io) {return false;}
+	}
 }

@@ -81,7 +81,7 @@ public abstract class GeneradorArbolBinarioSVG<T> extends GeneradorEstructuraSVG
 	 */
 	@Override public void imprimirCodigoSVG() {
 		if (arbolBinario.esVacia()) {
-			vacio();
+			System.out.println(vacio());
 			return;
 		}
 
@@ -104,5 +104,49 @@ public abstract class GeneradorArbolBinarioSVG<T> extends GeneradorEstructuraSVG
 		System.out.printf("<svg width='%d' height='%d' >\n\n", distancia * 4 + 80, (altura + 1) * 120);
 		bfsSVG(x,y,radio,distancia, arbolBinario.raiz());
 		System.out.println("\n</svg>");
+	}
+
+	/**
+	 * Recorre el arbolBinario en orden bfs agregando cada vertice en codigo SVG a una lista.
+	 */
+	protected void bfsSVG(int x, int y, int radio, int distancia, VerticeArbolBinario<T> vertice, Lista<String> codigoSVG) {
+		codigoSVG.agrega(vertice(x,y,radio,distancia,vertice));
+
+		if (vertice.hayIzquierdo())
+			bfsSVG(x - distancia, y + 120, radio, (int)distancia/2, vertice.izquierdo(), codigoSVG);
+
+
+		if (vertice.hayDerecho())
+			bfsSVG(x + distancia, y + 120, radio, (int)distancia/2, vertice.derecho(), codigoSVG);
+	}
+
+
+	public Lista<String> codigoSVG() {
+		Lista<String> codigoSVG = new Lista<String>();
+		if (arbolBinario.esVacia()) {
+			codigoSVG.agrega(vacio());
+			return codigoSVG;
+		}
+
+		int altura = arbolBinario.altura();
+		int distancia = (int)Math.pow(2,altura+1)*10 + 20;
+		int x = distancia * 2 + 40;
+		int y = 40;
+		int radio = 20;
+
+		if (altura > 5) {
+			radio = 16;
+			distancia = (int)Math.pow(2,altura)*10;
+			if (distancia < 0) {
+				distancia = distancia*-1;
+				distancia += (altura-5)*60*2 + (altura-5)*200;
+			}
+			x = distancia * 2 + 40;
+		}
+
+		codigoSVG.agrega(String.format("<svg width='%d' height='%d' xmlns='http://www.w3.org/2000/svg'>\n\n", distancia * 4 + 80, (altura + 1) * 120));
+		bfsSVG(x,y,radio,distancia, arbolBinario.raiz(),codigoSVG);
+		codigoSVG.agrega("\n</svg>");
+		return codigoSVG;
 	}
 }
