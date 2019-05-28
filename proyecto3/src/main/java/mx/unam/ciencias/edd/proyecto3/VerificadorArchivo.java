@@ -26,10 +26,8 @@ public class VerificadorArchivo {
 	 */
 	public static boolean verificaArchivo(File archivo) {
 		try{
-			if (!archivo.exists())
-				throw new FileNotFoundException();
-			return archivo.isFile() && archivo.canRead();}
-		catch (SecurityException se) {return false;}
+			return archivo.exists() && archivo.isFile() && archivo.canRead();
+		} catch (SecurityException se) {return false;}
 	}
  	
  	/**
@@ -48,7 +46,9 @@ public class VerificadorArchivo {
 				directorio.delete();
 
 			return directorio.mkdirs() && directorio.isDirectory() && directorio.canWrite();
-		} catch (SecurityException se) {return false;}
+		} catch (SecurityException se) {return false;
+		} catch (IOException ioe) {return false;	}
+
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class VerificadorArchivo {
 	public static boolean verificaNuevoArchivo (File archivo) {
 		try {
 			return archivo.exists() || archivo.createNewFile();
-		} catch(SecurityException se) {return false;}
-		catch (IOException io) {return false;}
+		} catch(SecurityException se) {return false;
+		} catch (IOException io) {return false;}
 	}
 }

@@ -1,4 +1,4 @@
-package mx.unam.ciencias.edd.proyecto2;
+package mx.unam.ciencias.edd.proyecto3;
 
 /**
  * Genera un codigo SVG que representa una Estructura de datos.

@@ -1,4 +1,4 @@
-package mx.unam.ciencias.edd.proyecto2;
+package mx.unam.ciencias.edd.proyecto3;
 
 import mx.unam.ciencias.edd.ArbolAVL;
 import mx.unam.ciencias.edd.ArbolBinario;
@@ -24,7 +24,7 @@ public class GeneradorArbolAVLSVG<T extends Comparable<T>> extends GeneradorArbo
 	 * Regresa un vertice de con su elemento, altura, balance y sus correspondientes aristas en codigo SVG.
 	 * @return vertice de ArbolAVL
 	 */
-	protected String vertice(int x, int y, int radio, int distancia, VerticeArbolBinario<T> vertice) {
+	@Override protected String vertice(int x, int y, int radio, int distancia, VerticeArbolBinario<T> vertice) {
 		double trazo = 3;
 		double texto = 20;
 		int izquierdo = -1;
@@ -76,4 +76,6 @@ public class GeneradorArbolAVLSVG<T extends Comparable<T>> extends GeneradorArbo
 		return verticeSVG += String.format("<text fill='blue' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>{%d/%d}</text>",
 					texto - 2.5, x + radio + 3, y - radio - 5, vertice.altura(), izquierdo - derecho);
 	}
+
+	@Override public Lista<String> codigoSVG() {return super.codigoSVG();}
 }

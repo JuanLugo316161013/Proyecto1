@@ -182,11 +182,13 @@ public class Archivo {
 		GeneradorArbolAVLSVG generadorArbolAVLSVG = new GeneradorArbolAVLSVG(palabrasRepetidas);
 		GeneradorArbolRojinegroSVG generadorArbolRojinegroSVG = new GeneradorArbolRojinegroSVG(palabrasRepetidas);
 		EscritorArchivo escritor = new EscritorArchivo(arbolAVL);
-		for (String codigo : generadorArbolAVLSVG.codigoSVG())
+		Lista<String> codigoSVG = generadorArbolAVLSVG.codigoSVG();
+		for (String codigo : codigoSVG)
 			escritor.escribe(codigo);
 		escritor.cerrar();
-		EscritorArchivo escritor = new EscritorArchivo(arbolRojinegro);
-		for (String codigo : generadorArbolRojinegroSVG.codigoSVG())
+		escritor = new EscritorArchivo(arbolRojinegro);
+		codigoSVG = generadorArbolRojinegroSVG.codigoSVG();
+		for (String codigo : codigoSVG)
 			escritor.escribe(codigo);
 		escritor.cerrar();
 	}

@@ -1,4 +1,4 @@
-package mx.unam.ciencias.edd.proyecto2;
+package mx.unam.ciencias.edd.proyecto3;
 
 import mx.unam.ciencias.edd.ArbolBinario;
 import mx.unam.ciencias.edd.ArbolRojinegro;
