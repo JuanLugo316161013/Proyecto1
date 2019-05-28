@@ -134,6 +134,16 @@ public class Archivo {
 	}
 
 	/**
+	 * Nos dice si un archivo tiene una cadena (palabra).
+	 * @param cadena cadena a buscar en el archivo.
+	 * @return true si el archivo contiene la cadena, 
+	 *         false en otro caso.
+	 */
+	public boolean contiene(Cadena cadena) {
+		return palabras.contiene(cadena);
+	}
+
+	/**
 	 * Crea un archivo html correspondiente al Archivo con la siguiente informacion:
 	 *  <ol>
 	 *  	<li>El número de veces que se repite una palabra en el archivo del texto.</li>

@@ -3,6 +3,7 @@ package mx.unam.ciencias.edd.proyecto3;
 import java.lang.SecurityException;
 import java.io.IOException;
 import java.io.File;
+import java.io.FileNotFoundException;
 /**
  * Clase que valida archivos.
  * Verifica si pueden leerse, ecribirse, acceder o crearse archivos.
@@ -24,7 +25,10 @@ public class VerificadorArchivo {
 	 *         false en otro caso.
 	 */
 	public static boolean verificaArchivo(File archivo) {
-		try{return archivo.exists() && archivo.isFile() && archivo.canRead();}
+		try{
+			if (!archivo.exists())
+				throw new FileNotFoundException();
+			return archivo.isFile() && archivo.canRead();}
 		catch (SecurityException se) {return false;}
 	}
  	
@@ -40,9 +44,10 @@ public class VerificadorArchivo {
 	public static boolean verificaDirectorio(File directorio) {
 		try {
 			if (directorio.exists())
+
 				return directorio.isDirectory() && directorio.canWrite();
 
-			return directorio.isDirectory() && directorio.mkdir() && directorio.canWrite();
+			return directorio.isDirectory() && directorio.mkdirs() && directorio.canWrite();
 		} catch (SecurityException se) {return false;}
 	}
 }

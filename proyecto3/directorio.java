@@ -1,11 +1,14 @@
-import java.io.File;
+import java.io.*;
 
 public class directorio {
 	public static void main(String[] args) {
-		Integer[] n = new Integer[0];
-		for (Integer i : n)
-			System.out.println(i);
-
-		System.out.println(n.length);
+		try {
+			File directory = new File("../proyecto3/perro/gato/raton");	
+			directory = new File(directory.getCanonicalPath());
+			if (directory.mkdirs())
+				System.out.println("Yes ;^)");
+			File archivo = new File("perro/archivo.txt");
+			archivo.createNewFile();
+		} catch (IOException ioe) {}
 	}
 }
