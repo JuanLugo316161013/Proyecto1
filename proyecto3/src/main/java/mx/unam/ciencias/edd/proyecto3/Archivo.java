@@ -116,6 +116,10 @@ public class Archivo {
 		noPalabras = palabras.getElementos();
 	}
 
+	/**
+	 * Regresa las 15 palaras que más se repiten en el archivo en caso de existir;
+	 * @return Las 15 palabras que más se repiten en el archivo.
+	 */
 	private Palabra[] ordenaPalabras() {
 		int elementos = palabras.getElementos();
 		Palabra[] palabrasOrdenadas = new Palabra[elementos];
@@ -129,6 +133,15 @@ public class Archivo {
 			palabra = new Palabra(cadena.getCadena(), palabras.get(cadena).intValue());
 			palabrasOrdenadas[i] = palabra;
 		}
+
+		if (elementos > 15) {
+			Palabra[] aux = new Palabra[15];
+			int k = 0;
+			for (int j = elementos - 1; j > (elementos-16); j--)
+				aux[k++] = palabrasOrdenadas[j];
+			palabrasOrdenadas = aux;
+		}
+
 
 		Arreglos.quickSort(palabrasOrdenadas);
 		return palabrasOrdenadas;
@@ -157,30 +170,30 @@ public class Archivo {
 	 *		<li>Un árbol AVL con los mismos datos del árbol de arriba.</li>
 	 *	</ol>
 	 */
-	public void CreaHtml() {
-		if (!VerificadorArchivo.verificaNuevoArchivo(archivoHTML));
-			throw new IOException();
+	public void creaHtml() {
+		if (!VerificadorArchivo.verificaNuevoArchivo(archivoHTML))
+			throw new ExcepcionDirectorioInvalido();
 
 		File arbolAVL = new File(String.format("%s/%s_arbolAVL.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
 		File arbolRojinegro = new File(String.format("%s/%s_arbolRojinegro.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
 		File graficaPastel = new File(String.format("%s/%s_graficaPastel.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
 		File graficaBarras = new File(String.format("%s/%s_graficaBarras.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
 		
-		if (!VerificadorArchivo.verificaNuevoArchivo(arbolAVL));
-			throw new IOException();
+		if (!VerificadorArchivo.verificaNuevoArchivo(arbolAVL))
+			throw new ExcepcionDirectorioInvalido();
 
-		if (!VerificadorArchivo.verificaNuevoArchivo(arbolRojinegro));
-			throw new IOException();
+		if (!VerificadorArchivo.verificaNuevoArchivo(arbolRojinegro))
+			throw new ExcepcionDirectorioInvalido();
 
-		if (!VerificadorArchivo.verificaNuevoArchivo(graficaPastel));
-			throw new IOException();
+		if (!VerificadorArchivo.verificaNuevoArchivo(graficaPastel))
+			throw new ExcepcionDirectorioInvalido();
 
-		if (!VerificadorArchivo.verificaNuevoArchivo(graficaBarras));
-			throw new IOException();
+		if (!VerificadorArchivo.verificaNuevoArchivo(graficaBarras))
+			throw new ExcepcionDirectorioInvalido();
 
 		Palabra[] palabrasRepetidas = ordenaPalabras();
-		GeneradorArbolAVLSVG generadorArbolAVLSVG = new GeneradorArbolAVLSVG(palabrasRepetidas);
-		GeneradorArbolRojinegroSVG generadorArbolRojinegroSVG = new GeneradorArbolRojinegroSVG(palabrasRepetidas);
+		GeneradorArbolAVLSVG<Palabra> generadorArbolAVLSVG = new GeneradorArbolAVLSVG<Palabra>(palabrasRepetidas);
+		GeneradorArbolRojinegroSVG<Palabra> generadorArbolRojinegroSVG = new GeneradorArbolRojinegroSVG<Palabra>(palabrasRepetidas);
 		EscritorArchivo escritor = new EscritorArchivo(arbolAVL);
 		Lista<String> codigoSVG = generadorArbolAVLSVG.codigoSVG();
 		for (String codigo : codigoSVG)

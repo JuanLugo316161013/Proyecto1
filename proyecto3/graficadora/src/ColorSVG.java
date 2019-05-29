@@ -5,7 +5,7 @@
 public enum ColorSVG {
 
 	/** Colores para graficas en svg */
-	BURLYWOOD("burlywood"), MARRON("maroon"), PURPLE("purble"), LEMONCHIFFON("lemonchiffon"), 
+	DARKSLATEGRAY("darkslategray"), BROWN("brown"), PURPLE("purple"), LEMONCHIFFON("lemonchiffon"), 
 	MEDIUMBLUE("mediumblue"), MEDIUMSEAGREEN("mediumseagreen"), YELLOW("yellow"), ORANGE("orange"), 
 	ORANGERED ("orangered"), DARKRED("darkred"), TOMATO("tomato"), DARKSLATEBLUE("darkslateblue"),
 	SEAGREEN("seagreen"), DARKBLUE("darkblue"), LIGTHSALMON("lightsalmon"),KHAKI("khaki"),

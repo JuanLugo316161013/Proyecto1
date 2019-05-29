@@ -43,7 +43,7 @@ public class VerificadorArchivo {
 		try {
 			directorio = new File(directorio.getCanonicalPath());
 			if (directorio.exists())
-				directorio.delete();
+				return directorio.isDirectory() && directorio.canWrite();
 
 			return directorio.mkdirs() && directorio.isDirectory() && directorio.canWrite();
 		} catch (SecurityException se) {return false;

@@ -4,6 +4,7 @@ mx/unam/ciencias/edd/test/TestLista$Par.class
 mx/unam/ciencias/edd/test/TestValorIndexable.class
 mx/unam/ciencias/edd/test/TestGrafica.class
 mx/unam/ciencias/edd/test/TestArbolAVL.class
+mx/unam/ciencias/edd/test/TestConjunto.class
 mx/unam/ciencias/edd/test/TestCola.class
 mx/unam/ciencias/edd/test/UtilTestArbolBinario.class
 mx/unam/ciencias/edd/test/TestDiccionario.class
