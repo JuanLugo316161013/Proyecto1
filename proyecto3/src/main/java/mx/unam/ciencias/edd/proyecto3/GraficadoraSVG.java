@@ -84,7 +84,8 @@ public class GraficadoraSVG<T extends DatoGraficable<T>>{
 		xi, yi, xf, yf, fondo.toString());
 		grafica += String.format("<rect x='40' y='%d' width='20' height='20' fill='%s'/>\n",dy,fondo.toString());
 		grafica += String.format("<text fill='black' font-family='sans-serif' font-size='18' x='240' dy='%d' text-anchor='middle'>%s</text>",dy + 16,"otros");
-		return grafica += "</svg>";
+		return grafica += "\n</svg>";
+
 	}
 
 	/**
