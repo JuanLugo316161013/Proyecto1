@@ -7,8 +7,8 @@ mx/unam/ciencias/edd/test/TestArbolAVL.class
 mx/unam/ciencias/edd/test/TestConjunto.class
 mx/unam/ciencias/edd/test/TestCola.class
 mx/unam/ciencias/edd/test/UtilTestArbolBinario.class
-mx/unam/ciencias/edd/test/TestDiccionario.class
 mx/unam/ciencias/edd/test/TestArreglos.class
+mx/unam/ciencias/edd/test/TestDiccionario.class
 mx/unam/ciencias/edd/test/TestArbolRojinegro$1.class
 mx/unam/ciencias/edd/test/TestMonticuloMinimo.class
 mx/unam/ciencias/edd/test/TestGrafica$1.class

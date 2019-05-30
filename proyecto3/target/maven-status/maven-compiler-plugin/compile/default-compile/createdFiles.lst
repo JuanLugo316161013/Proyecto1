@@ -3,14 +3,14 @@ mx/unam/ciencias/edd/ArbolAVL.class
 mx/unam/ciencias/edd/proyecto3/GeneradorArbolAVLSVG.class
 mx/unam/ciencias/edd/proyecto3/Archivo$Palabra.class
 mx/unam/ciencias/edd/proyecto3/Cadena.class
-mx/unam/ciencias/edd/proyecto3/GeneradorArbolRojinegroSVG$1.class
 mx/unam/ciencias/edd/Dispersores.class
+mx/unam/ciencias/edd/proyecto3/GeneradorArbolRojinegroSVG$1.class
 mx/unam/ciencias/edd/MonticuloMinimo$Adaptador.class
 mx/unam/ciencias/edd/FabricaDispersores.class
 mx/unam/ciencias/edd/ArbolBinarioCompleto$Iterador.class
 mx/unam/ciencias/edd/ExcepcionIndiceInvalido.class
-mx/unam/ciencias/edd/MonticuloMinimo$1.class
 mx/unam/ciencias/edd/proyecto3/GeneradorArbolRojinegroSVG.class
+mx/unam/ciencias/edd/MonticuloMinimo$1.class
 mx/unam/ciencias/edd/proyecto3/ExcepcionBanderaRepetida.class
 mx/unam/ciencias/edd/ArbolRojinegro$VerticeRojinegro.class
 mx/unam/ciencias/edd/ArbolAVL$VerticeAVL.class

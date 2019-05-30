@@ -175,7 +175,8 @@ public class Archivo {
 			throw new ExcepcionDirectorioInvalido();
 
 		Palabra[] palabrasRepetidas = ordenaPalabras();
-		creaGraficas
+		creaGraficas(palabrasRepetidas);
+		
 	}
 
 	/**
@@ -203,7 +204,7 @@ public class Archivo {
 			throw new ExcepcionDirectorioInvalido();
 
 		GeneradorArbolAVLSVG<Palabra> generadorArbolAVLSVG = new GeneradorArbolAVLSVG<Palabra>(palabrasRepetidas);
-		GeneradorArbolRojinegroSVG<Palabra> generadorArbolRojinegroSVG = new GeneradorArbolRojinegroSVG<Palabra>(palabrasRepetidas);
+		GeneradorArbolRojinegroSVG<Palabra> generadorArbolRojinegroSVG = new GeneradorArbolRojinegroSVG<Palabra>(llenaArbolRojonegro(palabrasRepetidas));
 		EscritorArchivo escritor = new EscritorArchivo(arbolAVL);
 		Lista<String> codigoSVG = generadorArbolAVLSVG.codigoSVG();
 		for (String codigo : codigoSVG)
@@ -215,4 +216,98 @@ public class Archivo {
 			escritor.escribe(codigo);
 		escritor.cerrar();
 	}
+
+	/**
+	 * Devuelve un arreglo ordenado para que el ArbolRojinegro que se forme de dicho arreglo, tenga la menor altura posible
+	 * @param palabras elementos en el ArbolRojinegro.
+	 */
+	private Palabra[] llenaArbolRojonegro(Palabra[] palabras) {
+		Palabra[] arbolRojinegro = null;
+		switch (arbolRojinegro.length) {
+			case 10 :
+				arbolRojinegro = new Palabra[palabras.length]; 
+				arbolRojinegro[0] = palabras[3];
+				arbolRojinegro[1] = palabras[1];
+				arbolRojinegro[2] = palabras[7];
+				arbolRojinegro[3] = palabras[0];
+				arbolRojinegro[4] = palabras[2];
+				arbolRojinegro[5] = palabras[5];
+				arbolRojinegro[6] = palabras[8];
+				arbolRojinegro[7] = palabras[4];
+				arbolRojinegro[8] = palabras[6];
+				arbolRojinegro[9] = palabras[9];
+			break;
+
+			case 11:
+				arbolRojinegro = new Palabra[palabras.length];
+				arbolRojinegro[0] = palabras[3];
+				arbolRojinegro[1] = palabras[1];
+				arbolRojinegro[2] = palabras[7];
+				arbolRojinegro[3] = palabras[0];
+				arbolRojinegro[4] = palabras[2];
+				arbolRojinegro[5] = palabras[5];
+				arbolRojinegro[6] = palabras[9];
+				arbolRojinegro[7] = palabras[4];
+				arbolRojinegro[8] = palabras[6];
+				arbolRojinegro[9] = palabras[8];
+				arbolRojinegro[10] = palabras[10];
+			break;
+
+			case 12:
+				arbolRojinegro = new Palabra[palabras.length]; 
+				arbolRojinegro[0] = palabras[7];
+				arbolRojinegro[1] = palabras[3];
+				arbolRojinegro[2] = palabras[9];
+				arbolRojinegro[3] = palabras[1];
+				arbolRojinegro[4] = palabras[5];
+				arbolRojinegro[5] = palabras[8];
+				arbolRojinegro[6] = palabras[10];
+				arbolRojinegro[7] = palabras[0];
+				arbolRojinegro[8] = palabras[2];
+				arbolRojinegro[9] = palabras[4];
+				arbolRojinegro[10] = palabras[6];
+				arbolRojinegro[11] = palabras[11];
+			break;
+
+			case 13: 
+				arbolRojinegro = new Palabra[palabras.length];
+				arbolRojinegro[0] = palabras[7];
+				arbolRojinegro[1] = palabras[3];
+				arbolRojinegro[2] = palabras[9];
+				arbolRojinegro[3] = palabras[1];
+				arbolRojinegro[4] = palabras[5];
+				arbolRojinegro[5] = palabras[8];
+				arbolRojinegro[6] = palabras[11];
+				arbolRojinegro[7] = palabras[0];
+				arbolRojinegro[8] = palabras[2];
+				arbolRojinegro[9] = palabras[4];
+				arbolRojinegro[10] = palabras[6];
+				arbolRojinegro[11] = palabras[10];
+				arbolRojinegro[12] = palabras[12];
+			break;
+			case 14: 
+				arbolRojinegro = new Palabra[palabras.length];
+				arbolRojinegro[0] = palabras[7];
+				arbolRojinegro[1] = palabras[3];
+				arbolRojinegro[2] = palabras[11];
+				arbolRojinegro[3] = palabras[1];
+				arbolRojinegro[4] = palabras[5];
+				arbolRojinegro[5] = palabras[9];
+				arbolRojinegro[6] = palabras[13];
+				arbolRojinegro[7] = palabras[0];
+				arbolRojinegro[8] = palabras[2];
+				arbolRojinegro[9] = palabras[4];
+				arbolRojinegro[10] = palabras[6];
+				arbolRojinegro[11] = palabras[8];
+				arbolRojinegro[12] = palabras[10];
+				arbolRojinegro[13] = palabras[12];
+				arbolRojinegro[14] = palabras[14];
+			break;
+
+			default:
+				arbolRojinegro = palabras;
+			break;
+		}
+		return arbolRojinegro;
+	} 
 }

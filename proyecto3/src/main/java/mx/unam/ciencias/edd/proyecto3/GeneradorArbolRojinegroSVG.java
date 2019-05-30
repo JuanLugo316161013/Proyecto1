@@ -66,4 +66,26 @@ public class GeneradorArbolRojinegroSVG<T extends Comparable<T>> extends Generad
 		return verticeSVG += String.format("<text fill='white' font-family='sans-serif' font-size='%.1f' x='%d' y='%d' text-anchor='middle'>%s</text>\n",
 			texto, x, y + 6, vertice.get());
 	}
+
+	public static void main(String[] args) {
+		Integer[] arbolRojinegro = new Integer[15];
+				arbolRojinegro[0] = new Integer (7);
+				arbolRojinegro[1] = new Integer (3);
+				arbolRojinegro[2] = new Integer (11);
+				arbolRojinegro[3] = new Integer (1);
+				arbolRojinegro[4] = new Integer (5);
+				arbolRojinegro[5] = new Integer (9);
+				arbolRojinegro[6] = new Integer (13);
+				arbolRojinegro[7] = new Integer (0);
+				arbolRojinegro[8] = new Integer (2);
+				arbolRojinegro[9] = new Integer (4);
+				arbolRojinegro[10] = new Integer (6);
+				arbolRojinegro[11] = new Integer (8);
+				arbolRojinegro[12] = new Integer (10);
+				arbolRojinegro[13] = new Integer (12);
+				arbolRojinegro[14] = new Integer (14);
+		GeneradorArbolRojinegroSVG<Integer> generador = new GeneradorArbolRojinegroSVG<Integer>(arbolRojinegro);
+		for (String codigo : generador.codigoSVG())
+			System.out.print(codigo);
+	}
 }

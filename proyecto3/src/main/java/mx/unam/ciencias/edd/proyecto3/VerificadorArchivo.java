@@ -28,7 +28,8 @@ public class VerificadorArchivo {
 		try{
 			archivo = new File(archivo.getCanonicalPath());
 			return archivo.exists() && archivo.isFile() && archivo.canRead();
-		} catch (SecurityException se) {return false;}
+		} catch (SecurityException se) {return false;
+		} catch (IOException ioe) {return false;}
 	}
  	
  	/**

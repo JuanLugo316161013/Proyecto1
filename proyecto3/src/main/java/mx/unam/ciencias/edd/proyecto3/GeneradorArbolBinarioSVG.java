@@ -147,8 +147,6 @@ public abstract class GeneradorArbolBinarioSVG<T> extends GeneradorEstructuraSVG
 		codigoSVG.agrega(String.format("<svg width='%d' height='%d' xmlns='http://www.w3.org/2000/svg'>\n\n", distancia * 4 + 80, (altura + 1) * 120));
 		bfsSVG(x,y,radio,distancia, arbolBinario.raiz(),codigoSVG);
 		codigoSVG.agrega("\n</svg>");
-		for (String cadena : codigoSVG)
-			System.out.print(cadena);
 		return codigoSVG;
 	}
 }
