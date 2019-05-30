@@ -174,6 +174,17 @@ public class Archivo {
 		if (!VerificadorArchivo.verificaNuevoArchivo(archivoHTML))
 			throw new ExcepcionDirectorioInvalido();
 
+		Palabra[] palabrasRepetidas = ordenaPalabras();
+		creaGraficas
+	}
+
+	/**
+	 * Crea las graficas correspondientes al archivo.
+	 * @param palabrasRepetidas palabras que se van a graficar.
+	 * @return true si las graficas se crearon con exito
+	 *         false en otro caso.
+	 */
+	private void creaGraficas(Palabra[] palabrasRepetidas) {
 		File arbolAVL = new File(String.format("%s/%s_arbolAVL.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
 		File arbolRojinegro = new File(String.format("%s/%s_arbolRojinegro.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
 		File graficaPastel = new File(String.format("%s/%s_graficaPastel.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
@@ -191,7 +202,6 @@ public class Archivo {
 		if (!VerificadorArchivo.verificaNuevoArchivo(graficaBarras))
 			throw new ExcepcionDirectorioInvalido();
 
-		Palabra[] palabrasRepetidas = ordenaPalabras();
 		GeneradorArbolAVLSVG<Palabra> generadorArbolAVLSVG = new GeneradorArbolAVLSVG<Palabra>(palabrasRepetidas);
 		GeneradorArbolRojinegroSVG<Palabra> generadorArbolRojinegroSVG = new GeneradorArbolRojinegroSVG<Palabra>(palabrasRepetidas);
 		EscritorArchivo escritor = new EscritorArchivo(arbolAVL);

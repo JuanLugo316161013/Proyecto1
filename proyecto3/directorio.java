@@ -3,12 +3,8 @@ import java.io.*;
 public class directorio {
 	public static void main(String[] args) {
 		try {
-			File directory = new File("../proyecto3/perro/gato/raton");	
-			directory = new File(directory.getCanonicalPath());
-			if (directory.mkdirs())
-				System.out.println("Yes ;^)");
-			File archivo = new File("perro/archivo.txt");
-			archivo.createNewFile();
+			File archivo = new File("../proyecto3/graficadora/archivo.html");
+			System.out.println(archivo.getCanonicalPath());
 		} catch (IOException ioe) {}
 	}
 }

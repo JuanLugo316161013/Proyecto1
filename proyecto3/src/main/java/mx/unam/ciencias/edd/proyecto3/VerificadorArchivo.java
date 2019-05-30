@@ -26,6 +26,7 @@ public class VerificadorArchivo {
 	 */
 	public static boolean verificaArchivo(File archivo) {
 		try{
+			archivo = new File(archivo.getCanonicalPath());
 			return archivo.exists() && archivo.isFile() && archivo.canRead();
 		} catch (SecurityException se) {return false;}
 	}
@@ -59,6 +60,7 @@ public class VerificadorArchivo {
 	 */
 	public static boolean verificaNuevoArchivo (File archivo) {
 		try {
+			archivo = new File(archivo.getCanonicalPath());
 			return archivo.exists() || archivo.createNewFile();
 		} catch(SecurityException se) {return false;
 		} catch (IOException io) {return false;}
