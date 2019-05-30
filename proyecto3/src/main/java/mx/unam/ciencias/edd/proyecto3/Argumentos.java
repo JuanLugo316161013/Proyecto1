@@ -18,6 +18,7 @@ public class Argumentos {
 	 * @param args argumentos de la entrada estandar.
 	 */
 	public Argumentos(String[] args) {
+		archivosTexto = new Lista<File>();
 		int bandera_O = 0;
 
 		for (int i = 0; i < args.length; i++) {

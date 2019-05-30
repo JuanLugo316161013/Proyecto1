@@ -61,7 +61,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="mx.unam.ciencias.edd.test.TestFabricaDispersores" name="testDispersorCadenaDJB" time="0.001"/>
+  <testcase classname="mx.unam.ciencias.edd.test.TestFabricaDispersores" name="testDispersorCadenaDJB" time="0.002"/>
   <testcase classname="mx.unam.ciencias.edd.test.TestFabricaDispersores" name="testDispersorCadenaXOR" time="0.001"/>
-  <testcase classname="mx.unam.ciencias.edd.test.TestFabricaDispersores" name="testDispersorCadenaBJ" time="0.002"/>
+  <testcase classname="mx.unam.ciencias.edd.test.TestFabricaDispersores" name="testDispersorCadenaBJ" time="0.001"/>
 </testsuite>

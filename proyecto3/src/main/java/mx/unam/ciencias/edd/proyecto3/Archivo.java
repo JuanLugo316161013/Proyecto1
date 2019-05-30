@@ -79,6 +79,12 @@ public class Archivo {
 	/* Número de palabras ene le archivo. */
 	private int noPalabras;
 
+	/** Si el archivo esta marcado*/
+	protected boolean marcado;
+
+	/** Graficas asociadas al archivo */
+	File arbolAVL, arbolRojinegro, graficaPastel, graficaBarras;
+
 	/**
 	 * Constructor que recibe un archivo de texto y la direccion en donde se creara su archivoHTML.
 	 * @param archivoTexto archivo de texto asociado al Archivo.
@@ -113,11 +119,16 @@ public class Archivo {
 		}
 		lector.cerrar();
 		archivoHTML = new File(String.format("%s/%s(html).html",directorio.getAbsolutePath(),archivoTexto.getName()));
+		arbolAVL = new File(String.format("%s/%s_arbolAVL.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
+		arbolRojinegro = new File(String.format("%s/%s_arbolRojinegro.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
+		graficaPastel = new File(String.format("%s/%s_graficaPastel.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
+		graficaBarras = new File(String.format("%s/%s_graficaBarras.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
 		noPalabras = palabras.getElementos();
+		creaHtml();
 	}
 
 	/**
-	 * Regresa las 15 palaras que más se repiten en el archivo en caso de existir;
+	 * Regresa las 15 palabras que más se repiten en el archivo en caso de existir;
 	 * @return Las 15 palabras que más se repiten en el archivo.
 	 */
 	private Palabra[] ordenaPalabras() {
@@ -169,14 +180,61 @@ public class Archivo {
 	 *			valor de cada palabra es el número de veces que aparece en el archivo.</li>
 	 *		<li>Un árbol AVL con los mismos datos del árbol de arriba.</li>
 	 *	</ol>
+	 * @throws ExcepcionDirectorioInvalido si algun archivo no se pudo crear en el directorio seleccionado.
 	 */
 	public void creaHtml() {
 		if (!VerificadorArchivo.verificaNuevoArchivo(archivoHTML))
 			throw new ExcepcionDirectorioInvalido();
-
+		Iterator<Cadena> iterador = palabras.iteradorLlaves();
+		Cadena llave;
 		Palabra[] palabrasRepetidas = ordenaPalabras();
 		creaGraficas(palabrasRepetidas);
-		
+		EscritorArchivo escritor = new EscritorArchivo(archivoHTML);
+		escritor.escribe("<!DOCTYPE HTML>\n");
+		escritor.escribe("<html>\n");
+		escritor.escribe("<head>\n");
+		escritor.escribe("<meta charset='UTF-8'>\n");
+		escritor.escribe(String.format("<title>%s</title>\n",archivoTexto.getName()));
+		escritor.escribe("</head>\n");
+		escritor.escribe("<body>\n");
+		escritor.escribe("<header>\n");
+		escritor.escribe(String.format("<h1>%s</h1>\n",archivoTexto.getName()));
+		escritor.escribe("</header>\n");
+		escritor.escribe("<h2>Conteo de palabrás en el archivo.</h2>\n");
+		escritor.escribe("<ul>\n");
+		while (iterador.hasNext()) {
+			llave = iterador.next();
+			escritor.escribe(String.format("<li>%s : %d</li>\n",llave.getCadena(),palabras.get(llave).intValue()));
+		}
+		escritor.escribe("</ul>\n");
+		escritor.escribe("<figure>\n");
+		escritor.escribe(String.format("<img src = '%s' alt='Grafica de pastel con las palabras más comunes en el archivo'\ntitle= 'Grafica de pastel con las palabras más comunes en el archivo '\n",
+			graficaPastel.getAbsolutePath()));
+		escritor.escribe("<figcaption>Grafica de pastel con las palabras más comunes en el archivo</figcaption>\n");
+		escritor.escribe("</figure>\n");
+		escritor.escribe("<figure>\n");
+		escritor.escribe(String.format("<img src = '%s' alt='Grafica de pastel con las palabras más comunes en el archivo'\ntitle= 'Grafica de pastel con las palabras más comunes en el archivo '\n",
+			graficaBarras.getAbsolutePath()));
+		escritor.escribe("<figcaption>Grafica de pastel con las palabras más comunes en el archivo</figcaption>\n");
+		escritor.escribe("</figure>\n");
+		escritor.escribe("<h2>Palabras más frecuentes en el archivo, ordenadas de menor a mayor.</h2>\n");
+		escritor.escribe("<ol>\n");
+		for (Palabra palabra : palabrasRepetidas)
+			escritor.escribe(String.format("<li>%s : %d</li>\n",palabra.palabra, palabra.frecuencia));
+		escritor.escribe("</ol>\n");
+		escritor.escribe("<figure>\n");
+		escritor.escribe(String.format("<img src = '%s' alt='ArbolRojinegro con las 15 palabras más utilizadas en el archivo'\ntitle= 'ArbolRojinegro con las 15 palabras más utilizadas en el archivo '\n",
+			arbolRojinegro.getAbsolutePath()));
+		escritor.escribe("<figcaption>ArbolRojinegro con las 15 palabras más utilizadas en el archivo</figcaption>\n");
+		escritor.escribe("</figure>\n");
+		escritor.escribe("<figure>\n");
+		escritor.escribe(String.format("<img src = '%s' alt='ArbolAVL con las 15 palabras más utilizadas en el archivo'\ntitle= 'ArbolAVL con las 15 palabras más utilizadas en el archivo '\n",
+			arbolAVL.getAbsolutePath()));
+		escritor.escribe("<figcaption>ArbolAVL con las 15 palabras más utilizadas en el archivo</figcaption>\n");
+		escritor.escribe("</figure>\n");
+		escritor.escribe("</body>\n");
+		escritor.escribe("</html>");
+		escritor.cerrar();
 	}
 
 	/**
@@ -184,13 +242,9 @@ public class Archivo {
 	 * @param palabrasRepetidas palabras que se van a graficar.
 	 * @return true si las graficas se crearon con exito
 	 *         false en otro caso.
+	 * @throws ExcepcionDirectorioInvalido si algun archivo no se pudo crear en el directorio seleccionado.
 	 */
 	private void creaGraficas(Palabra[] palabrasRepetidas) {
-		File arbolAVL = new File(String.format("%s/%s_arbolAVL.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
-		File arbolRojinegro = new File(String.format("%s/%s_arbolRojinegro.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
-		File graficaPastel = new File(String.format("%s/%s_graficaPastel.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
-		File graficaBarras = new File(String.format("%s/%s_graficaBarras.svg",archivoHTML.getAbsolutePath(),archivoTexto.getName()));
-		
 		if (!VerificadorArchivo.verificaNuevoArchivo(arbolAVL))
 			throw new ExcepcionDirectorioInvalido();
 
@@ -223,7 +277,7 @@ public class Archivo {
 	 */
 	private Palabra[] llenaArbolRojonegro(Palabra[] palabras) {
 		Palabra[] arbolRojinegro = null;
-		switch (arbolRojinegro.length) {
+		switch (palabras.length) {
 			case 10 :
 				arbolRojinegro = new Palabra[palabras.length]; 
 				arbolRojinegro[0] = palabras[3];
@@ -309,5 +363,5 @@ public class Archivo {
 			break;
 		}
 		return arbolRojinegro;
-	} 
+	}
 }
