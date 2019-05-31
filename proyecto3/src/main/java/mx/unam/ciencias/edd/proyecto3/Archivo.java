@@ -26,7 +26,7 @@ public class Archivo {
 	/**
 	 * Clase que contiene una palabra del Archivo, y el número de veces que aparece en el Archivo.
 	 */
-	protected class Palabra implements Comparable<Palabra>, DatoGraficable<Palabra>{
+	protected class Palabra implements DatoGraficable<Palabra>{
 		
 		/* Palabra en el archivo de texto. */
 		public String palabra;
@@ -44,16 +44,7 @@ public class Archivo {
 			this.palabra = palabra;
 			this.frecuencia = frecuencia;
 		}
-
-		/**
-	     * Compara un Palabra con otro Palabra.
-	     * @param palabra Palabra de la palabra.
-	     * @return un valor menor que cero si el Palabra que llama el método
-	     *         es menor que el parámetro; cero si son iguales; o mayor que cero
-	     *         si es mayor.
-	     */
-		@Override public int compareTo(Palabra palabra) {return frecuencia - palabra.frecuencia;}
-
+		
 		/**
 		 * Devuelve el elemento de un Dato Palabra.
 		 * @return elemento del Dato Palabra.
@@ -82,6 +73,9 @@ public class Archivo {
 	/** Si el archivo esta marcado*/
 	protected boolean marcado;
 
+	/** Palabras en el archivo con el numero de veces que esta en el archivo */
+	private Lista<Palabra> palabrasContadas;
+
 	/** Graficas asociadas al archivo */
 	File arbolAVL, arbolRojinegro, graficaPastel, graficaBarras;
 
@@ -94,36 +88,37 @@ public class Archivo {
 		this.archivoTexto = archivoTexto;
 		LectorArchivo lector = new LectorArchivo(archivoTexto);
 		palabras = new Diccionario<Cadena,Integer>();
+		palabrasContadas = new Lista<Palabra>();
+		Iterator<Cadena> iterador;
 		Cadena cadena;
 		String linea;
-		String palabra = "";
 		Integer i;
 		while ((linea = lector.leer()) != null) {
-			for (int j = 0; j < linea.length(); j++) {
-				if (linea.charAt(j) < 33) {
-					if (!palabras.equals("")) {
-						cadena = new Cadena(palabra);
-						if (palabras.contiene(cadena)) {
-							i = new Integer(palabras.get(cadena).intValue());
-							palabras.agrega(cadena,i);
-						} else {
-							i = new Integer(1);
-							palabras.agrega(cadena,i);
-						}
-						palabra = "";
-					}
-					continue;
+			for (String palabra : linea.split("\\P{L}+")) {
+				cadena = new Cadena(palabra);
+				if (palabras.contiene(cadena)) {
+					i = new Integer(palabras.get(cadena).intValue()+1);
+					palabras.agrega(cadena,i);
+				} else {
+					i = new Integer(1);
+					palabras.agrega(cadena,i);
 				}
-				palabra += linea.charAt(j);
 			}
 		}
 		lector.cerrar();
+		iterador = palabras.iteradorLlaves();
+		int j;
+		while (iterador.hasNext()) {
+			cadena = iterador.next();
+			j = palabras.get(cadena).intValue();
+			palabrasContadas.agrega(new Palabra(cadena.getCadena(),j));
+			noPalabras += j;
+		}
 		archivoHTML = new File(String.format("%s/%s(html).html",directorio.getAbsolutePath(),archivoTexto.getName()));
 		arbolAVL = new File(String.format("%s/%s_arbolAVL.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
 		arbolRojinegro = new File(String.format("%s/%s_arbolRojinegro.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
 		graficaPastel = new File(String.format("%s/%s_graficaPastel.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
 		graficaBarras = new File(String.format("%s/%s_graficaBarras.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
-		noPalabras = palabras.getElementos();
 	}
 
 	/**
@@ -132,29 +127,39 @@ public class Archivo {
 	 */
 	private Palabra[] ordenaPalabras() {
 		int elementos = palabras.getElementos();
-		Palabra[] palabrasOrdenadas = new Palabra[elementos];
-		Iterator<Cadena> iterador = palabras.iteradorLlaves();
+		Palabra[] palabrasOrdenadas;
+		Palabra p;
+		if (elementos > 15) 
+			palabrasOrdenadas = new Palabra[15];
+		else
+			palabrasOrdenadas = new Palabra[elementos];
 
-		Palabra palabra;
-		Cadena cadena;
-
-		for (int i = 0; iterador.hasNext(); i++) {
-			cadena = iterador.next();
-			palabra = new Palabra(cadena.getCadena(), palabras.get(cadena).intValue());
-			palabrasOrdenadas[i] = palabra;
+		elementos = palabrasOrdenadas.length;
+		for (Palabra palabra : palabrasContadas) {
+			for (int i = 0; i < elementos; i++) {
+				if (palabrasOrdenadas[i] == null) {
+					palabrasOrdenadas[i] = palabra;
+				} else {
+					if (palabra.frecuencia > palabrasOrdenadas[i].frecuencia) {
+						try {
+							for (int j = elementos-1; j > i; j++) {
+								palabrasOrdenadas[j] = palabrasOrdenadas[j-1];
+							}
+						} catch (ArrayIndexOutOfBoundsException aiobe) {}
+						palabrasOrdenadas[i] = palabra;
+					}
+				}
+			}
 		}
-
-		if (elementos > 15) {
-			Palabra[] aux = new Palabra[15];
-			int k = 0;
-			for (int j = elementos - 1; j > (elementos-16); j--)
-				aux[k++] = palabrasOrdenadas[j];
-			palabrasOrdenadas = aux;
-		}
-
-
-		Arreglos.quickSort(palabrasOrdenadas);
 		return palabrasOrdenadas;
+	}
+
+	private void recorrerArreglo(Palabra[] arreglo, Palabra elemento, int i) {
+		Palabra palabra = arreglo[i];
+		arreglo[i] = elemento;
+		if (i == arreglo.length - 1)
+			return;
+		recorrerArreglo(arreglo,palabra,i+1);
 	}
 
 	/**
@@ -258,7 +263,7 @@ public class Archivo {
 			throw new ExcepcionDirectorioInvalido();
 
 		Integer[] arbolBalanceado = llenaArbolBalaceado(palabrasRepetidas);
-		GraficadoraSVG<Palabra> graficadora = new GraficadoraSVG<Palabra>(palabrasRepetidas,palabras.getElementos());
+		GraficadoraSVG<Palabra> graficadora = new GraficadoraSVG<Palabra>(palabrasRepetidas,noPalabras);
 		GeneradorArbolAVLSVG<Integer> generadorArbolAVLSVG = new GeneradorArbolAVLSVG<Integer>(arbolBalanceado);
 		GeneradorArbolRojinegroSVG<Integer> generadorArbolRojinegroSVG = new GeneradorArbolRojinegroSVG<Integer>(arbolBalanceado);
 		EscritorArchivo escritor = new EscritorArchivo(arbolAVL);
@@ -347,6 +352,7 @@ public class Archivo {
 				arbolRojinegro[11] = 10;
 				arbolRojinegro[12] = 12;
 			break;
+			
 			case 14: 
 				arbolRojinegro = new Integer[palabras.length];
 				arbolRojinegro[0] = 7;

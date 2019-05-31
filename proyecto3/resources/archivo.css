@@ -7,9 +7,12 @@ header
 
 ul 
 {
-  list-style:none;
   text-align: left;
-  font: 150% sans-serif;
+  font: 150% sans-serif;.columnas{
+  column-count: 5; /* número de columnas */
+  column-gap: 100px; /* ancho de columnas */
+  -moz-column-count: 5; /* Firefox */
+  column-rule: 5px outset #999999; /* separación de columnas */
 }
 
 ol
