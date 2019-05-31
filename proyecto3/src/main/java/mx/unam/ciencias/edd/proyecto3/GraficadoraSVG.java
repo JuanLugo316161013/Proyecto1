@@ -44,7 +44,7 @@ public class GraficadoraSVG<T extends DatoGraficable<T>>{
 	 * @param datos datos de la grafica.
 	 * @param valorTotal valor total de lo datos.
 	 */
-	private GraficadoraSVG(T[] datos, int valorTotal) {
+	public GraficadoraSVG(T[] datos, int valorTotal) {
 		this.datos = datos;
 		this.valorTotal = valorTotal;
 	}
@@ -80,7 +80,7 @@ public class GraficadoraSVG<T extends DatoGraficable<T>>{
 			angulo += 360/(	(double)valorTotal/(double)elemento.frecuencia());
 			xf = 240 + radio*Math.cos(Math.toRadians(angulo));
 			yf = 240 + radio*Math.sin(Math.toRadians(angulo));
-			grafica += String.format("<path d='M 240 240 L %.4f %.4f A 200 200 0 %d 1 %.4f %.4f z' fill='%s' stroke-width='2' stroke='white'/>\n",
+			grafica += String.format("<path d='M 240 240 L %.4f %.4f A 200 200 0 %d 1 %.4f %.4f z' fill='%s' stroke-width='1' stroke='white'/>\n",
 			xi, yi, elemento.frecuencia() > valorTotal/2? 1 : 0 , xf, yf, colores[i].toString());
 			grafica += String.format("<rect x='40' y='%d' width='20' height='20' fill='%s'/>\n",dy,colores[i].toString());
 			grafica += String.format("<text fill='black' font-family='sans-serif' font-size='18' x='240' y='%d' text-anchor='middle'>%s</text>\n",dy + 16,elemento.get());
@@ -93,7 +93,7 @@ public class GraficadoraSVG<T extends DatoGraficable<T>>{
 		angulo += 360/(	(double)valorTotal/(double)(valorTotal - frecuenciaAcumulada));
 		xf = 240 + radio*Math.cos(Math.toRadians(angulo));
 		yf = 240 + radio*Math.sin(Math.toRadians(angulo));
-		grafica += String.format("<path d='M 240 240 L %.4f %.4f A 200 200 0 %d 1 %.4f %.4f z' fill='%s' stroke-width='2' stroke='white'/>\n",
+		grafica += String.format("<path d='M 240 240 L %.4f %.4f A 200 200 0 %d 1 %.4f %.4f z' fill='%s' stroke-width='1' stroke='white'/>\n",
 		xi, yi, frecuenciaAcumulada > valorTotal/2 ? 0 : 1, xf, yf, fondo.toString());
 		grafica += String.format("<rect x='40' y='%d' width='20' height='20' fill='%s'/>\n",dy,fondo.toString());
 		grafica += String.format("<text fill='black' font-family='sans-serif' font-size='18' x='240' y='%d' text-anchor='middle'>%s</text>\n",dy + 16,"otros");

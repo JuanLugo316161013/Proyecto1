@@ -124,7 +124,6 @@ public class Archivo {
 		graficaPastel = new File(String.format("%s/%s_graficaPastel.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
 		graficaBarras = new File(String.format("%s/%s_graficaBarras.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
 		noPalabras = palabras.getElementos();
-		creaHtml();
 	}
 
 	/**
@@ -195,6 +194,7 @@ public class Archivo {
 		escritor.escribe("<head>\n");
 		escritor.escribe("<meta charset='UTF-8'>\n");
 		escritor.escribe(String.format("<title>%s</title>\n",archivoTexto.getName()));
+		escritor.escribe("<link rel='stylesheet' href='/home/lugo/Proyectos/proyecto3/resources/archivo.css'>"); 
 		escritor.escribe("</head>\n");
 		escritor.escribe("<body>\n");
 		escritor.escribe("<header>\n");
@@ -257,8 +257,10 @@ public class Archivo {
 		if (!VerificadorArchivo.verificaNuevoArchivo(graficaBarras))
 			throw new ExcepcionDirectorioInvalido();
 
-		GeneradorArbolAVLSVG<Palabra> generadorArbolAVLSVG = new GeneradorArbolAVLSVG<Palabra>(palabrasRepetidas);
-		GeneradorArbolRojinegroSVG<Palabra> generadorArbolRojinegroSVG = new GeneradorArbolRojinegroSVG<Palabra>(llenaArbolRojonegro(palabrasRepetidas));
+		Integer[] arbolBalanceado = llenaArbolBalaceado(palabrasRepetidas);
+		GraficadoraSVG<Palabra> graficadora = new GraficadoraSVG<Palabra>(palabrasRepetidas,palabras.getElementos());
+		GeneradorArbolAVLSVG<Integer> generadorArbolAVLSVG = new GeneradorArbolAVLSVG<Integer>(arbolBalanceado);
+		GeneradorArbolRojinegroSVG<Integer> generadorArbolRojinegroSVG = new GeneradorArbolRojinegroSVG<Integer>(arbolBalanceado);
 		EscritorArchivo escritor = new EscritorArchivo(arbolAVL);
 		Lista<String> codigoSVG = generadorArbolAVLSVG.codigoSVG();
 		for (String codigo : codigoSVG)
@@ -269,97 +271,106 @@ public class Archivo {
 		for (String codigo : codigoSVG)
 			escritor.escribe(codigo);
 		escritor.cerrar();
+		escritor = new EscritorArchivo(graficaPastel);
+		escritor.escribe(graficadora.graficaPastel());
+		escritor.cerrar();
+		escritor = new EscritorArchivo(graficaBarras);
+		escritor.escribe(graficadora.graficaBarras());
+		escritor.cerrar();
 	}
 
 	/**
 	 * Devuelve un arreglo ordenado para que el ArbolRojinegro que se forme de dicho arreglo, tenga la menor altura posible
 	 * @param palabras elementos en el ArbolRojinegro.
 	 */
-	private Palabra[] llenaArbolRojonegro(Palabra[] palabras) {
-		Palabra[] arbolRojinegro = null;
+	private Integer[] llenaArbolBalaceado(Palabra[] palabras) {
+		Integer[] arbolRojinegro = null;
 		switch (palabras.length) {
 			case 10 :
-				arbolRojinegro = new Palabra[palabras.length]; 
-				arbolRojinegro[0] = palabras[3];
-				arbolRojinegro[1] = palabras[1];
-				arbolRojinegro[2] = palabras[7];
-				arbolRojinegro[3] = palabras[0];
-				arbolRojinegro[4] = palabras[2];
-				arbolRojinegro[5] = palabras[5];
-				arbolRojinegro[6] = palabras[8];
-				arbolRojinegro[7] = palabras[4];
-				arbolRojinegro[8] = palabras[6];
-				arbolRojinegro[9] = palabras[9];
+				arbolRojinegro = new Integer[palabras.length]; 
+				arbolRojinegro[0] = 3;
+				arbolRojinegro[1] = 1;
+				arbolRojinegro[2] = 7;
+				arbolRojinegro[3] = 0;
+				arbolRojinegro[4] = 2;
+				arbolRojinegro[5] = 5;
+				arbolRojinegro[6] = 8;
+				arbolRojinegro[7] = 4;
+				arbolRojinegro[8] = 6;
+				arbolRojinegro[9] = 9;
 			break;
 
 			case 11:
-				arbolRojinegro = new Palabra[palabras.length];
-				arbolRojinegro[0] = palabras[3];
-				arbolRojinegro[1] = palabras[1];
-				arbolRojinegro[2] = palabras[7];
-				arbolRojinegro[3] = palabras[0];
-				arbolRojinegro[4] = palabras[2];
-				arbolRojinegro[5] = palabras[5];
-				arbolRojinegro[6] = palabras[9];
-				arbolRojinegro[7] = palabras[4];
-				arbolRojinegro[8] = palabras[6];
-				arbolRojinegro[9] = palabras[8];
-				arbolRojinegro[10] = palabras[10];
+				arbolRojinegro = new Integer[palabras.length];
+				arbolRojinegro[0] = 3;
+				arbolRojinegro[1] = 1;
+				arbolRojinegro[2] = 7;
+				arbolRojinegro[3] = 0;
+				arbolRojinegro[4] = 2;
+				arbolRojinegro[5] = 5;
+				arbolRojinegro[6] = 9;
+				arbolRojinegro[7] = 4;
+				arbolRojinegro[8] = 6;
+				arbolRojinegro[9] = 8;
+				arbolRojinegro[10] = 10;
 			break;
 
 			case 12:
-				arbolRojinegro = new Palabra[palabras.length]; 
-				arbolRojinegro[0] = palabras[7];
-				arbolRojinegro[1] = palabras[3];
-				arbolRojinegro[2] = palabras[9];
-				arbolRojinegro[3] = palabras[1];
-				arbolRojinegro[4] = palabras[5];
-				arbolRojinegro[5] = palabras[8];
-				arbolRojinegro[6] = palabras[10];
-				arbolRojinegro[7] = palabras[0];
-				arbolRojinegro[8] = palabras[2];
-				arbolRojinegro[9] = palabras[4];
-				arbolRojinegro[10] = palabras[6];
-				arbolRojinegro[11] = palabras[11];
+				arbolRojinegro = new Integer[palabras.length]; 
+				arbolRojinegro[0] = 7;
+				arbolRojinegro[1] = 3;
+				arbolRojinegro[2] = 9;
+				arbolRojinegro[3] = 1;
+				arbolRojinegro[4] = 5;
+				arbolRojinegro[5] = 8;
+				arbolRojinegro[6] = 10;
+				arbolRojinegro[7] = 0;
+				arbolRojinegro[8] = 2;
+				arbolRojinegro[9] = 4;
+				arbolRojinegro[10] = 6;
+				arbolRojinegro[11] = 11;
 			break;
 
 			case 13: 
-				arbolRojinegro = new Palabra[palabras.length];
-				arbolRojinegro[0] = palabras[7];
-				arbolRojinegro[1] = palabras[3];
-				arbolRojinegro[2] = palabras[9];
-				arbolRojinegro[3] = palabras[1];
-				arbolRojinegro[4] = palabras[5];
-				arbolRojinegro[5] = palabras[8];
-				arbolRojinegro[6] = palabras[11];
-				arbolRojinegro[7] = palabras[0];
-				arbolRojinegro[8] = palabras[2];
-				arbolRojinegro[9] = palabras[4];
-				arbolRojinegro[10] = palabras[6];
-				arbolRojinegro[11] = palabras[10];
-				arbolRojinegro[12] = palabras[12];
+				arbolRojinegro = new Integer[palabras.length];
+				arbolRojinegro[0] = 7;
+				arbolRojinegro[1] = 3;
+				arbolRojinegro[2] = 9;
+				arbolRojinegro[3] = 1;
+				arbolRojinegro[4] = 5;
+				arbolRojinegro[5] = 8;
+				arbolRojinegro[6] = 11;
+				arbolRojinegro[7] = 0;
+				arbolRojinegro[8] = 2;
+				arbolRojinegro[9] = 4;
+				arbolRojinegro[10] = 6;
+				arbolRojinegro[11] = 10;
+				arbolRojinegro[12] = 12;
 			break;
 			case 14: 
-				arbolRojinegro = new Palabra[palabras.length];
-				arbolRojinegro[0] = palabras[7];
-				arbolRojinegro[1] = palabras[3];
-				arbolRojinegro[2] = palabras[11];
-				arbolRojinegro[3] = palabras[1];
-				arbolRojinegro[4] = palabras[5];
-				arbolRojinegro[5] = palabras[9];
-				arbolRojinegro[6] = palabras[13];
-				arbolRojinegro[7] = palabras[0];
-				arbolRojinegro[8] = palabras[2];
-				arbolRojinegro[9] = palabras[4];
-				arbolRojinegro[10] = palabras[6];
-				arbolRojinegro[11] = palabras[8];
-				arbolRojinegro[12] = palabras[10];
-				arbolRojinegro[13] = palabras[12];
-				arbolRojinegro[14] = palabras[14];
+				arbolRojinegro = new Integer[palabras.length];
+				arbolRojinegro[0] = 7;
+				arbolRojinegro[1] = 3;
+				arbolRojinegro[2] = 11;
+				arbolRojinegro[3] = 1;
+				arbolRojinegro[4] = 5;
+				arbolRojinegro[5] = 9;
+				arbolRojinegro[6] = 13;
+				arbolRojinegro[7] = 0;
+				arbolRojinegro[8] = 2;
+				arbolRojinegro[9] = 4;
+				arbolRojinegro[10] = 6;
+				arbolRojinegro[11] = 8;
+				arbolRojinegro[12] = 10;
+				arbolRojinegro[13] = 12;
+				arbolRojinegro[14] = 14;
 			break;
 
 			default:
-				arbolRojinegro = palabras;
+				arbolRojinegro = new Integer[palabras.length];
+				for (int i = 0; i < palabras.length; i++)
+					arbolRojinegro[i] = i+1;
+
 			break;
 		}
 		return arbolRojinegro;

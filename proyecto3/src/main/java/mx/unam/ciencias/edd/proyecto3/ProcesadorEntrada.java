@@ -46,6 +46,10 @@ public class ProcesadorEntrada {
 		archivosProcesados = new Lista<Archivo>();
 		for (File archivo : archivos)
 			archivosProcesados.agrega(new Archivo(archivo,directorio));
+		// Limpia el directorio.
+		File[] archivosDirectorio = directorio.listFiles();
+		for (File archivo : archivosDirectorio)
+			archivo.delete();
 	}
 
 	/**
