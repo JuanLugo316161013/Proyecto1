@@ -127,16 +127,16 @@ public class GraficadoraSVG<T extends DatoGraficable<T>>{
 	 */
 	public String graficaBarras() {
 		ColorSVG[] colores = revuelveColores();
-		int noElementos = datos.length, ancho = (noElementos + 1)*120, dy = 480, dx = 80, i = 0, frecuenciaAcumulada = 0;
+		int noElementos = datos.length, ancho = (noElementos + 1)*90, dy = 480, dx = 80, i = 0, frecuenciaAcumulada = 0;
 		double altura;
 		ColorSVG fondo = colores[noElementos];
 		Lista<Dato<T>> elementos = new Lista<Dato<T>>();
 		String grafica = String.format("<svg width='%d' height='%d' xmlns='http://www.w3.org/2000/svg'>\n", 120 + ancho, 480 + (noElementos + 1) * 30);
-		grafica += String.format("<line x1='40' x2='%d' y1='40' y2='40' stroke = 'black' stroke-width = '1'/>\n", ancho + 80);
-		grafica += String.format("<line x1='40' x2='%d' y1='140' y2='140' stroke = 'black' stroke-width = '1'/>\n", ancho + 80);
-		grafica += String.format("<line x1='40' x2='%d' y1='240' y2='240' stroke = 'black' stroke-width = '1'/>\n", ancho + 80);
-		grafica += String.format("<line x1='40' x2='%d' y1='340' y2='340' stroke = 'black' stroke-width = '1'/>\n", ancho + 80);
-		grafica += String.format("<line x1='40' x2='%d' y1='440' y2='440' stroke = 'black' stroke-width = '1'/>\n", ancho + 80);
+		grafica += String.format("<line x1='40' x2='%d' y1='40' y2='40' stroke = 'black' stroke-width = '1'/>\n", ancho + 120);
+		grafica += String.format("<line x1='40' x2='%d' y1='140' y2='140' stroke = 'black' stroke-width = '1'/>\n", ancho + 120);
+		grafica += String.format("<line x1='40' x2='%d' y1='240' y2='240' stroke = 'black' stroke-width = '1'/>\n", ancho + 120);
+		grafica += String.format("<line x1='40' x2='%d' y1='340' y2='340' stroke = 'black' stroke-width = '1'/>\n", ancho + 120);
+		grafica += String.format("<line x1='40' x2='%d' y1='440' y2='440' stroke = 'black' stroke-width = '1'/>\n", ancho + 120);
 		grafica += String.format("<text fill='black' font-family='sans-serif' font-size='16' x='40' y='30' text-anchor='middle'>%d</text>",valorTotal);
 		grafica += String.format("<text fill='black' font-family='sans-serif' font-size='16' x='40' y='130' text-anchor='middle'>%.1f</text>",(double)((valorTotal/4)*3));
 		grafica += String.format("<text fill='black' font-family='sans-serif' font-size='16' x='40' y='230' text-anchor='middle'>%.1f</text>",(double)((valorTotal/4)*2));
@@ -149,7 +149,7 @@ public class GraficadoraSVG<T extends DatoGraficable<T>>{
 			grafica += String.format("<rect x='40' y='%d' width='20' height='20' fill='%s'/>\n",dy,colores[i].toString());
 			grafica += String.format("<text fill='black' font-family='sans-serif' font-size='18' x='240' y='%d' text-anchor='middle'>%s</text>\n",dy + 16,elemento.get());
 			dy += 30;
-			dx += 120;
+			dx += 90;
 			i++;
 		}
 		altura = ((valorTotal-frecuenciaAcumulada)*400)/valorTotal;

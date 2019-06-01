@@ -3,7 +3,7 @@ package mx.unam.ciencias.edd.proyecto3;
 import java.util.NoSuchElementException;
 import java.io.File;
 import mx.unam.ciencias.edd.Lista;
-import mx.unam.ciencias.edd.Diccionario;
+import mx.unam.ciencias.edd.Conjunto;
 /**
  * <p>Clase que procesa la entrada entra de un programa desde la entrada estandar.</p>
  * <p>Dada la entrada identifica los archivos que se utilizaran en el programa, y el directorio en donde
@@ -14,10 +14,13 @@ import mx.unam.ciencias.edd.Diccionario;
 public class ProcesadorEntrada {
 
 	/** Lista de archivos especificados en la entrada estandar. */
-	private Lista<File> archivos;
+	private Conjunto<File> archivos;
 
 	/** Lista de archivos procesados*/
 	private Lista<Archivo> archivosProcesados;
+
+	/** Directorio selecionado. */
+	private File directorio;
 
 	/**
 	 * Constructor vacío.
@@ -35,7 +38,8 @@ public class ProcesadorEntrada {
 		
 		Argumentos argumentos = new Argumentos(args);
 		archivos = argumentos.archivos();
-		procesaArchivos(argumentos.directorio());
+		directorio = argumentos.directorio();
+		procesaArchivos(directorio);
 	}
 
 	/**
@@ -43,9 +47,10 @@ public class ProcesadorEntrada {
 	 * @throws NoSuchElementException si el archivo no existe.
 	 */
 	private void procesaArchivos(File directorio) {
+		int i = 1;
 		archivosProcesados = new Lista<Archivo>();
 		for (File archivo : archivos)
-			archivosProcesados.agrega(new Archivo(archivo,directorio));
+			archivosProcesados.agrega(new Archivo(archivo,directorio,i++));
 		// Limpia el directorio.
 		File[] archivosDirectorio = directorio.listFiles();
 		for (File archivo : archivosDirectorio)
@@ -60,4 +65,10 @@ public class ProcesadorEntrada {
 	public Lista<Archivo> archivosProcesados() {
 		return archivosProcesados;
 	}
+
+	/**
+     * Regresa el directorio.
+     * @return directorio.
+     */
+	public File directorio() {return directorio;}
 }

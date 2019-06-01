@@ -21,12 +21,34 @@ import mx.unam.ciencias.edd.Lista;
  *	</ol>
  *  </p>
  */
-public class Archivo {
+public class Archivo implements Iterable<Cadena> {
+
+	private class Iterador implements Iterator<Cadena> {
+		Iterator<Cadena> iterador;
+
+		/* Construye un nuevo iterador */
+		public Iterador() {
+			iterador = palabras.iteradorLlaves();
+		}
+
+        /* Nos dice si hay un siguiente elemento. */
+        @Override public boolean hasNext() {
+            // Aquí va su código.
+            return iterador.hasNext();
+        }
+
+        /* Regresa el siguiente elemento. */
+        @Override public Cadena next() {
+            // Aquí va su código.
+            return iterador.next();
+        }
+
+	}
 
 	/**
 	 * Clase que contiene una palabra del Archivo, y el número de veces que aparece en el Archivo.
 	 */
-	protected class Palabra implements DatoGraficable<Palabra>{
+	protected class Palabra implements Comparable<Palabra>, DatoGraficable<Palabra>{
 		
 		/* Palabra en el archivo de texto. */
 		public String palabra;
@@ -56,6 +78,14 @@ public class Archivo {
 		 * @return número de veces que aparece la palabra en el Archivo.
 		 */
 		@Override public int frecuencia() {return frecuencia;}
+
+		/**
+		 * Compara dos palabras segun el numero de repeticiones en el archivo.
+		 * @param palabra palabra a comparar.
+		 * @return número mayor a cero si su frecuencias es mayor a la del objeto
+		 *         número menor a cero si su frecuencia es menor, cero si son iguales.
+		 */
+		@Override public int compareTo(Palabra palabra) {return frecuencia - palabra.frecuencia;}
 	}
 
 	/* Archivo de texto asociado. */
@@ -70,21 +100,21 @@ public class Archivo {
 	/* Número de palabras ene le archivo. */
 	private int noPalabras;
 
-	/** Si el archivo esta marcado*/
-	protected boolean marcado;
-
 	/** Palabras en el archivo con el numero de veces que esta en el archivo */
 	private Lista<Palabra> palabrasContadas;
 
 	/** Graficas asociadas al archivo */
-	File arbolAVL, arbolRojinegro, graficaPastel, graficaBarras;
+	private File arbolAVL, arbolRojinegro, graficaPastel, graficaBarras, css;
+
+	/** numero de archivo */
+	private int numeroArchivo;
 
 	/**
 	 * Constructor que recibe un archivo de texto y la direccion en donde se creara su archivoHTML.
 	 * @param archivoTexto archivo de texto asociado al Archivo.
 	 * @param directorio directorio donde se creara el archivo html.
 	 */
-	public Archivo(File archivoTexto, File directorio) {
+	public Archivo(File archivoTexto, File directorio, int numeroArchivo) {
 		this.archivoTexto = archivoTexto;
 		LectorArchivo lector = new LectorArchivo(archivoTexto);
 		palabras = new Diccionario<Cadena,Integer>();
@@ -95,6 +125,8 @@ public class Archivo {
 		Integer i;
 		while ((linea = lector.leer()) != null) {
 			for (String palabra : linea.split("\\P{L}+")) {
+				if (palabra.isEmpty())
+					continue;
 				cadena = new Cadena(palabra);
 				if (palabras.contiene(cadena)) {
 					i = new Integer(palabras.get(cadena).intValue()+1);
@@ -114,11 +146,13 @@ public class Archivo {
 			palabrasContadas.agrega(new Palabra(cadena.getCadena(),j));
 			noPalabras += j;
 		}
+		css = new File(String.format("%s/archivo.css",directorio.getAbsolutePath()));
 		archivoHTML = new File(String.format("%s/%s(html).html",directorio.getAbsolutePath(),archivoTexto.getName()));
 		arbolAVL = new File(String.format("%s/%s_arbolAVL.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
 		arbolRojinegro = new File(String.format("%s/%s_arbolRojinegro.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
 		graficaPastel = new File(String.format("%s/%s_graficaPastel.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
 		graficaBarras = new File(String.format("%s/%s_graficaBarras.svg",directorio.getAbsolutePath(),archivoTexto.getName()));
+		this.numeroArchivo = numeroArchivo;
 	}
 
 	/**
@@ -126,40 +160,22 @@ public class Archivo {
 	 * @return Las 15 palabras que más se repiten en el archivo.
 	 */
 	private Palabra[] ordenaPalabras() {
-		int elementos = palabras.getElementos();
+		int elementos = palabrasContadas.getElementos();
 		Palabra[] palabrasOrdenadas;
-		Palabra p;
 		if (elementos > 15) 
 			palabrasOrdenadas = new Palabra[15];
 		else
 			palabrasOrdenadas = new Palabra[elementos];
-
+		/* AUNQUE SE APLIQUE MERGESORT AUN SE MANTIENE LA COMPLEJIDAD EN EL CONTEO DE PALABRAS YA QUE SE LE APLICA A UNA
+		   LISTA QUE CONTIENE LAS PALABRAS Y LAS VECES QUE APARECE EN EL ARCHIVO */
+		Lista<Palabra> palabrasRepetidas = Lista.mergeSort(palabrasContadas).reversa();
+		int i = 0;
 		elementos = palabrasOrdenadas.length;
-		for (Palabra palabra : palabrasContadas) {
-			for (int i = 0; i < elementos; i++) {
-				if (palabrasOrdenadas[i] == null) {
-					palabrasOrdenadas[i] = palabra;
-				} else {
-					if (palabra.frecuencia > palabrasOrdenadas[i].frecuencia) {
-						try {
-							for (int j = elementos-1; j > i; j++) {
-								palabrasOrdenadas[j] = palabrasOrdenadas[j-1];
-							}
-						} catch (ArrayIndexOutOfBoundsException aiobe) {}
-						palabrasOrdenadas[i] = palabra;
-					}
-				}
-			}
-		}
-		return palabrasOrdenadas;
-	}
+		for (Palabra palabra : palabrasRepetidas)
+			if (i < elementos)
+				palabrasOrdenadas[i++] = palabra;
 
-	private void recorrerArreglo(Palabra[] arreglo, Palabra elemento, int i) {
-		Palabra palabra = arreglo[i];
-		arreglo[i] = elemento;
-		if (i == arreglo.length - 1)
-			return;
-		recorrerArreglo(arreglo,palabra,i+1);
+		return palabrasOrdenadas;
 	}
 
 	/**
@@ -199,7 +215,7 @@ public class Archivo {
 		escritor.escribe("<head>\n");
 		escritor.escribe("<meta charset='UTF-8'>\n");
 		escritor.escribe(String.format("<title>%s</title>\n",archivoTexto.getName()));
-		escritor.escribe("<link rel='stylesheet' href='/home/lugo/Proyectos/proyecto3/resources/archivo.css'>"); 
+		escritor.escribe(String.format("<link rel='stylesheet' href='%s'>",css.getAbsolutePath())); 
 		escritor.escribe("</head>\n");
 		escritor.escribe("<body>\n");
 		escritor.escribe("<header>\n");
@@ -213,14 +229,14 @@ public class Archivo {
 		}
 		escritor.escribe("</ul>\n");
 		escritor.escribe("<figure>\n");
-		escritor.escribe(String.format("<img src = '%s' alt='Grafica de pastel con las palabras más comunes en el archivo'\ntitle= 'Grafica de pastel con las palabras más comunes en el archivo '\n",
+		escritor.escribe(String.format("<img src = '%s' alt='Grafica de pastel con las palabras más comunes en el archivo'\ntitle= 'Grafica de pastel con las palabras más comunes en el archivo '>\n",
 			graficaPastel.getAbsolutePath()));
 		escritor.escribe("<figcaption>Grafica de pastel con las palabras más comunes en el archivo</figcaption>\n");
 		escritor.escribe("</figure>\n");
 		escritor.escribe("<figure>\n");
-		escritor.escribe(String.format("<img src = '%s' alt='Grafica de pastel con las palabras más comunes en el archivo'\ntitle= 'Grafica de pastel con las palabras más comunes en el archivo '\n",
-			graficaBarras.getAbsolutePath()));
-		escritor.escribe("<figcaption>Grafica de pastel con las palabras más comunes en el archivo</figcaption>\n");
+		escritor.escribe(String.format("<img src = '%s' %s alt='Grafica de barras con las palabras más comunes en el archivo'\ntitle= 'Grafica de barras con las palabras más comunes en el archivo '>\n",
+			graficaBarras.getAbsolutePath(),palabrasRepetidas.length >= 13 ? "id = \"barras\" " : ""));
+		escritor.escribe("<figcaption>Grafica de barras con las palabras más comunes en el archivo</figcaption>\n");
 		escritor.escribe("</figure>\n");
 		escritor.escribe("<h2>Palabras más frecuentes en el archivo, ordenadas de menor a mayor.</h2>\n");
 		escritor.escribe("<ol>\n");
@@ -228,12 +244,12 @@ public class Archivo {
 			escritor.escribe(String.format("<li>%s : %d</li>\n",palabra.palabra, palabra.frecuencia));
 		escritor.escribe("</ol>\n");
 		escritor.escribe("<figure>\n");
-		escritor.escribe(String.format("<img src = '%s' alt='ArbolRojinegro con las 15 palabras más utilizadas en el archivo'\ntitle= 'ArbolRojinegro con las 15 palabras más utilizadas en el archivo '\n",
+		escritor.escribe(String.format("<img src = '%s' alt='ArbolRojinegro con las 15 palabras más utilizadas en el archivo'\ntitle= 'ArbolRojinegro con las 15 palabras más utilizadas en el archivo ''>\n",
 			arbolRojinegro.getAbsolutePath()));
 		escritor.escribe("<figcaption>ArbolRojinegro con las 15 palabras más utilizadas en el archivo</figcaption>\n");
 		escritor.escribe("</figure>\n");
 		escritor.escribe("<figure>\n");
-		escritor.escribe(String.format("<img src = '%s' alt='ArbolAVL con las 15 palabras más utilizadas en el archivo'\ntitle= 'ArbolAVL con las 15 palabras más utilizadas en el archivo '\n",
+		escritor.escribe(String.format("<img src = '%s' alt='ArbolAVL con las 15 palabras más utilizadas en el archivo'\ntitle= 'ArbolAVL con las 15 palabras más utilizadas en el archivo ''>\n",
 			arbolAVL.getAbsolutePath()));
 		escritor.escribe("<figcaption>ArbolAVL con las 15 palabras más utilizadas en el archivo</figcaption>\n");
 		escritor.escribe("</figure>\n");
@@ -293,92 +309,141 @@ public class Archivo {
 		switch (palabras.length) {
 			case 10 :
 				arbolRojinegro = new Integer[palabras.length]; 
-				arbolRojinegro[0] = 3;
-				arbolRojinegro[1] = 1;
-				arbolRojinegro[2] = 7;
-				arbolRojinegro[3] = 0;
-				arbolRojinegro[4] = 2;
-				arbolRojinegro[5] = 5;
-				arbolRojinegro[6] = 8;
-				arbolRojinegro[7] = 4;
-				arbolRojinegro[8] = 6;
-				arbolRojinegro[9] = 9;
+				arbolRojinegro[0] = 4;
+				arbolRojinegro[1] = 2;
+				arbolRojinegro[2] = 8;
+				arbolRojinegro[3] = 1;
+				arbolRojinegro[4] = 3;
+				arbolRojinegro[5] = 6;
+				arbolRojinegro[6] = 9;
+				arbolRojinegro[7] = 5;
+				arbolRojinegro[8] = 7;
+				arbolRojinegro[9] = 10;
 			break;
 
 			case 11:
 				arbolRojinegro = new Integer[palabras.length];
-				arbolRojinegro[0] = 3;
-				arbolRojinegro[1] = 1;
-				arbolRojinegro[2] = 7;
-				arbolRojinegro[3] = 0;
-				arbolRojinegro[4] = 2;
-				arbolRojinegro[5] = 5;
-				arbolRojinegro[6] = 9;
-				arbolRojinegro[7] = 4;
-				arbolRojinegro[8] = 6;
-				arbolRojinegro[9] = 8;
-				arbolRojinegro[10] = 10;
+				arbolRojinegro[0] = 4;
+				arbolRojinegro[1] = 2;
+				arbolRojinegro[2] = 8;
+				arbolRojinegro[3] = 1;
+				arbolRojinegro[4] = 3;
+				arbolRojinegro[5] = 6;
+				arbolRojinegro[6] = 10;
+				arbolRojinegro[7] = 5;
+				arbolRojinegro[8] = 7;
+				arbolRojinegro[9] = 9;
+				arbolRojinegro[10] = 11;
 			break;
 
 			case 12:
 				arbolRojinegro = new Integer[palabras.length]; 
-				arbolRojinegro[0] = 7;
-				arbolRojinegro[1] = 3;
-				arbolRojinegro[2] = 9;
-				arbolRojinegro[3] = 1;
-				arbolRojinegro[4] = 5;
-				arbolRojinegro[5] = 8;
-				arbolRojinegro[6] = 10;
-				arbolRojinegro[7] = 0;
-				arbolRojinegro[8] = 2;
-				arbolRojinegro[9] = 4;
-				arbolRojinegro[10] = 6;
-				arbolRojinegro[11] = 11;
+				arbolRojinegro[0] = 8;
+				arbolRojinegro[1] = 4;
+				arbolRojinegro[2] = 10;
+				arbolRojinegro[3] = 2;
+				arbolRojinegro[4] = 6;
+				arbolRojinegro[5] = 9;
+				arbolRojinegro[6] = 11;
+				arbolRojinegro[7] = 1;
+				arbolRojinegro[8] = 3;
+				arbolRojinegro[9] = 5;
+				arbolRojinegro[10] = 7;
+				arbolRojinegro[11] = 12;
 			break;
 
 			case 13: 
 				arbolRojinegro = new Integer[palabras.length];
-				arbolRojinegro[0] = 7;
-				arbolRojinegro[1] = 3;
-				arbolRojinegro[2] = 9;
-				arbolRojinegro[3] = 1;
-				arbolRojinegro[4] = 5;
-				arbolRojinegro[5] = 8;
-				arbolRojinegro[6] = 11;
-				arbolRojinegro[7] = 0;
-				arbolRojinegro[8] = 2;
-				arbolRojinegro[9] = 4;
-				arbolRojinegro[10] = 6;
-				arbolRojinegro[11] = 10;
-				arbolRojinegro[12] = 12;
+				arbolRojinegro[0] = 8;
+				arbolRojinegro[1] = 4;
+				arbolRojinegro[2] = 10;
+				arbolRojinegro[3] = 2;
+				arbolRojinegro[4] = 6;
+				arbolRojinegro[5] = 9;
+				arbolRojinegro[6] = 12;
+				arbolRojinegro[7] = 1;
+				arbolRojinegro[8] = 3;
+				arbolRojinegro[9] = 5;
+				arbolRojinegro[10] = 7;
+				arbolRojinegro[11] = 11;
+				arbolRojinegro[12] = 13;
 			break;
 			
 			case 14: 
 				arbolRojinegro = new Integer[palabras.length];
-				arbolRojinegro[0] = 7;
-				arbolRojinegro[1] = 3;
-				arbolRojinegro[2] = 11;
-				arbolRojinegro[3] = 1;
-				arbolRojinegro[4] = 5;
-				arbolRojinegro[5] = 9;
+				arbolRojinegro[0] = 8;
+				arbolRojinegro[1] = 4;
+				arbolRojinegro[2] = 12;
+				arbolRojinegro[3] = 2;
+				arbolRojinegro[4] = 6;
+				arbolRojinegro[5] = 10;
 				arbolRojinegro[6] = 13;
-				arbolRojinegro[7] = 0;
-				arbolRojinegro[8] = 2;
-				arbolRojinegro[9] = 4;
-				arbolRojinegro[10] = 6;
-				arbolRojinegro[11] = 8;
-				arbolRojinegro[12] = 10;
-				arbolRojinegro[13] = 12;
-				arbolRojinegro[14] = 14;
+				arbolRojinegro[7] = 1;
+				arbolRojinegro[8] = 3;
+				arbolRojinegro[9] = 5;
+				arbolRojinegro[10] = 7;
+				arbolRojinegro[11] = 9;
+				arbolRojinegro[12] = 11;
+				arbolRojinegro[13] = 14;
+			break;
+
+			case 15: 
+				arbolRojinegro = new Integer[palabras.length];
+				arbolRojinegro[0] = 8;
+				arbolRojinegro[1] = 4;
+				arbolRojinegro[2] = 12;
+				arbolRojinegro[3] = 2;
+				arbolRojinegro[4] = 6;
+				arbolRojinegro[5] = 10;
+				arbolRojinegro[6] = 14;
+				arbolRojinegro[7] = 1;
+				arbolRojinegro[8] = 3;
+				arbolRojinegro[9] = 5;
+				arbolRojinegro[10] = 7;
+				arbolRojinegro[11] = 9;
+				arbolRojinegro[12] = 11;
+				arbolRojinegro[13] = 13;
+				arbolRojinegro[14] = 15;
 			break;
 
 			default:
 				arbolRojinegro = new Integer[palabras.length];
 				for (int i = 0; i < palabras.length; i++)
 					arbolRojinegro[i] = i+1;
-
 			break;
 		}
 		return arbolRojinegro;
 	}
+
+	 /**
+     * Regresa un iterador para iterar las palabras de los archivos
+     * @return un iterador de Cadenas.
+     */
+    @Override public Iterator<Cadena> iterator() {
+        return new Iterador();
+    }
+
+    /**
+     * Regresa el numero de archivo.
+     * @return numero del archivo.
+     */
+    public int numeroArchivo() {return numeroArchivo;}
+
+    /**
+     * Regresa el nombre del archivo
+     * @return nombre del archivo.
+     */
+    public String nombre() {return archivoTexto.getName();}
+
+    /**
+     * Regresa el nombre del archivo
+     * @return nombre del archivo.
+     */
+    public String nombreCompleto() {return archivoHTML.getAbsolutePath();}
+
+    /**
+     * Regresa el numero de palabras en el archivo.
+     * @return numero de palabras en el archivo.
+     */
+    public int palabras() {return noPalabras;}
 }

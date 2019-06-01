@@ -1,14 +1,14 @@
 package mx.unam.ciencias.edd.proyecto3;
 
 import java.io.File;
-import mx.unam.ciencias.edd.Lista;
+import mx.unam.ciencias.edd.Conjunto;
 /**
  * Clase que procesa los argumento de la entrada estandar;
  */
 public class Argumentos {
 
 	/* Lista de archivo de texto. */
-	private Lista<File> archivosTexto;
+	private Conjunto<File> archivosTexto;
 
 	/* Directorio donde estarán los archivos html correspondinetes a los archivos de texto.*/
 	private File directorio;
@@ -18,7 +18,7 @@ public class Argumentos {
 	 * @param args argumentos de la entrada estandar.
 	 */
 	public Argumentos(String[] args) {
-		archivosTexto = new Lista<File>();
+		archivosTexto = new Conjunto<File>();
 		int bandera_O = 0;
 
 		for (int i = 0; i < args.length; i++) {
@@ -51,11 +51,11 @@ public class Argumentos {
 	}
 
 	/**
-	 * Devuelve la lista de archivos que se paso en los argumentos de la
+	 * Devuelve la conjunto de archivos que se paso en los argumentos de la
 	 * entrada estandar.
-	 * @return lista de archivos.
+	 * @return conjunto de archivos.
 	 */
-	public Lista<File> archivos() {return archivosTexto;}
+	public Conjunto<File> archivos() {return archivosTexto;}
 
 	/**
 	 * Devuelve el directorio en donde se crearan todos los archivos html y svg.
