@@ -7,7 +7,7 @@ Ejecutar
 Para ejecutar el programa se tiene que ejecutar el archvio jar [proyecto1.jar](https://github.com/JuanLugoN/Proyectos/tree/master/proyecto1/target/proyecto1.jar), el programa recibe el texto a ordenar a traves de una lista de archivos desde los argumentos del programa ó de la entrada estandar.
 
 ### Ejemplo de como ejecutar el programa cuando recibe su entrada atravez de los argumentos del programa.
-```shell
+```
 cd proyecto1/
 java -jar target/proyecto1.jar archivo1.txt archivo2.txt ...
 ```
