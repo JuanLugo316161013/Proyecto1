@@ -13,7 +13,7 @@ java -jar target/proyecto1.jar archivo1.txt archivo2.txt ...
 ```
 
 ### Ejemplo de como ejecutar el programa cuando recibe su entrada de la entrada estandar.
-```shell
+```
 cd proyecto1/
 cat .../archivo.txt | java -jar target/proyecto1.jar
 ```
