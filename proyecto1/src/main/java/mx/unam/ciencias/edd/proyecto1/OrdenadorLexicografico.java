@@ -1,183 +1,96 @@
 package mx.unam.ciencias.edd.proyecto1;
 
-import mx.unam.ciencias.edd.VerticeArbolBinario;
 import mx.unam.ciencias.edd.ArbolRojinegro;
-import mx.unam.ciencias.edd.Pila;
-import mx.unam.ciencias.edd.Cola;
+import java.io.FileNotFoundException;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
+import java.io.BufferedWriter;
+import java.io.OutputStream;
+import java.io.IOException;
+import java.io.File;
+import java.lang.SecurityException;
+import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
 
 /**
- * Clase que ordena cadenas de caracteres basado en el ordenamiento
- * Sort de Unix.
+ * Clase que ordena lexicografícamente una lista de archivos. Basado en Sort de Unix
  */
 public class OrdenadorLexicografico {
+	
+	/* Estructura que ordena la lista de archivos */
+	private ArbolRojinegro<Cadena> ordenadorLexicografico;
 
-	/** Bandera -r, bandera de imprimir en orden inverso. */
-	private boolean reversa;
-
-	/** Bandera -o, bandera de salida a un archivo. */
-	private boolean salida;
-
-	/** Arbol que ordena agrega y ordena cadenas en tiempo logaritmico. */
-	private ArbolRojinegro<Cadena> arbol;
+	/* Argumentos del Programa */
+	private Argumentos argumentos;
 
 	/**
-	 * Contructor vacio.
-	 * Inicializa la estructura que ordena las cadenas.
+	 * Constructor que recibe los argumentos del metodo principal.
+	 * @param args argumentos del metodo principal.
 	 */
-	public OrdenadorLexicografico() {
-		arbol = new ArbolRojinegro<Cadena>();
-	}
-
-	/**
-	 * Devuelve si el Ordenador Lexicografico es vacio.
-	 * @return 'true' si la estructura que ordena es vacia
-	 *         'false' si no lo es.
-	 */
-	public boolean esVacio() {
-		return arbol.esVacia();
-	}
-
-	/**
-	 * Regresa un ArbolRojinegro de tipo Cadena que es la estrutura,
-	 * que ordena las cadena.
-	 * @return ArbolRojinegro de tipo Cadena.
-	 * @throws NoSuchElementException si el ordenador es vacio.
-	 */
-	public ArbolRojinegro<Cadena> getOrdenador() {
-		if (arbol == null)
-			throw new NoSuchElementException();
-
-		return new ArbolRojinegro<Cadena>(arbol);
-	}
-
-	/**
-	 * Regresa si la bandera -r esta activada
-	 * @return si se ah pasado la bandera -r.
-	 */
-	public boolean bandera_R() {return reversa;}
-
-	/**
-	 * Regresa si la bandera -o esta activada.
-	 * @return si se ah pasado la bandera -o.
-	 */
-	public boolean bandera_O() {return salida;}
-
-	/**
-	 * Agrega una cadena y la ordena.
-	 * @param elemento cadena a ordenar.
-	 * @throws IllegalArgumentException si el elemento el null.
-	 */
-	public void agrega(String elemento) {
-		if (elemento == null)
-			throw new IllegalArgumentException();
-
-		Cadena cadena = new Cadena(elemento);
-		arbol.agrega(cadena);
-	}
-
-	/**
-	 * Define si una bandera es valida, y la inicializa,
-	 * si no lo es no hace nada.
-	 * @param bandera bandera que se paso.
-	 * @throws IllegalArgumentException si la bandera es null.
-	 */
-	public void bandera(String bandera) {
-		if (bandera == null)
-			throw new IllegalArgumentException();
-
-		if (bandera.equals("-r"))
-			reversa = true;
-
-		if (bandera.equals("-o"))
-			salida = true;
-	}
-
-	/**
-	 * Regresa el orden el contenido del ordenador lexicografico
-	 * en orden.
-	 * Si la bandera -o es falsa regresa null.
-	 * @return un arreglo de de cadenas en orden o
-	 *         null si la bandera -o es falsa;
-	 * @throws NoSuchElementException si el ordenador es null.
-	 */
-	public String[] salida() {
-		if (arbol.esVacia())
-			throw new NoSuchElementException();
-
-		String[] orden = new String[arbol.getElementos()];
-		Pila<Cadena> pila;
-		Cola<Cadena> cola;
-		String cadena = "";
-
-		cola = new Cola<Cadena>();
-		pila = new Pila<Cadena>();
-
-		for (Cadena vertice : arbol) {
-			cola.mete(vertice);
-			pila.mete(vertice);
-		}
-
-		if (reversa)
-			for (int i = 0; !pila.esVacia(); i++)
-				orden[i] = pila.saca().getCadena() + "\n";
+	public OrdenadorLexicografico(String[] args) {
+		ordenadorLexicografico = new ArbolRojinegro<Cadena>();
+		ProcesadorEntrada entrada = new ProcesadorEntrada(args);
+		argumentos = entrada.argumentos();
+		Cadena.COMPARADOR = argumentos.bandera_R();
+		if (entrada.metodo()) 
+			ordenaListaArchivos();
 		else
-			for (int i = 0; !cola.esVacia(); i++)
-				orden[i] = cola.saca().getCadena() + "\n";
-
-		return orden;
+			ordenaEntradaEstandar();
+		if (argumentos.bandera_O())
+			escribeOrdenLexicografico();
+		else 
+			imprimeOrdenLexicografico();
 	}
 
 	/**
-	 * Regresa una representacion de las cadenas del
-	 * Ordenador Lexicografico, ordenado.
-	 * @return representacion de un Ordenador Lexicografico.
+	 * Lee y ordena lo recibido en la entrada estandar.
+	 */ 
+	private void ordenaEntradaEstandar() {
+		LectorArchivo lector = new LectorArchivo(System.in);
+ 		Cadena renglon;
+		while ((renglon = lector.leer()) != null)
+			ordenadorLexicografico.agrega(renglon);
+	}
+
+	/**
+	 * Lee y ordena una lista de archivos de los argumentos del metodo principal.
 	 */
-	@Override public String toString() {
-		if (arbol.esVacia())
-			return "";
-
-		Pila<Cadena> pila;
-		Cola<Cadena> cola;
-		String cadena = "";
-
-		cola = new Cola<Cadena>();
-		pila = new Pila<Cadena>();
-
-		for (Cadena vertice : arbol) {
-			cola.mete(vertice);
-			pila.mete(vertice);
+	private void ordenaListaArchivos() {
+		LectorArchivo lector;
+		Cadena renglon;
+		for (File archivo : argumentos.archivos()) {
+			lector = new LectorArchivo(archivo);
+			while ((renglon = lector.leer()) != null)
+				ordenadorLexicografico.agrega(renglon);
 		}
-
-		if (reversa)
-			while (!pila.esVacia())
-				cadena += pila.saca().getCadena() + "\n";
-		else
-			while(!cola.esVacia())
-				cadena += cola.saca().getCadena() + "\n";
-
-		return cadena;
 	}
 
 	/**
-	 * Determina si un Ordenador Lexicografico es igual a un objeto.
-	 * @param objeto objeto a comparar.
-	 * @return 'true' si son iguales
-	 *		   'false' si no lo son.
+	 * Imprime en orden lexicografíco las lineas de texto recibidas.
 	 */
-	@Override public boolean equals(Object objeto) {
-		if (objeto == null || getClass() != objeto.getClass())
-            return false;
+	private void imprimeOrdenLexicografico() {
+		ordenadorLexicografico.dfsInOrder(v -> System.out.println(v.get()));
+	}
 
-		if (arbol == null)
-			return false;
-
-		@SuppressWarnings("unchecked") OrdenadorLexicografico ordenador = (OrdenadorLexicografico)objeto;
-
+	/**
+	 * Escribe en orden lexicografíco las lineas de texto recibidas, en el archivo
+	 * especificada por la bandera '-o'.
+	 */
+	private void escribeOrdenLexicografico() {
 		try {
-			return arbol.equals(ordenador.getOrdenador()) &&
-			bandera_R() == ordenador.bandera_R() &&
-			ordenador.bandera_O() == bandera_O();
-		} catch (NoSuchElementException nsee) {return true;}
+			BufferedWriter escritor = new BufferedWriter(new OutputStreamWriter
+			          (new FileOutputStream(argumentos.archivo(),true),StandardCharsets.UTF_8));
+			for (Cadena renglon : ordenadorLexicografico)
+				escritor.write(renglon.toString());
+		} catch (FileNotFoundException fnfe) {
+			System.err.println("Error en la escritura de archivos");
+			System.exit(1);
+		} catch (SecurityException se) {
+			System.err.println("Error en la escritura de archivos");
+			System.exit(1);
+		} catch(IOException ioe) {
+			System.err.println("Error en la escritura de archivos");
+			System.exit(1);
+		}
 	}
 }

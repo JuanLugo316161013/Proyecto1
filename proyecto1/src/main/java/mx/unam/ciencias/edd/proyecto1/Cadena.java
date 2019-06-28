@@ -1,102 +1,67 @@
 package mx.unam.ciencias.edd.proyecto1;
 
-import java.util.NoSuchElementException;
-import java.util.regex.Pattern;
 import java.text.Collator;
-
+import java.text.Normalizer;
 /**
- * Clase que compara cadenas basada en la comparación de cadenas de
- * caracteres Sort de Unix. (Clase que envuelve a String).
+ * Clase que contiene una una cadena de caracteres, y la misma cadena pero en su forma 
+ * normalizada (sin acentos, y en minusculas).
  */
+public class Cadena implements Comparable<Cadena> {
 
-public class Cadena implements Comparable<Cadena>{
+	/* Cadena original */
+	private String cadena;
 
-	/** Cadena de caracteres de Cadena*/
-	private String  cadena;
+	/* Cadena normalizada. */
+	private String cadenaNormalizada;
+
+	/** 
+	 * Especifica el modo de comparar los objetos {@link Cadena}
+	 * si es <code>false</code> las cadenas se comparan de manera normal,
+	 * si es <code>true</code> el valor de la cadena se multiplica por -1*/
+	public static boolean COMPARADOR;
+
+
+	/* Objeto que compara dos cadenas normalizadas */
+	private static Collator comparador = Collator.getInstance();
 
 	/**
-	 * Constructor vacío de Cadena
-	 * No se puede crear un objeto cadena sin su cadena
-	 * de caracteres.
-	 */
-	private Cadena() {}
-
-	/**
-	 * Contructor que recibe e inicializa a la cadena de caracteres
-	 * @param cadena cadena de caracteres (String).
-	 * @throws IllegalAccessException si la cadena es null.
+	 * Constructor que recibe un String que será la cadena interna asociada.
+	 * @param cadena String que será la cadena asociada a Cadena.
 	 */
 	public Cadena(String cadena) {
-		if (cadena == null)
-			throw new IllegalArgumentException();
-
 		this.cadena = cadena;
+		cadenaNormalizada = Normalizer.normalize(cadena,Normalizer.Form.NFKD);
+		cadenaNormalizada = cadenaNormalizada.replaceAll("[^a-z,A-Z,0-9,\\p{Z}]", "");
 	}
 
 	/**
-	 * Regresa la cadena de caracteres de la Cadena.
-	 * @return cadena de caracteres de Cadena (String).
-	 * @throws NoSuchElementException si la cadena no tiene su cadena
-	 *								  de caracteres.
-	 */
-	public String getCadena() {
-		if (cadena == null)
-			throw new NoSuchElementException();
-
-		return cadena;
-	}
-
-	/**
-	 * Define la cadena de caracteres de la Cadena.
-	 * @param cadena cadena de caracteres (String).
-	 * @throws IllegalAccessException si la cadena es null.
-	 */
-	public void setCadena(String cadena) {
-		if (cadena == null)
-			throw new IllegalArgumentException();
-
-		this.cadena = cadena;
-	}
-
-	/**
-	 * Compara dos Cadenas por sus cadenas de caracteres basado en la comparacion
-	 * de cadenas de caracteres Sort de Unix.
-	 * @param cadena cadena a comparar
-	 * @return si la cadena primera es mayor regresa un numero mayor a 0,
-	 *		   si son iguales regresa 0
-	 *	 	   si la primera es menor regresa un numero negativo.
-	 * @throws NullPointerException si la cadena de Cadena es null.
-	 * @throws IllegalAccessException si la cadena que se pasa es null.
+	 * Compara dos objetos Cadena, compara sus cadenas normalizadas.
+	 * @param cadena cadena a comparar.
+	 * @return un número mayor a cero si la cadena a comparar es mayor a la cadena normalizada del objeto Cadena
+	 *         un número menor a cero si es menor la cadena a comparar, o cero si son iguales.
 	 */
 	@Override public int compareTo(Cadena cadena) {
-		if (this.cadena == null)
-			throw new NoSuchElementException();
-
-		if (cadena == null || cadena.getCadena() == null)
-			throw new IllegalArgumentException();
-
-		String cadena1 = this.cadena, cadena2 = cadena.getCadena();
-		Collator comparador = Collator.getInstance();
 		comparador.setStrength(Collator.PRIMARY);
-		return comparador.compare(cadena1.replaceAll("[^\\p{L}\\p{Z}]", ""),
-			                      cadena2.replaceAll("[^\\p{L}\\p{Z}]", ""));
+		int valor = comparador.compare(cadenaNormalizada,cadena.getCadena());
+		return COMPARADOR ? valor * -1 : valor;
 	}
 
 	/**
-	 * Determina si la cadena es igual a un objeto.
-	 * @param objeto objeto a comparar.
-	 * @return 'true' si son iguales,
-	 *		   'false' si no.
+	 * Regresa la cadena de caracteres normalizada.
+	 * @return cadena normalizada.
 	 */
-	@Override public boolean equals(Object objeto){
-		if (objeto == null || getClass() != objeto.getClass())
+	private String getCadena() {return cadenaNormalizada;}
+
+	@Override public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass())
             return false;
-
-		if (cadena == null)
-        	return false;
-
-        @SuppressWarnings("unchecked") Cadena cadenaObjeto = (Cadena) objeto;
-
-		return cadena.equals(cadenaObjeto.getCadena());
+        @SuppressWarnings("unchecked") Cadena cadena = (Cadena)o;
+        return cadenaNormalizada.equals(cadena.getCadena());
 	}
+
+ 	/**
+ 	 * Regresa el {@link String} pasado en el constructor.
+ 	 * @return cadena normalizada.
+ 	 */
+	@Override public String toString() {return cadena;}
 }

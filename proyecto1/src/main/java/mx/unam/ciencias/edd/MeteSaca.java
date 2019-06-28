@@ -35,7 +35,6 @@ public abstract class MeteSaca<T> {
     /**
      * Agrega un elemento al extremo de la estructura.
      * @param elemento el elemento a agregar.
-     * @return el elemento en un extremo de la estructura.
      */
     public abstract void mete(T elemento);
 
@@ -99,15 +98,15 @@ public abstract class MeteSaca<T> {
         Nodo nodoAuxiliar = cabeza;
         Nodo nodoDeMeteSacaParaComparar = m.cabeza;
         while (nodoAuxiliar != null && nodoDeMeteSacaParaComparar != null) {
-            if (!nodoAuxiliar.elemento.equals(nodoDeMeteSacaParaComparar.elemento)) 
+            if (!nodoAuxiliar.elemento.equals(nodoDeMeteSacaParaComparar.elemento))
                 return false;
             nodoAuxiliar = nodoAuxiliar.siguiente;
-            nodoDeMeteSacaParaComparar = nodoDeMeteSacaParaComparar.siguiente;    
+            nodoDeMeteSacaParaComparar = nodoDeMeteSacaParaComparar.siguiente;
         }
         if (nodoAuxiliar == null && nodoDeMeteSacaParaComparar != null)
             return false;
         if (nodoAuxiliar != null && nodoDeMeteSacaParaComparar == null)
-            return false;        
+            return false;
         return true;
     }
 }

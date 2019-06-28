@@ -170,11 +170,11 @@ public class ArbolRojinegro<T extends Comparable<T>>
 
         // caso 4
         /* Si el vertice y su padre estan cruzados, es decir que sus
-           direcciones son diferentes, giramos en la direccion del padre 
-           despues hacemos que el vertice sea e padre y el padre sea 
+           direcciones son diferentes, giramos en la direccion del padre
+           despues hacemos que el vertice sea e padre y el padre sea
            el vertice */
         boolean caso4 = false;
-        
+
         if (abuelo.izquierdo == padre && padre.derecho == vertice) {
             super.giraIzquierda(padre);
             caso4 = true;
@@ -273,7 +273,7 @@ public class ArbolRojinegro<T extends Comparable<T>>
                 } else {
                     fantasma.padre.derecho = null;
                 }
-            } else { 
+            } else {
                 raiz = null;
             }
         }
@@ -329,7 +329,7 @@ public class ArbolRojinegro<T extends Comparable<T>>
         // caso3
         izquierdo = verticeRojinegro(hermano.izquierdo);
         derecho = verticeRojinegro(hermano.derecho);
-  
+
         /* Si el los dos hijos del hemano son negros, el padre
            es negro y el hermano es negro, pintamos al hermano
            de rojo, hacemos recursion sobre el padre y terminamos */
@@ -343,7 +343,7 @@ public class ArbolRojinegro<T extends Comparable<T>>
         }
 
         // caso4
-        /*Si los hijos del hermano son negros, el hermano es negro 
+        /*Si los hijos del hermano son negros, el hermano es negro
           y el padre es rojo coloreamos al hermano de rojo y al padre
           de negro, y terminamos*/
         if ((izquierdo == null || izquierdo.color == Color.NEGRO) &&
@@ -361,7 +361,7 @@ public class ArbolRojinegro<T extends Comparable<T>>
            el dereho del hermano es negro ó el vertice es derecho, el
            derecho del hermano es negro y el izquierdo del hermano es
            rojo, coloreamos al hermano de rojo, al hijo rojo del hermano
-           lo coloreamos de negro y giramos sobre el hermano en la 
+           lo coloreamos de negro y giramos sobre el hermano en la
            direccion contraria al vertice */
         if ((padre.izquierdo == vertice) &&
            (izquierdo != null && izquierdo.color == Color.ROJO) &&
@@ -402,7 +402,7 @@ public class ArbolRojinegro<T extends Comparable<T>>
            contraria del vertice */
         hermano.color = padre.color;
         padre.color = Color.NEGRO;
-        
+
         if (padre.izquierdo == vertice) {
             derecho.color = Color.NEGRO;
             super.giraIzquierda(padre);
