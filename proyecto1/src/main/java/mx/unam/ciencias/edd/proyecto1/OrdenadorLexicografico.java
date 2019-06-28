@@ -2,14 +2,11 @@ package mx.unam.ciencias.edd.proyecto1;
 
 import mx.unam.ciencias.edd.ArbolRojinegro;
 import java.io.FileNotFoundException;
-import java.io.OutputStreamWriter;
-import java.io.FileOutputStream;
 import java.io.BufferedWriter;
-import java.io.OutputStream;
 import java.io.IOException;
 import java.io.File;
+import java.io.FileWriter;
 import java.lang.SecurityException;
-import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
 
 /**
@@ -78,10 +75,12 @@ public class OrdenadorLexicografico {
 	 */
 	private void escribeOrdenLexicografico() {
 		try {
-			BufferedWriter escritor = new BufferedWriter(new OutputStreamWriter
-			          (new FileOutputStream(argumentos.archivo(),true),StandardCharsets.UTF_8));
-			for (Cadena renglon : ordenadorLexicografico)
+			BufferedWriter escritor = new BufferedWriter(new FileWriter(argumentos.archivo()));
+			for (Cadena renglon : ordenadorLexicografico) {
 				escritor.write(renglon.toString());
+				escritor.newLine();
+			}
+			escritor.close();
 		} catch (FileNotFoundException fnfe) {
 			System.err.println("Error en la escritura de archivos");
 			System.exit(1);

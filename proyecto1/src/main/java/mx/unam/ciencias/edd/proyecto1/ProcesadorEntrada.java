@@ -12,11 +12,7 @@ public class ProcesadorEntrada {
 	private boolean modo;
 
 	/* Argumentos del programa. */
-	private Argumentos argumentos; 
-	/**
-	 * Constructor vacío.
-	 */
-	private ProcesadorEntrada() {}
+	private Argumentos argumentos;
 
 	/**
 	 * Constructor que recibe los argumentos del metodo main
@@ -25,7 +21,7 @@ public class ProcesadorEntrada {
 	public ProcesadorEntrada(String[] args) {
 		argumentos = new Argumentos(args);
 
-		if (args.length < 1 || argumentos.archivos() == null)
+		if (args.length < 1 || argumentos.archivos().getElementos() == 0)
 			modo = false;
 		else
 			modo = true;

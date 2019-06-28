@@ -19,7 +19,9 @@ public class Proyecto1 {
         } catch (ExcepcionBanderaRepetida ebr) {
             System.err.println("Error bandera repetida.");
             System.exit(1);
+        } catch (ExcepcionArchivoInvalido eai) {
+            System.err.println("Error archivo invalido.");
+            System.exit(1);
         }
-        System.out.printf("Se tardo %2.9f en ordenar\n",(System.nanoTime() - tiempoInicial)/1000000000.0);
     }
 }

@@ -44,9 +44,9 @@ public class Argumentos {
 				throw new ExcepcionBanderaRepetida();
 			}
 
-			if (bandera_O == 1) {
+			if (bandera_O == 1 && this.archivo == null) {
 				this.archivo = new File(args[i]);
-				if (!VerificadorArchivo.verificaDirectorio(archivo))
+				if (!VerificadorArchivo.verificaNuevoArchivo(archivo))
 					throw new ExcepcionArchivoInvalido();
 				continue;
 			}
@@ -69,7 +69,7 @@ public class Argumentos {
 	 * entrada estandar.
 	 * @return lista de archivos en la entrada en los argumentos del programa.
 	 */
-	public Lista<File> archivos() {return archivos.esVacia() ? null : archivos;}
+	public Lista<File> archivos() {return archivos;}
 
 	/**
 	 * Devuelve el archivo donde se escribira la salida del programa.
