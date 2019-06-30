@@ -2,7 +2,7 @@ package mx.unam.ciencias.edd.proyecto2;
 
 import java.util.NoSuchElementException;
 /**
- *  Proyecto 2 imprime, la representacion de una Estructura de Datos en codigo SVG.
+ * 
  */
 public class Proyecto2 {
 	
@@ -11,8 +11,7 @@ public class Proyecto2 {
 	 * @param args argumentos del metodo principal.
 	 */
 	public static void main(String[] args) {
-
-		try {
+		/*try {
 			ProcesadorEntrada entrada = new ProcesadorEntrada(args);
 			EstructurasDeDatosSVG estructura = new EstructurasDeDatosSVG(entrada.entradaProcesada());
 			estructura.imprimirEstructuraSVG();
@@ -44,6 +43,6 @@ public class Proyecto2 {
 			System.err.printf("%s\n%s\n",
 				"Error: vertices/aristas repetidos.","No se puede repetir vertices o aristas en una grafica.");
 			System.exit(1);
-		}
+		}*/
 	}
 }

@@ -5,23 +5,23 @@ import mx.unam.ciencias.edd.ArbolBinarioCompleto;
 import mx.unam.ciencias.edd.Lista;
 import mx.unam.ciencias.edd.VerticeArbolBinario;
 /**
- * Genera codigo SVG que representa a un ArbolBinarioCompleto.
+ * Clase que genera codigo svg que representa un Arbol Binario Completo.
  */
-public class GeneradorArbolBinarioCompletoSVG extends GeneradorArbolBinarioSVG {
+public class GeneradorArbolBinarioCompletoSVG<T> extends GeneradorArbolBinarioSVG<T> {
 
 	/**
-	 * Constructor que recibe una Lista de elementos del ArbolBinarioCompleto.
-	 * @throws ExcepcionFormatoEquivocado si algun elemento es caracter no imprimible.
-	 * @throws NumberFormatException si algun elemento no es un numero entero.
+	 * Constructor que recibe una lista con los elementos de un Arbol Binario Completo.
+	 * @param elementos elementos del Arbol Binario Completo.
 	 */
-	public GeneradorArbolBinarioCompletoSVG(Lista<String> elementos) {	
+	public GeneradorArbolBinarioCompletoSVG(Lista<T> elementos) {	
 		super(elementos);
 	}
 
 	/**
-	 * Devuelve una instancia de un nuevo arbol binario, usando una instancia de {@link ArbolBinarioCompleto}
+	 * Devuelve una instancia de un Arbol Binario que extiende de {@link ArbolBinario}.
+	 * @return instancia de {@link ArbolBinarioCompleto}.
 	 */
-	@Override protected ArbolBinario<Integer> nuevoArbolBinario() {
-		return new ArbolBinarioCompleto<Integer>();
+	@Override protected ArbolBinario<T> nuevoArbolBinario() {
+		return new ArbolBinarioCompleto<T>();
 	}
 }
