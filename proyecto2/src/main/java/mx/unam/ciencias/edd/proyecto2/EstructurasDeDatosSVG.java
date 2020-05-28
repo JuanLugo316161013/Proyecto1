@@ -3,10 +3,9 @@ package mx.unam.ciencias.edd.proyecto2;
 import mx.unam.ciencias.edd.Lista;
 import java.util.NoSuchElementException;
 /**
- * Clase que dado el nombre y los elemntos de una estructura de datos, imprime el codigo svg que representa 
- * a dicha estructura.
+ * Representa una estructura de datos en codigo SVG.
  */
-public class EstructurasDeDatosSVG<T> {
+public class EstructurasDeDatosSVG {
 
 	/** Generador de codigo SVG que representa una estructura de datos */
 	GeneradorEstructuraSVG estructura;
@@ -17,72 +16,73 @@ public class EstructurasDeDatosSVG<T> {
 	private EstructurasDeDatosSVG() {}
 
 	/**
-	 * Constructor que recibe una lista con el nombre de la estructura de datos,
-	 * y sus elementos.
-	 * @param estructuraDeDatos nombre de la estructura de datos. 
-	 * @param elementos elementos de la estructura de datos. 
-	 * @throws ExcepcionEstructuraInvalida si el nombre de la estructura no esta en la siguiente lista.
-	 * <ul>
-	 *	 <li>ArbolAVL</li>				
-	 *	 <li>ArbolBinarioCompleto</li>				
-	 *	 <li>ArbolBinarioOrdenado</li>				
-	 *	 <li>ArbolRojinegro</li>				
-	 *	 <li>Cola</li>				
-	 *	 <li>Grafica</li>				
-	 *	 <li>Lista</li>
-	 *	 <li>MonticuloArreglo</li>
-	 *	 <li>MonticuloMinimo</li>
-	 *	 <li>Pila</li>
-	 * </ul>
+	 * Constructor que recibe una lista con el nombre de la estructura y sus elementos,
+	 * define que estructura sera representada en SVG.
+	 * @param estructura lista con el nombre de la estructura y sus elementos.
+	 * @throws ExcepcionEstructuraInvalida si la estructura no es :
+	 *
+	 *				- ArbolAVL.
+	 *				- ArbolBinarioCompleto.
+	 *				- ArbolBinarioOrdenado.
+	 *				- ArbolRojinegro.
+	 *				- Cola.
+	 *				- Grafica.
+	 *				- Lista.
+	 *				- MonticuloArreglo.
+	 *				- MonticuloMinimo.
+	 *				- Pila.
 	 */
-	public EstructurasDeDatosSVG(String estructuraDeDatos, Lista<T> elementos)  {
+	public EstructurasDeDatosSVG(Lista<String> estructura)  {
+
+		String estructuraDeDatos = estructura.eliminaPrimero();
+
 		if (estructuraDeDatos.equals("ArbolAVL")) {
-			this.estructura = new GeneradorArbolAVLSVG(elementos);
+			this.estructura = new GeneradorArbolAVLSVG(estructura);
 			return;
 		}
 
 		if (estructuraDeDatos.equals("ArbolBinarioCompleto")) {
-			this.estructura = new GeneradorArbolBinarioCompletoSVG(elementos);
+			this.estructura = new GeneradorArbolBinarioCompletoSVG(estructura);
 			return;
 		}
 
 		if (estructuraDeDatos.equals("ArbolBinarioOrdenado")) {
-			this.estructura = new GeneradorArbolBinarioOrdenadoSVG(elementos);
+			this.estructura = new GeneradorArbolBinarioOrdenadoSVG(estructura);
 			return;
 		}
 
 		if (estructuraDeDatos.equals("ArbolRojinegro")) {
-			this.estructura = new GeneradorArbolRojinegroSVG(elementos);
+			this.estructura = new GeneradorArbolRojinegroSVG(estructura);
 			return;
 		}
 
 		if (estructuraDeDatos.equals("Cola")) {
-			this.estructura = new GeneradorColaSVG(elementos);
+			this.estructura = new GeneradorColaSVG(estructura);
 			return;
 		}
 
 		if (estructuraDeDatos.equals("Grafica")) {
-			this.estructura = new GeneradorGraficaSVG(elementos);
+			this.estructura = new GeneradorGraficaSVG(estructura);
 			return;
 		}
 
 		if (estructuraDeDatos.equals("Lista")) {
-			this.estructura = new GeneradorListaSVG(elementos);
+			this.estructura = new GeneradorListaSVG(estructura);
 			return;
 		}
 
 		if (estructuraDeDatos.equals("MonticuloArreglo")) {
-			this.estructura = new GeneradorMonticuloArregloSVG(elementos);
+			this.estructura = new GeneradorMonticuloArregloSVG(estructura);
 			return;
 		}
 
 		if (estructuraDeDatos.equals("MonticuloMinimo")) {
-			this.estructura = new GeneradorMonticuloMinimoSVG(elementos);
+			this.estructura = new GeneradorMonticuloMinimoSVG(estructura);
 			return;
 		}
 
 		if (estructuraDeDatos.equals("Pila")) {
-			this.estructura = new GeneradorPilaSVG(elementos);
+			this.estructura = new GeneradorPilaSVG(estructura);
 			return;
 		}
 

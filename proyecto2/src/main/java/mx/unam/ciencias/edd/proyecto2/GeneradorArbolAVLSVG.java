@@ -5,34 +5,29 @@ import mx.unam.ciencias.edd.ArbolBinario;
 import mx.unam.ciencias.edd.Lista;
 import mx.unam.ciencias.edd.VerticeArbolBinario;
 /**
- * Clase que genera codigo svg que representa un ArbolAVL.
+ * Genera codigo SVG que representa a un ArbolAVL.
  */
-public class GeneradorArbolAVLSVG<T> extends GeneradorArbolBinarioSVG<T> {
+public class GeneradorArbolAVLSVG extends GeneradorArbolBinarioSVG {
 
 	/**
-	 * Constructor que recibe una lista con los elementos de un ArbolAVL.
-	 * @param elementos elementos del ArbolAVL.
-	 */	
+	 * Constructor que recibe una Lista de elementos del ArbolAVL.
+	 * @throws ExcepcionFormatoEquivocado si algun elemento es caracter no imprimible.
+	 * @throws NumberFormatException si algun elemento no es un numero entero.
+	 */
 	public GeneradorArbolAVLSVG(Lista<String> elementos) {
 		super(elementos);
 	}
 
 	/**
-	 * Devuelve una instancia de un Arbol Binario que extiende de {@link ArbolBinario}.
-	 * @return instancia de {@link ArbolAVL}.
+	 * Devuelve una instancia de un nuevo arbol binario, usando una instancia de {@link ArbolAVL}
 	 */
 	@Override protected ArbolBinario<Integer> nuevoArbolBinario() {
 		return new ArbolAVL<Integer>();
 	}
 
 	/**
-	 * Devuelve codigo svg que representa un vertice del ArbolAVL, y sus aristas, si es que tiene.
-	 * @param x posicion del centro del vertice con respecto al eje 'x'.
-	 * @param y posicion del centro del vertice con respecto al eje 'y'.
-	 * @param radio radio del vertice.
-	 * @param distancia distancia con respecto al eje 'x' con sus hijos.
-	 * @param vertice un vertice del ArbolAVL.
-	 * @return codigo svg que representa un vertice del ArbolAVL, y sus arista, si es que tiene.
+	 * Regresa un vertice de con su elemento, altura, balance y sus correspondientes aristas en codigo SVG.
+	 * @return vertice de ArbolAVL
 	 */
 	protected String vertice(int x, int y, int radio, int distancia, VerticeArbolBinario<Integer> vertice) {
 		double trazo = 3;

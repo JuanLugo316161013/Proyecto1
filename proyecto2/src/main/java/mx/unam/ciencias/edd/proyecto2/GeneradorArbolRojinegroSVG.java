@@ -6,38 +6,33 @@ import mx.unam.ciencias.edd.Color;
 import mx.unam.ciencias.edd.Lista;
 import mx.unam.ciencias.edd.VerticeArbolBinario;
 /**
- * Clase que genera codigo svg que representa un ArbolRojinegro.
+ * Genera codigo SVG que representa a un ArbolRojinegro.
  */
-public class GeneradorArbolRojinegroSVG<T> extends GeneradorArbolBinarioOrdenadoSVG<T> {
+public class GeneradorArbolRojinegroSVG extends GeneradorArbolBinarioSVG {
 
-	/** ArbolRojinegro generico interno */
-	private ArbolRojinegro<T> arbolRojinegro;
-
-	/**
-	 * Constructor que recibe una lista con los elementos de un ArbolRojinegro.
-	 * @param elementos elementos del ArbolRojinegro.
-	 */	
-	public GeneradorArbolRojinegroSVG(Lista<T> elementos) {
-		super(elementos);
-		arbolRojinegro = (ArbolRojinegro<T>) arbolBinario;
-	}
+	/** ArbolRojinegro de Integer interno */
+	private ArbolRojinegro<Integer> arbolRojinegro;
 
 	/**
-	 * Devuelve una instancia de un Arbol Binario que extiende de {@link ArbolBinario}.
-	 * @return instancia de {@link ArbolRojinegro}.
+	 * Constructor que recibe una Lista de elementos del ArbolRojinegro.
+	 * @throws ExcepcionFormatoEquivocado si algun elemento es caracter no imprimible.
+	 * @throws NumberFormatException si algun elemento no es un numero entero.
 	 */
-	@Override protected ArbolBinario<T> nuevoArbolBinario() {
-		return new ArbolRojinegro<T>();
+	public GeneradorArbolRojinegroSVG(Lista<String> elementos) {
+		super(elementos);
+		arbolRojinegro = (ArbolRojinegro<Integer>) arbolBinario;
 	}
 
 	/**
-	 * Devuelve codigo svg que representa un vertice del ArbolRojinegro, y sus aristas, si es que tiene.
-	 * @param x posicion del centro del vertice con respecto al eje 'x'.
-	 * @param y posicion del centro del vertice con respecto al eje 'y'.
-	 * @param radio radio del vertice.
-	 * @param distancia distancia con respecto al eje 'x' con sus hijos.
-	 * @param vertice un vertice del ArbolRojinegro.
-	 * @return codigo svg que representa un vertice del ArbolRojinegro, y sus arista, si es que tiene.
+	 * Devuelve una instancia de un nuevo arbol binario, usando una instancia de {@link ArbolRojinegro}
+	 */
+	@Override protected ArbolBinario<Integer> nuevoArbolBinario() {
+		return new ArbolRojinegro<Integer>();
+	}
+
+	/**
+	 * Regresa un vertice con su elemento y sus correspondientes aristas en codigo SVG.
+	 * @return vertice de ArbolRojinegro
 	 */
 	@Override protected String vertice(int x, int y, int radio, int distancia, VerticeArbolBinario<Integer> vertice) {
 		double trazo = 3;

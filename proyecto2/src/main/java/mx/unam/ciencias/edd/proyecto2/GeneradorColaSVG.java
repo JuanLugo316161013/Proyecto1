@@ -35,7 +35,7 @@ public class GeneradorColaSVG implements GeneradorEstructuraSVG {
 	}
 
 	/**
-	 * Regresa codigo svg que representa un nodo en una Cola.
+	 * Regresa un nodo con su elemento en codigo SVG.
 	 * @param x punto en la recta x.
 	 * @param y punto en la recta y.
 	 * @return nodo de la Cola con su elemento.
@@ -45,6 +45,16 @@ public class GeneradorColaSVG implements GeneradorEstructuraSVG {
 		nodo += String.format("<text fill='black' font-family='sans-serif' font-size='20' x='%d' y='%d' text-anchor='middle'>%d</text>",
 			x+25, (y+30)-7, elemento);
 		return nodo;
+	}
+
+	/**
+	 * Imprime una estructura vacía.
+	 */
+	private void vacio() {
+		System.out.println("<svg width='200' height='200' >\n");
+		System.out.println("<circle cx='100' cy='100' r='50' stroke='black' stroke-width='3' fill='white' />");
+		System.out.println("<line x1='160' y1='40' x2='40' y2='160' stroke='black' stroke-width='3' />");
+		System.out.println("\n</svg>");
 	}
 
 	/**

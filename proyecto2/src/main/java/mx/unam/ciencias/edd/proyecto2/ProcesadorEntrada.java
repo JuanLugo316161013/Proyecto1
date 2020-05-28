@@ -2,74 +2,70 @@ package mx.unam.ciencias.edd.proyecto2;
 
 import java.util.NoSuchElementException;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileReader;
-import java.lang.NumberFormatException;
-import java.lang.SecurityException;
 import mx.unam.ciencias.edd.Lista;
 /**
- * <p>Clase que determina de si hay que leer de la entrada estandar, un archivo o de los argumentos del programa.</p>
- * <p>La clase lee los elementos de una estructura de datos especificados en la entrada (entrada estandar, archivo, 
- * argumentos del programa) y el nombre de la estructura.</p>
+ * Procesa la entrada estandar de un programa ejecutable, si son archivos, los lee.
  */
 public class ProcesadorEntrada {
 
 	/** Lector de archivos */
-	private BufferedReader lector;
+	private LectorArchivo lector;
 
-	/** Elementos de la estructura de datos */
-	private Lista<Integer> elementos;
-
-	/** Estructura de Datos */
-	private String estructura; 
+	/** Entrada procesada */
+	private Lista<String> entrada;
 
 	/**
-	 * Constructor que recibe los argumentos del programa.
-	 * @param args argumentos del programa.
+	 * Constructor vacío.
+	 */
+	private ProcesadorEntrada() {}
+
+	/**
+	 * Constructor que recibe los argumentos del metodo main
+	 * @param args argumentos del metodo main.
+	 * @throws IllegalArgumentException si el args es null.
 	 * @throws ExcepcionEntradaSobrecargada si se quiere leer de un archivo y la entrada estandar.
-	 * @throws ExcepcionArchivoInvalido si el archivo no se puede leer.
+	 * @throws NoSuchElementException el archivo no exite.
 	 */
 	public ProcesadorEntrada(String[] args) {
-		try  {
-			if (args.length < 1) {
-				lector = new BufferedReader(new InputStreamReader(System.in));
-				procesaArchivo();
-				return;
-			} else if (args.length == 1) {
-				File archivo = new File(args[0]);
-				if (!VerificadorArchivo.verificaArchivo(archivo))
-					throw new ExcepcionArchivoInvalido();
-				lector = new BufferedReader(new FileReader(archivo));
-				procesaArchivo();
-				return;
-			} else {
-				procesaEntradaEstandar(args);
-			}
-		} catch (IOException ioe) {
-			System.err.println("Error en la lectura de archivo.");
-			System.exit(1);
-		} catch (SecurityException se) {
-			System.err.println("Error en la lectura de archivo.");
-			System.exit(1);
+		entrada = new Lista<String>();
+
+		if (args.length < 1) {
+			lector = new LectorArchivo(System.in);
+			procesaArchivo();
+			lector.cerrar();
+			return;
 		}
+
+		lector = new LectorArchivo(System.in);
+
+		if (lector.estaListo())
+			throw new ExcepcionEntradaSobrecargada();
+
+		if (args.length == 1) {
+			lector = new LectorArchivo(new File(args[0]));
+			procesaArchivo();
+			lector.cerrar();
+			return;
+		}
+
+		lector.cerrar();
+		procesaEntradaEstandar(args);
 	}
 
 	/**
 	 * Procesa la entrada estandar.
 	 * @param args los argumentos del metodo main.
-	 * @throws NoSuchElementException si no se lee ninguna estructura.
 	 */
 	private void procesaEntradaEstandar(String[] args) {
-		if (args[0].equals("#"))
-			throw new NoSuchElementException();
-		estructura = args[0];
-		elementos = new Lista<Integer>();
-		for (int i = 1; i < args.length; i++)
-			elementos.agrega(Integer.valueOf(args[i]));
+		for (String cadena : args) {
+			if (cadena.contains("#")) {
+				String[] s = cadena.split("#");
+					entrada.agrega(s[0]);
+					break;
+			} else {
+				entrada.agrega(cadena);
+			}
+		}
 	}
 
 	/**
@@ -77,54 +73,31 @@ public class ProcesadorEntrada {
 	 * @throws NoSuchElementException si el archivo no existe.
 	 */
 	private void procesaArchivo() {
-		String linea, cadena;
-		elementos = new Lista<Integer>();
-		try {
-			while ((linea = lector.readLine()) != null) {
-				cadena = "";
-				char[] caracteres = linea.toCharArray();
-				for (int i = 0; i < caracteres.length; i++){
-					if (caracteres[i] == '#')
-						break;
-					if (caracteres[i] < 33)	{
-						if (cadena.isEmpty()) {
-							continue;
-						} else if (estructura == null) {
-							estructura = cadena;
-							cadena = "";
-							continue;
-						} else {
-							elementos.agrega(Integer.valueOf(cadena));
-							cadena = "";
-							continue;
-						}
-					}
-					cadena += String.valueOf(caracteres[i]);
-					System.out.println(cadena);
-					if (!cadena.isEmpty() && i == caracteres.length-1 && estructura == null)
-						estructura = cadena;
-					else if (!cadena.isEmpty() && i == caracteres.length-1)
-						elementos.agrega(Integer.valueOf(cadena));
+		String linea;
+
+		while ((linea = lector.leer()) != null) {
+			if (linea.trim().isEmpty())
+				continue;
+			for (String cadena : linea.trim().split("\\s")) {
+				if (cadena.contains("#")) {
+					String[] s = cadena.split("#");
+					entrada.agrega(s[0]);
+					break;
+				} else {
+					entrada.agrega(cadena);
 				}
 			}
-		} catch (IOException ioe) {
-			System.err.println("Error en la lectura de archivo.");
-			System.exit(1);
-		} catch (NumberFormatException nfe) {
-			System.err.println("Error elemento invalido.");
-			System.exit(1);
-		} 
+		}
 	}
 
 	/**
-	 * Regresa el nombre de la estructura de datos.
-	 * @return nombre de la estructura de datos.
+	 * Regresa una lista con la entrada procesada.
+	 * @return lista de elementos en la entrada.
+	 * @throws NoSuchElementException si la lista es vacía;
 	 */
-	public String estructura() {return estructura;}
-
-	/**
-	 * Regresa una Lista de {@link Integer} que son los elementos de la estructura de datos.
-	 * @return elementos de la estrucura de datos.
-	 */
-	public Lista<Integer> elementos() {return elementos;}
+	public Lista<String> entradaProcesada() {
+		if (entrada.esVacia())
+			throw new NoSuchElementException();
+		return entrada;
+	}
 }
